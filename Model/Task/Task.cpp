@@ -23,19 +23,28 @@
 
 Task::Task
     (
+        const int taskIDToSet,
         const int arrivalTimeToSet,
         const int computationTimeToSet,
         const int relativeDeadlineToSet
     )
     :
+    taskID(taskIDToSet),
     arrivalTime(arrivalTimeToSet),
     computationTime(computationTimeToSet),
     relativeDeadline(relativeDeadlineToSet),
     absoluteDeadline(arrivalTimeToSet + relativeDeadlineToSet),
     elapsedTime(0),
-    instantaneousExceedingTime(0)
+    instantaneousExceedingTime(0),
+    remainingComputationTime(computationTimeToSet)
+    currentState(NEW)
     {}
-    
+
+int Task::getTaskID()
+{
+    return taskID;
+}
+
 int Task::getArrivalTime()
 {
     return arrivalTime;
@@ -69,4 +78,25 @@ int Task::getInstantaneousExceedingTime()
 bool deadlineMiss()
 {
     return instantaneousExceedingTime > 0;
+}
+
+void Task::setState(TaskState stateToSet)
+{
+    currentState = stateToSet;
+}
+
+TaskState Task::getState()
+{
+    return currentState;
+}
+
+void Task::update()
+{
+    elapsedTime++;
+    instantaneousExceedingTime =
+        (elapsedTime > relativeDeadline)?
+        elapsedTime - relativeDeadline : 0;
+    remainingComputationTime =
+        (currentState == EXECUTING)?
+        remainingComputationTime - 1 : remainingComputationTime;
 }

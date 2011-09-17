@@ -19,23 +19,36 @@
  *
  */
 
+enum TaskState
+{
+    NEW,
+    READY,
+    EXECUTING,
+    SUSPENDED
+};
+
 class Task
 {
     private:
+        const int taskID;
         const int arrivalTime;
         const int computationTime;
         const int relativeDeadline;
         const int absoluteDeadline;
         int elapsedTime;
+        int remainingComputationTime;
         int instantaneousExceedingTime;
+        TaskState currentState;
     protected:
     public:
     Task
     (
+        const int taskID,
         const int arrivalTime,
         const int computationTime,
         const int relativeDeadline
     );
+    int getTaskID();
     int getArrivalTime();
     int getComputationTime();
     int getRelativeDeadline();
@@ -43,4 +56,7 @@ class Task
     int getElapsedTime();
     int getInstantaneousExceedingTime();
     bool deadlineMiss();
+    void setState(TaskState stateToSet);
+    TaskState getState();
+    void update();
 };
