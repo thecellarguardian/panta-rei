@@ -34,7 +34,7 @@ class Task
         const int arrivalTime;
         const int computationTime;
         const int relativeDeadline;
-        const int absoluteDeadline;
+        int absoluteDeadline;
         int elapsedTime;
         int remainingComputationTime;
         int instantaneousExceedingTime;
@@ -58,5 +58,5 @@ class Task
     bool deadlineMiss();
     void setState(TaskState stateToSet);
     TaskState getState();
-    void update();
+    virtual void update() = 0;
 };

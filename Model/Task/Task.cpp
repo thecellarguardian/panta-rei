@@ -89,14 +89,3 @@ TaskState Task::getState()
 {
     return currentState;
 }
-
-void Task::update()
-{
-    elapsedTime++;
-    instantaneousExceedingTime =
-        (elapsedTime > relativeDeadline)?
-        elapsedTime - relativeDeadline : 0;
-    remainingComputationTime =
-        (currentState == EXECUTING)?
-        remainingComputationTime - 1 : remainingComputationTime;
-}
