@@ -47,7 +47,7 @@ int PeriodicTask::getCurrentInstanceArrivalTime()
     return currentInstanceArrivalTime;
 }
 
-int PeriodicTaskgetRemainingPeriod()
+int PeriodicTask::getRemainingPeriod()
 {
     return remainingPeriod;
 }
