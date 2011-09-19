@@ -29,8 +29,8 @@
 /**
  * @class Subject
  *
- * @brief Modella un soggetto di osservazione nel design pattern Observer.
- *
+ * @brief This class models a subject of observation.
+ * @see "Observer design pattern."
  * Un oggetto di tipo Subject consente ad oggetti di tipo Observer di
  * registrarsi al fine di ricevere notifiche quando un cambiamento di stato
  * significativo occorre.
