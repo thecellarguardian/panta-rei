@@ -30,10 +30,7 @@
  * activated he notifies the end of a time slice to its state observers.
  * Notice that this is a simulation of a real-time system on a non real-time
  * machine, thus this timer is not granted neither to generate exact
- * temporization nor to meet real-time costraints. In order to obtain an online
- * and interactive simulation, a proper time-slice value must be set. If,
- * instead, we want to examinate the scheduling simulation offline, no
- * time slice is needed (it would only slow down the scheduling production).
+ * temporization nor to meet real-time costraints.
  * A timer is initialized with its starting and final time; it simply cycles
  * (finalTime - startingTime) times and, every time, it notifies its observers.
  * If the online flag is set, every notification is preceded by a pause of
@@ -42,24 +39,23 @@
 class Timer : public Subject
 {
     private:
-        int clock;
-        int startTime;
-        int finalTime;
-        int timeSlice;
-        bool onlineFlag;
+        unsigned int timeSlice;
+        unsigned int finalTime;
+        unsigned int clock;
     public:
         Timer();
-        Timer(bool online, int timeSlice, int startTime, int finalTime);
-        int getStartTime();
-        int getFinalTime();
-        int getTimeSlice();
-        bool getOnlineFlag();
-        void setStartTime(int startTimeToSet);
-        void setFinalTime(int finalTimeToSet);
-        void setTimeSlice(int timeSliceToSet);
-        void setOnlineFlag(bool onlineFlagToSet);
+        Timer
+        (
+            unsigned int timeSliceToSet,
+            unsigned int finalTimeToSet
+        );
+        unsigned int getTimeSlice();
+        unsigned int getFinalTime();
+        unsigned int getCurrentTime();
+        void setFinalTime(unsigned int finalTimeToSet);
+        void setTimeSlice(unsigned int timeSliceToSet);
         /**
-         * Avvia il 
+         * Avvia il timer.
          **/
         void start();
 };
