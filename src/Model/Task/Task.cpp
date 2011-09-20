@@ -38,7 +38,7 @@ Task::Task
     instantaneousExceedingTime(0),
     remainingComputationTime(computationTimeToSet)
     currentState(NEW)
-    {}
+{}
 
 int Task::getTaskID()
 {
