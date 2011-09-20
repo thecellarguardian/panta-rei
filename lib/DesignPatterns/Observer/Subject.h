@@ -30,34 +30,33 @@
  * @class Subject
  *
  * @brief This class models a subject of observation.
+ * A Subject object lets Observer object to register themselves, in order to
+ * be notified when the Subject's state changes.
  * @see "Observer design pattern."
- * Un oggetto di tipo Subject consente ad oggetti di tipo Observer di
- * registrarsi al fine di ricevere notifiche quando un cambiamento di stato
- * significativo occorre.
- *
- */
- 
+ **/
 class Subject
 {
     private:
-        /**
-         * Lista degli Observer registrati, gli Observer che desiderano ricevere
-         * notifiche quando lo stato del Subject cambia.
-         */
         std::list< boost::shared_ptr<Observer> > attachedObservers;
+        /**<
+         * Registered Observers list. These object have to be notified when the
+         * Subject' s state changes.
+         **/
     public:
         /**
-         * Questo metodo consente di registrare un Observer.
-         */
+         * You can register an Observer using this method.
+         * @param observerToAttach Observer object to register.
+         **/
         void attach(boost::shared_ptr<Observer> observerToAttach);
         /**
-         * Questo metodo consente di deregistrare un Observer.
-         */
+         * You can de-register an Observer using this method.
+         * * @param observerToDetach Observer object to de-register.
+         **/
         void detach(boost::shared_ptr<Observer> observerToDetach)
         /**
-         * Questo metodo consente di notificare a tutti gli Observer registrati
-         * su questo Subject che il suo stato è cambiato.
-         */
+         * Each registered Observer is notified about the new state of
+         * the Subject.
+         **/
         void notify();
 };
 
