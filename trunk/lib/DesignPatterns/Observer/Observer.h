@@ -16,15 +16,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+ **/
 
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
 /**
  * @class Observer
- *
  * @brief This class models a state observer.
  * An Observer object has to be registered to a Subject object in order to be
  * notified when its state changes, and act properly.

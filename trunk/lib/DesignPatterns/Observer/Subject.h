@@ -16,8 +16,7 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- *
- */
+ **/
 
 #include "Observer.h"
 #include <list>
@@ -28,7 +27,6 @@
 
 /**
  * @class Subject
- *
  * @brief This class models a subject of observation.
  * A Subject object lets Observer object to register themselves, in order to
  * be notified when the Subject's state changes.
