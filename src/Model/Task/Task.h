@@ -36,33 +36,34 @@ enum TaskState
 class Task : public Observer
 {
     protected:
-        const int taskID;
-        const int arrivalTime;
-        const int computationTime;
-        const int relativeDeadline;
-        int absoluteDeadline;
-        int elapsedTime;
-        int remainingComputationTime;
-        int instantaneousExceedingTime;
+        const unsigned int taskID;
+        const unsigned int arrivalTime;
+        const unsigned int computationTime;
+        const unsigned int relativeDeadline;
+        unsigned int absoluteDeadline;
+        unsigned int elapsedTime;
+        unsigned int remainingComputationTime;
+        unsigned int instantaneousExceedingTime;
         TaskState currentState;
         Timer* timer;
     protected:
     public:
     Task
     (
-        const int taskIDToSet,
-        const int arrivalTimeToSet,
-        const int computationTimeToSet,
-        const int relativeDeadlineToSet,
+        const unsigned int taskIDToSet,
+        const unsigned int arrivalTimeToSet,
+        const unsigned int computationTimeToSet,
+        const unsigned int relativeDeadlineToSet,
         Timer* timer
     );
-    int getTaskID();
-    int getArrivalTime();
-    int getComputationTime();
-    int getRelativeDeadline();
-    int getAbsoluteDeadline();
-    int getElapsedTime();
-    int getInstantaneousExceedingTime();
+    unsigned int getTaskID();
+    unsigned int getArrivalTime();
+    unsigned int getComputationTime();
+    unsigned int getRemainingComputationTime();
+    unsigned int getRelativeDeadline();
+    unsigned int getAbsoluteDeadline();
+    unsigned int getElapsedTime();
+    unsigned int getInstantaneousExceedingTime();
     bool deadlineMiss();
     void setState(TaskState stateToSet);
     TaskState getState();

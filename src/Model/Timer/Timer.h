@@ -41,7 +41,7 @@ class Timer : public Subject
     private:
         unsigned int timeSlice;
         unsigned int finalTime;
-        int clock;
+        unsigned int clock;
     public:
         Timer();
         Timer
