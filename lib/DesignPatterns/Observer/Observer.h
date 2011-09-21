@@ -37,6 +37,6 @@ class Observer
          * polimorphism.
          **/
         virtual void update() = 0;
-}
+};
 
 #endif
