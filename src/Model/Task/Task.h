@@ -19,6 +19,12 @@
  *
  */
 
+#include "../../../lib/DesignPatterns/Observer/Observer.h"
+#include "../Timer/Timer.h"
+
+#ifndef TASK_H
+#define TASK_H
+
 enum TaskState
 {
     NEW,
@@ -27,9 +33,9 @@ enum TaskState
     SUSPENDED
 };
 
-class Task
+class Task : public Observer
 {
-    private:
+    protected:
         const int taskID;
         const int arrivalTime;
         const int computationTime;
@@ -39,14 +45,16 @@ class Task
         int remainingComputationTime;
         int instantaneousExceedingTime;
         TaskState currentState;
+        Timer* timer;
     protected:
     public:
     Task
     (
-        const int taskID,
-        const int arrivalTime,
-        const int computationTime,
-        const int relativeDeadline
+        const int taskIDToSet,
+        const int arrivalTimeToSet,
+        const int computationTimeToSet,
+        const int relativeDeadlineToSet,
+        Timer* timer
     );
     int getTaskID();
     int getArrivalTime();
@@ -60,3 +68,5 @@ class Task
     TaskState getState();
     virtual void update() = 0;
 };
+
+#endif
