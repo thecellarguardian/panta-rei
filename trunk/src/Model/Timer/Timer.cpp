@@ -36,7 +36,9 @@ Timer::Timer
     :
     timeSlice(timeSliceToSet),
     finalTime(finalTimeToSet)
-{}
+{
+    clock = 0;
+}
 
 unsigned int Timer::getTimeSlice()
 {

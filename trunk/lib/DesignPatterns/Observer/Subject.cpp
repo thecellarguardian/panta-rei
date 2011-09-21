@@ -20,22 +20,21 @@
 
 #include "Subject.h"
 
-void Subject::attach(boost::shared_ptr<Observer> observerToAttach)
+void Subject::attach(Observer* observerToAttach)
 {
     attachedObservers.push_back(observerToAttach);
 }
 
-void Subject::detach(boost::shared_ptr<Observer> observerToDetach)
+void Subject::detach(Observer* observerToDetach)
 {
     attachedObservers.remove(observerToDetach);
 }
 
 void Subject::notify()
 {
-    std::list< boost::shared_ptr<Observer> >::iterator i =
-        attachedObservers.begin();
+    std::list<Observer*>::iterator i = attachedObservers.begin();
     for(; i != attachedObservers.end(); i++)
     {
-        (*(*i)).update();
+        (*i)->update();
     }
 }

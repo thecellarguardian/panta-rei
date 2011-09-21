@@ -35,22 +35,25 @@
 class Subject
 {
     private:
-        std::list< boost::shared_ptr<Observer> > attachedObservers;
+        std::list<Observer*> attachedObservers;
         /**<
          * Registered Observers list. These object have to be notified when the
-         * Subject' s state changes.
+         * Subject' s state changes. Notice the use of simple pointer instead of
+         * a shared_ptr: the Subject is a subject of observation, thus it
+         * doesn't make any sense, for a Subject, to have lifecycle control over
+         * its observers.
          **/
     public:
         /**
          * You can register an Observer using this method.
          * @param observerToAttach Observer object to register.
          **/
-        void attach(boost::shared_ptr<Observer> observerToAttach);
+        void attach(Observer* observerToAttach);
         /**
          * You can de-register an Observer using this method.
          * * @param observerToDetach Observer object to de-register.
          **/
-        void detach(boost::shared_ptr<Observer> observerToDetach)
+        void detach(Observer* observerToDetach);
         /**
          * Each registered Observer is notified about the new state of
          * the Subject.
