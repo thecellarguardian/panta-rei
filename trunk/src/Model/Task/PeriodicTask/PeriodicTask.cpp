@@ -24,11 +24,11 @@
 
 PeriodicTask::PeriodicTask
     (
-        const int taskIDToSet,
-        const int arrivalTimeToSet,
-        const int computationTimeToSet,
-        const int relativeDeadlineToSet,
-        const int periodToSet,
+        const unsigned int taskIDToSet,
+        const unsigned int arrivalTimeToSet,
+        const unsigned int computationTimeToSet,
+        const unsigned int relativeDeadlineToSet,
+        const unsigned int periodToSet,
         Timer* timerToSet
     )
     :
@@ -45,7 +45,7 @@ PeriodicTask::PeriodicTask
     remainingPeriod(periodToSet)
     {}
 
-int PeriodicTask::getCurrentInstanceArrivalTime()
+unsigned int PeriodicTask::getCurrentInstanceArrivalTime()
 {
     return currentInstanceArrivalTime;
 }
@@ -65,7 +65,7 @@ void PeriodicTask::update()
             (elapsedTime > relativeDeadline)?
             elapsedTime - relativeDeadline : 0;
         remainingComputationTime =
-            (currentState == EXECUTING)?
+            (currentState == EXECUTING && remainingComputationTime > 0)?
             remainingComputationTime - 1 : remainingComputationTime;
         remainingPeriod--;
     }
@@ -74,7 +74,14 @@ void PeriodicTask::update()
 
 void PeriodicTask::reset()
 {
-    currentInstanceArrivalTime += period;
+    unsigned int activityInterval =
+        timer->getCurrentTime() - currentInstanceArrivalTime;
+    //Next arrival time: (ceiling((now - arrival)/period))*period
+    currentInstanceArrivalTime +=
+        (
+            (activityInterval/period) +
+            ((activityInterval%period == 0)? 0 : 1)
+        )*period;
     elapsedTime = 0;
     remainingComputationTime = computationTime;
     instantaneousExceedingTime = 0;
@@ -86,7 +93,8 @@ void PeriodicTask::testPrint()
     std::cout << "TaskID: " << getTaskID() <<
     ((timer->getCurrentTime() == getArrivalTime())? " ACTIVATED" : "")
     << std::endl;
-    std::cout << "Computation time left: " << getComputationTime() << std::endl;
+    std::cout << "Computation time left: " << getRemainingComputationTime()
+    << std::endl;
     std::cout << "Elapsed time: " << getElapsedTime() << std::endl;
     std::cout << "Instantaneous exceeding time: " <<
     getInstantaneousExceedingTime() << std::endl;

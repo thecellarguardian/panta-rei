@@ -24,21 +24,21 @@
 class PeriodicTask : public Task
 {
     private:
-        const int period;
-        int currentInstanceArrivalTime;
-        int remainingPeriod;
+        const unsigned int period;
+        unsigned int currentInstanceArrivalTime;
+        int remainingPeriod; //Notice: it can be < 0 in case of period miss
     protected:
     public:
         PeriodicTask
         (
-            const int taskID,
-            const int arrivalTime,
-            const int computationTime,
-            const int relativeDeadline,
-            const int period,
+            const unsigned int taskID,
+            const unsigned int arrivalTime,
+            const unsigned int computationTime,
+            const unsigned int relativeDeadline,
+            const unsigned int period,
             Timer* timer
         );
-    int getCurrentInstanceArrivalTime();
+    unsigned int getCurrentInstanceArrivalTime();
     int getRemainingPeriod();
     virtual void update();
     void reset();

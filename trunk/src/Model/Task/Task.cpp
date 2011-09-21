@@ -23,10 +23,10 @@
 
 Task::Task
     (
-        const int taskIDToSet,
-        const int arrivalTimeToSet,
-        const int computationTimeToSet,
-        const int relativeDeadlineToSet,
+        const unsigned int taskIDToSet,
+        const unsigned int arrivalTimeToSet,
+        const unsigned int computationTimeToSet,
+        const unsigned int relativeDeadlineToSet,
         Timer* timerToSet
     )
     :
@@ -44,37 +44,42 @@ Task::Task
     timer->attach(this);
 }
 
-int Task::getTaskID()
+unsigned int Task::getTaskID()
 {
     return taskID;
 }
 
-int Task::getArrivalTime()
+unsigned int Task::getArrivalTime()
 {
     return arrivalTime;
 }
 
-int Task::getComputationTime()
+unsigned int Task::getComputationTime()
 {
     return computationTime;
 }
 
-int Task::getRelativeDeadline()
+unsigned int Task::getRemainingComputationTime()
+{
+    return remainingComputationTime;
+}
+
+unsigned int Task::getRelativeDeadline()
 {
     return relativeDeadline;
 }
 
-int Task::getAbsoluteDeadline()
+unsigned int Task::getAbsoluteDeadline()
 {
     return absoluteDeadline;
 }
 
-int Task::getElapsedTime()
+unsigned int Task::getElapsedTime()
 {
     return elapsedTime;
 }
 
-int Task::getInstantaneousExceedingTime()
+unsigned int Task::getInstantaneousExceedingTime()
 {
     return instantaneousExceedingTime;
 }
