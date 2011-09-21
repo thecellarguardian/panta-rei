@@ -26,7 +26,8 @@ Task::Task
         const int taskIDToSet,
         const int arrivalTimeToSet,
         const int computationTimeToSet,
-        const int relativeDeadlineToSet
+        const int relativeDeadlineToSet,
+        Timer* timerToSet
     )
     :
     taskID(taskIDToSet),
@@ -36,9 +37,12 @@ Task::Task
     absoluteDeadline(arrivalTimeToSet + relativeDeadlineToSet),
     elapsedTime(0),
     instantaneousExceedingTime(0),
-    remainingComputationTime(computationTimeToSet)
-    currentState(NEW)
-{}
+    remainingComputationTime(computationTimeToSet),
+    currentState(NEW),
+    timer(timerToSet)
+{
+    timer->attach(this);
+}
 
 int Task::getTaskID()
 {
@@ -75,7 +79,7 @@ int Task::getInstantaneousExceedingTime()
     return instantaneousExceedingTime;
 }
 
-bool deadlineMiss()
+bool Task::deadlineMiss()
 {
     return instantaneousExceedingTime > 0;
 }

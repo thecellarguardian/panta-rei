@@ -20,6 +20,7 @@
  */
 
 #include "PeriodicTask.h"
+#include <iostream> //TODO remove this
 
 PeriodicTask::PeriodicTask
     (
@@ -27,7 +28,8 @@ PeriodicTask::PeriodicTask
         const int arrivalTimeToSet,
         const int computationTimeToSet,
         const int relativeDeadlineToSet,
-        const int periodToSet
+        const int periodToSet,
+        Timer* timerToSet
     )
     :
     Task
@@ -35,7 +37,8 @@ PeriodicTask::PeriodicTask
         taskIDToSet,
         arrivalTimeToSet,
         computationTimeToSet,
-        relativeDeadlineToSet
+        relativeDeadlineToSet,
+        timerToSet
     ),
     period(periodToSet),
     currentInstanceArrivalTime(0),
@@ -54,14 +57,18 @@ int PeriodicTask::getRemainingPeriod()
 
 void PeriodicTask::update()
 {
-    elapsedTime++;
-    instantaneousExceedingTime =
-        (elapsedTime > relativeDeadline)?
-        elapsedTime - relativeDeadline : 0;
-    remainingComputationTime =
-        (currentState == EXECUTING)?
-        remainingComputationTime - 1 : remainingComputationTime;
-    remainingPeriod--;
+    testPrint();
+    if(timer->getCurrentTime() >= arrivalTime)
+    {
+        elapsedTime++;
+        instantaneousExceedingTime =
+            (elapsedTime > relativeDeadline)?
+            elapsedTime - relativeDeadline : 0;
+        remainingComputationTime =
+            (currentState == EXECUTING)?
+            remainingComputationTime - 1 : remainingComputationTime;
+        remainingPeriod--;
+    }
 }
 
 
@@ -71,4 +78,17 @@ void PeriodicTask::reset()
     elapsedTime = 0;
     remainingComputationTime = computationTime;
     instantaneousExceedingTime = 0;
+}
+
+void PeriodicTask::testPrint()
+{
+    std::cout << "-----------------------------------------------" << std::endl;
+    std::cout << "TaskID: " << getTaskID() <<
+    ((timer->getCurrentTime() == getArrivalTime())? " ACTIVATED" : "")
+    << std::endl;
+    std::cout << "Computation time left: " << getComputationTime() << std::endl;
+    std::cout << "Elapsed time: " << getElapsedTime() << std::endl;
+    std::cout << "Instantaneous exceeding time: " <<
+    getInstantaneousExceedingTime() << std::endl;
+    std::cout << ((deadlineMiss())? "DEADLINE MISS!" : "") << std::endl;
 }

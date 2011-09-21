@@ -35,10 +35,12 @@ class PeriodicTask : public Task
             const int arrivalTime,
             const int computationTime,
             const int relativeDeadline,
-            const int period
-        )
+            const int period,
+            Timer* timer
+        );
     int getCurrentInstanceArrivalTime();
     int getRemainingPeriod();
     virtual void update();
     void reset();
-}
+    void testPrint(); //TODO remove this
+};
