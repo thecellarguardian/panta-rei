@@ -20,7 +20,14 @@
  */
 
 #include "PeriodicTask.h"
+#include <cassert>
 #include <iostream> //TODO remove this
+
+/*
+ * To disable assertions:
+ * #ifndef NDEBUG
+ * #define NDEBUG
+ */
 
 PeriodicTask::PeriodicTask
     (
@@ -40,10 +47,17 @@ PeriodicTask::PeriodicTask
         relativeDeadlineToSet,
         timerToSet
     ),
-    period(periodToSet),
-    currentInstanceArrivalTime(0),
-    remainingPeriod(periodToSet)
-    {}
+    period
+        (
+            (
+                (periodToSet >= relativeDeadline)?
+                periodToSet : relativeDeadline
+            )
+        ),
+    currentInstanceArrivalTime(0)
+    {
+        remainingPeriod = period;
+    }
 
 unsigned int PeriodicTask::getCurrentInstanceArrivalTime()
 {
@@ -58,7 +72,42 @@ int PeriodicTask::getRemainingPeriod()
 void PeriodicTask::update()
 {
     testPrint();
-    if(timer->getCurrentTime() >= arrivalTime)
+    //AUTOMATA BASED MODEL
+    switch(currentState)
+    {
+        case NEW:
+        {
+            assert(timer->getCurrentTime() < arrivalTime);
+            break;
+        }
+        case READY:
+        {
+            assert(timer->getCurrentTime() >= arrivalTime);
+            elapsedTime++;
+            instantaneousExceedingTime =
+                (elapsedTime > relativeDeadline)?
+                elapsedTime - relativeDeadline : 0;
+            remainingPeriod--;
+            break;
+        }
+        case EXECUTING:
+        {
+            assert(timer->getCurrentTime() >= arrivalTime);
+            elapsedTime++;
+            instantaneousExceedingTime =
+                (elapsedTime > relativeDeadline)?
+                elapsedTime - relativeDeadline : 0;
+            remainingComputationTime--;
+            remainingPeriod--;
+        }
+        case SUSPENDED:
+        {
+            assert(remainingComputationTime == 0 && remainingPeriod > 0);
+            elapsedTime++;
+            remainingPeriod--;
+        }
+    }
+    /*if(timer->getCurrentTime() >= arrivalTime)
     {
         elapsedTime++;
         instantaneousExceedingTime =
@@ -68,7 +117,7 @@ void PeriodicTask::update()
             (currentState == EXECUTING && remainingComputationTime > 0)?
             remainingComputationTime - 1 : remainingComputationTime;
         remainingPeriod--;
-    }
+    }*/
 }
 
 
