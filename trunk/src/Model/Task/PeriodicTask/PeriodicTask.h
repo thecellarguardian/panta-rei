@@ -21,6 +21,14 @@
 
 #include "../Task.h"
 
+/**
+ * @class PeriodicTask
+ * @brief This class models a periodic task.
+ * A periodic task is a task with an additional micro-state dimension,
+ * the period, which has to be reactivated at the end of each period. If a
+ * period-miss happens, the task must be reactivated when the next period
+ * available starts (some periods may be lost).
+ **/
 class PeriodicTask : public Task
 {
     private:

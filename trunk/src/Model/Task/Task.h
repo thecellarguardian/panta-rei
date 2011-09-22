@@ -33,15 +33,33 @@ enum TaskState
     SUSPENDED
 };
 
+/**
+ * @class Task
+ * @brief This class models a generic task.
+ * The data part of a Task object models the task state, while the update method
+ * modifies the state according in function of the present state. In particular,
+ * we can define:
+ * - a macro-state: indicates the "functioning modality" of the task;
+ * - a micro-state: the micro state defines the nuances into the macro-state;
+ *
+ * Here it is an exemple: a task could be READY (macro-state) to be scheduled,
+ * but its instantaneous exceeding time could be greater than zero (part of the
+ * micro-state which indicates, in this case, that a deadline-miss happened).
+ * The macro-state of a task is set by a task manager, such as a scheduler or an
+ * acrivator, and it's like a "modality switch"; the task reacts to a time
+ * event in different ways according to its current macro-state. Each task is
+ * a Timer observer, and each time event triggers the micro-state update, while
+ * the macro-state is set by a task manager.
+ **/
 class Task : public Observer
 {
     protected:
-        const unsigned int taskID;
+        const unsigned int taskID; /**< It must be univocal for each task.**/
         const unsigned int arrivalTime;
         const unsigned int computationTime;
         const unsigned int relativeDeadline;
         unsigned int absoluteDeadline;
-        unsigned int elapsedTime;
+        unsigned int elapsedTime; /**< Time elapsed since activation.**/
         unsigned int remainingComputationTime;
         unsigned int instantaneousExceedingTime;
         TaskState currentState;
@@ -57,14 +75,32 @@ class Task : public Observer
         Timer* timer
     );
     unsigned int getTaskID();
-    unsigned int getArrivalTime();
+    /**
+     * This method returns the current task instance arrival time. The method
+     * is virtual pure since the returned quantity changes with the
+     * particular task type. An exemple: for aperiodic tasks, the returned
+     * value is arrivalTime, since there's only one instance of the task.
+     * Concerning periodic tasks, the arrival time of the current instance (be
+     * it the k-th) is arrivalTime + k*period.
+     * @return Current task instance arrival time.
+     **/
+    virtual unsigned int getCurrentInstanceArrivalTime() = 0;
     unsigned int getComputationTime();
     unsigned int getRemainingComputationTime();
     unsigned int getRelativeDeadline();
     unsigned int getAbsoluteDeadline();
     unsigned int getElapsedTime();
     unsigned int getInstantaneousExceedingTime();
+    /**
+     * It returns true if the instantaneousExceedingTime is greater than 0.
+     * @return True if there has been a deadline miss.
+     **/
     bool deadlineMiss();
+    /**
+     * This method is called by a task manager, such as the scheduler or the
+     * activator. It triggers a macro-state transition (which, in this case,
+     * happen not to have related actions).
+     **/
     void setState(TaskState stateToSet);
     TaskState getState();
     virtual void update() = 0;
