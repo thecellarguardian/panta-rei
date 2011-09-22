@@ -19,15 +19,15 @@
  *
  */
 
+/* To disable assertions:
+ * #ifndef NDEBUG
+ * #define NDEBUG
+ * #endif
+ */
+
 #include "PeriodicTask.h"
 #include <cassert>
 #include <iostream> //TODO remove this
-
-/*
- * To disable assertions:
- * #ifndef NDEBUG
- * #define NDEBUG
- */
 
 PeriodicTask::PeriodicTask
     (
@@ -54,7 +54,7 @@ PeriodicTask::PeriodicTask
                 periodToSet : relativeDeadline
             )
         ),
-    currentInstanceArrivalTime(0)
+    currentInstanceArrivalTime(arrivalTimeToSet)
     {
         remainingPeriod = period;
     }
@@ -132,6 +132,7 @@ void PeriodicTask::reset()
             ((activityInterval%period == 0)? 0 : 1)
         )*period;
     elapsedTime = 0;
+    absoluteDeadline = currentInstanceArrivalTime + relativeDeadline;
     remainingComputationTime = computationTime;
     instantaneousExceedingTime = 0;
 }
@@ -140,7 +141,7 @@ void PeriodicTask::testPrint()
 {
     std::cout << "-----------------------------------------------" << std::endl;
     std::cout << "TaskID: " << getTaskID() <<
-    ((timer->getCurrentTime() == getArrivalTime())? " ACTIVATED" : "")
+    ((timer->getCurrentTime() == getCurrentInstanceArrivalTime())? " ACTIVATED" : "")
     << std::endl;
     std::cout << "Computation time left: " << getRemainingComputationTime()
     << std::endl;

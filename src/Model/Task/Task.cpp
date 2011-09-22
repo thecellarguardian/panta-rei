@@ -43,7 +43,7 @@ Task::Task
     elapsedTime(0),
     instantaneousExceedingTime(0),
     remainingComputationTime(computationTimeToSet),
-    currentState(NEW),
+    currentState(EXECUTING),
     timer(timerToSet)
 {
     absoluteDeadline = arrivalTimeToSet + relativeDeadlineToSet;
@@ -53,11 +53,6 @@ Task::Task
 unsigned int Task::getTaskID()
 {
     return taskID;
-}
-
-unsigned int Task::getArrivalTime()
-{
-    return arrivalTime;
 }
 
 unsigned int Task::getComputationTime()
