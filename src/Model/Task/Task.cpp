@@ -33,14 +33,20 @@ Task::Task
     taskID(taskIDToSet),
     arrivalTime(arrivalTimeToSet),
     computationTime(computationTimeToSet),
-    relativeDeadline(relativeDeadlineToSet),
-    absoluteDeadline(arrivalTimeToSet + relativeDeadlineToSet),
+    relativeDeadline
+        (
+            (
+                (relativeDeadlineToSet >= computationTimeToSet)?
+                relativeDeadlineToSet : computationTimeToSet
+            )
+        ),
     elapsedTime(0),
     instantaneousExceedingTime(0),
     remainingComputationTime(computationTimeToSet),
     currentState(NEW),
     timer(timerToSet)
 {
+    absoluteDeadline = arrivalTimeToSet + relativeDeadlineToSet;
     timer->attach(this);
 }
 
