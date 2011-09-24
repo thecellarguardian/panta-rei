@@ -19,29 +19,41 @@
  **/
 
  #include <boost/shared_ptr.hpp>
+ #include <list>
+ #include "../../QueueImplementation/QueueImplementation.h"
 
  #ifndef ORDERED_QUEUE_IMPLEMENTATION_H
  #define ORDERED_QUEUE_IMPLEMENTATION_H
  
 
-template <typename ElementType, typename Comparator> class OrderedQueueImplementation
+template <typename ElementType, typename Comparator>
+class OrderedQueueImplementation : public QueueImplementation<ElementType>
 {
     private:
-        std::list< shared_ptr<T> > dataStructure;
+        std::list< boost::shared_ptr<ElementType> > dataStructure;
         Comparator comparationOperator;
     public:
-        void insert(boost::shared_ptr<T> elementToInsert)
+        /**
+         * Insertion complexity: O(n*log(n)) (Merge Sort).
+         **/
+        void insert(boost::shared_ptr<ElementType> elementToInsert)
         {
             dataStructure.push_back(elementToInsert);
             dataStructure.sort(comparationOperator);
         }
-        virtual boost::shared_ptr<T> extract()
+        /**
+         * Extraction complexity: O(1).
+         **/
+        virtual boost::shared_ptr<ElementType> extract()
         {
             if(dataStructure.size() > 0)
             {
-                return dataStructure.pop_front();
+                boost::shared_ptr<ElementType> pointerToReturn =
+                    dataStructure.front();
+                dataStructure.pop_front();
+                return pointerToReturn;
             }
-            boost::shared_ptr<T> nullPointer;
+            boost::shared_ptr<ElementType> nullPointer;
             return nullPointer;
         }
 };
