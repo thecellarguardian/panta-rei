@@ -28,10 +28,10 @@ template <typename ElementType, typename Comparator> class OrderedQueueImplement
 {
     private:
         std::list< shared_ptr<T> > dataStructure;
+        Comparator comparationOperator;
     public:
         void insert(boost::shared_ptr<T> elementToInsert)
         {
-            Comparator comparationOperator;
             dataStructure.push_back(elementToInsert);
             dataStructure.sort(comparationOperator);
         }
