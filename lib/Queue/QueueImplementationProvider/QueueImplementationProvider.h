@@ -21,8 +21,14 @@
  #include "../QueueImplementation/QueueImplementation.h"
  #include <boost/shared_ptr.hpp>
 
-class QueueImplementationProvider
+ #ifndef QUEUE_IMPLEMENTATION_PROVIDER_H
+ #define QUEUE_IMPLEMENTATION_PROVIDER_H
+
+template <typename T> class QueueImplementationProvider
 {
     public:
-        virtual boost::shared_ptr<QueueImplementation> getImplementation() = 0;
+        virtual boost::shared_ptr< QueueImplementation<T> >
+        getImplementation() = 0;
 };
+
+#endif

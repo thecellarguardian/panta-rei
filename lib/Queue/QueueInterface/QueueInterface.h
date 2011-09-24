@@ -19,6 +19,8 @@
  **/
 
 #include <boost/shared_ptr.hpp>
+#include "../QueueImplementation/QueueImplementation.h"
+#include "../QueueImplementationProvider/QueueImplementationProvider.h"
 
 #ifndef QUEUE_INTERFACE_H
 #define QUEUE_INTERFACE_H
@@ -41,7 +43,7 @@ template<typename T> class QueueInterface
          * The implementation reference will be provided by this object, and
          * the QueueInterface will become the owner of the implementation.
          **/
-        QueueInterface(QueueImplementationProvider* implementationProvider)
+        QueueInterface(QueueImplementationProvider<T>* implementationProvider)
             : queueImplementation(implementationProvider->getImplementation())
             {}
         /**
