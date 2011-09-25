@@ -24,7 +24,6 @@
 
  #ifndef ORDERED_QUEUE_IMPLEMENTATION_H
  #define ORDERED_QUEUE_IMPLEMENTATION_H
- 
 
 template <typename ElementType, typename Comparator>
 class OrderedQueueImplementation : public QueueImplementation<ElementType>

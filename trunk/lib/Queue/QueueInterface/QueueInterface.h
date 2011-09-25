@@ -19,6 +19,7 @@
  **/
 
 #include <boost/shared_ptr.hpp>
+#include <cassert>
 #include "../QueueImplementation/QueueImplementation.h"
 #include "../QueueImplementationProvider/QueueImplementationProvider.h"
 
@@ -39,19 +40,59 @@ template<typename T> class QueueInterface
         boost::shared_ptr< QueueImplementation<T> > queueImplementation;
     public:
         /**
+         * The default constructor creates an interface without attaching any
+         * implementation. This is useful in case of shared queues, where the
+         * queue creator hasn't the needed knowledge to attach the proper
+         * implementation. An example: a task activator needs to access a
+         * "ready" queue (only to perform the insert operation), but it's the
+         * scheduler that knows exactly what data structure should be used to
+         * implement that queue (ordered list, hash map...) according to the
+         * scheduling policy it implements. This leads to a strong procedural
+         * constraint: lazy queue initialization is possible through the use
+         * of the default constructor and the attachImplementation method, but
+         * every queue client must be sure about the consistency of the queue
+         * structure (the interface it refers must be provided with an
+         * implementation).
+         * @post An implementation must be provided before the queue is used.
+         **/
+        QueueInterface(){}
+        /**
+         * This constructor attaches the implementation to the queue interface.
+         * @param queueImplementationToSet The implementation to be attached.
+         * @pre queueImplementationToSet must refer a queue implementation.
+         **/
+        QueueInterface
+            (
+                boost::shared_ptr< QueueImplementation<T> >
+                queueImplementationToSet
+            )
+            : queueImplementation(queueImplementationToSet)
+            {
+                assert(queueImplementationToSet.get() != NULL);
+            }
+        /**
          * The constructor takes a QueueImplementationProvider as an argument.
          * The implementation reference will be provided by this object, and
          * the QueueInterface will become the owner of the implementation.
          **/
         QueueInterface(QueueImplementationProvider<T>* implementationProvider)
-            : queueImplementation(implementationProvider->getImplementation())
-            {}
+            : queueImplementation(implementationProvider->getImplementation()){}
+        void attachImplementation
+            (
+                boost::shared_ptr< QueueImplementation<T> >
+                queueImplementationToSet
+            )
+        {
+            assert(queueImplementationToSet.get() != NULL);
+            queueImplementation = queueImplementationToSet;
+        }
         /**
          * The insert method is bound to the implementation method.
          * @param elementToInsert Element to be inserted.
          **/
         void insert(boost::shared_ptr<T> elementToInsert)
         {
+            assert(queueImplementation.get() != NULL);
             queueImplementation->insert(elementToInsert);
         }
         /**
@@ -60,6 +101,7 @@ template<typename T> class QueueInterface
          **/
         boost::shared_ptr<T> extract()
         {
+            assert(queueImplementation.get() != NULL);
             return queueImplementation->extract();
         }
 };

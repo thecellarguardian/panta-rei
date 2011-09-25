@@ -32,7 +32,7 @@ class Observer
 {
     public:
         /**
-         * This method is called by the Subject to whom this Observer is
+         * This method is called by the Subject to the which this Observer is
          * registered. The specific actions to be done can be defined through
          * polimorphism.
          **/
