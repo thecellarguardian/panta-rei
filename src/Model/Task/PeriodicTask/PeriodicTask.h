@@ -21,6 +21,9 @@
 
 #include "../Task.h"
 
+#ifndef PERIODIC_TASK_H
+#define PERIODIC_TASK_H
+
 /**
  * @class PeriodicTask
  * @brief This class models a periodic task.
@@ -48,7 +51,9 @@ class PeriodicTask : public Task
         );
     unsigned int getCurrentInstanceArrivalTime();
     int getRemainingPeriod();
-    virtual void update();
+    void update();
     void reset();
-    void testPrint(); //TODO remove this
+    void print();
 };
+
+#endif

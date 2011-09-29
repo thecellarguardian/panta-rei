@@ -87,6 +87,20 @@ template<typename T> class QueueInterface
             queueImplementation = queueImplementationToSet;
         }
         /**
+         * This method attaches a particular implementation to the queue
+         * interface. If the interface was made using the default constructor,
+         * this method has to be called before the interface using.
+         * @param queueImplementationToSet The implementation to be set.
+         **/
+        void setImplementation
+            (
+                boost::shared_ptr< QueueImplementation<T> >
+                queueImplementationToSet
+            )
+        {
+            queueImplementation = queueImplementationToSet;
+        }
+        /**
          * The insert method is bound to the implementation method.
          * @param elementToInsert Element to be inserted.
          **/
@@ -103,6 +117,20 @@ template<typename T> class QueueInterface
         {
             assert(queueImplementation.get() != NULL);
             return queueImplementation->extract();
+        }
+        boost::shared_ptr<T> front()
+        {
+            assert(queueImplementation.get() != NULL);
+            return queueImplementation->front();
+        }
+        boost::shared_ptr<T> back()
+        {
+            assert(queueImplementation.get() != NULL);
+            return queueImplementation->back();
+        }
+        void print()
+        {
+            queueImplementation->print();
         }
 };
 
