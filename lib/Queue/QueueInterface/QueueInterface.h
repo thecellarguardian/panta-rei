@@ -18,6 +18,12 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+/* To disable assertions:
+ * #ifndef NDEBUG
+ * #define NDEBUG
+ * #endif
+ */
+
 #include <boost/shared_ptr.hpp>
 #include <cassert>
 #include "../QueueImplementation/QueueImplementation.h"
@@ -86,6 +92,7 @@ template<typename T> class QueueInterface
             assert(queueImplementationToSet.get() != NULL);
             queueImplementation = queueImplementationToSet;
         }
+        virtual ~QueueInterface(){}
         /**
          * This method attaches a particular implementation to the queue
          * interface. If the interface was made using the default constructor,

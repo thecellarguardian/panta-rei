@@ -20,6 +20,8 @@
 
 #include "SystemQueuesManager.h"
 
+SystemQueuesManager::~SystemQueuesManager(){}
+
 boost::shared_ptr< QueueInterface<Task> >&
 SystemQueuesManager::operator[](std::string key)
 {

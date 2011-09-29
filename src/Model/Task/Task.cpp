@@ -50,6 +50,8 @@ Task::Task
     timer->attach(this);
 }
 
+Task::~Task(){}
+
 unsigned int Task::getTaskID()
 {
     return taskID;

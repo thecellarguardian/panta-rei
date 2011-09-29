@@ -27,6 +27,7 @@
 template <typename T> class QueueImplementationProvider
 {
     public:
+        virtual ~QueueImplementationProvider(){}
         virtual boost::shared_ptr< QueueImplementation<T> >
         getImplementation() = 0;
 };

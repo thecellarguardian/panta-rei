@@ -32,6 +32,7 @@ class SystemQueuesManager
         std::map< std::string, boost::shared_ptr< QueueInterface<Task> > >
         queueRegistry;
     public:
+        virtual ~SystemQueuesManager();
         boost::shared_ptr< QueueInterface<Task> >& operator[](std::string key);
 };
 

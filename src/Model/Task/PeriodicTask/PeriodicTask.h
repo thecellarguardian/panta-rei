@@ -49,11 +49,12 @@ class PeriodicTask : public Task
             const unsigned int period,
             Timer* timer
         );
-    unsigned int getCurrentInstanceArrivalTime();
-    int getRemainingPeriod();
-    void update();
-    void reset();
-    void print();
+        ~PeriodicTask();
+        unsigned int getCurrentInstanceArrivalTime();
+        int getRemainingPeriod();
+        void update();
+        void reset();
+        void print();
 };
 
 #endif

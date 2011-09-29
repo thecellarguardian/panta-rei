@@ -75,6 +75,7 @@ class Task : public Observer
         const unsigned int relativeDeadlineToSet,
         Timer* timer
     );
+    virtual ~Task();
     unsigned int getTaskID();
     /**
      * This method returns the current task instance arrival time. The method

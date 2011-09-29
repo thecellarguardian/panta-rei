@@ -44,6 +44,7 @@ class Subject
          * its observers.
          **/
     public:
+        virtual ~Subject();
         /**
          * You can register an Observer using this method.
          * @param observerToAttach Observer object to register.
