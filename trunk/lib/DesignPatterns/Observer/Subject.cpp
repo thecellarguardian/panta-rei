@@ -20,6 +20,8 @@
 
 #include "Subject.h"
 
+Subject::~Subject(){}
+
 void Subject::attach(Observer* observerToAttach)
 {
     attachedObservers.push_back(observerToAttach);

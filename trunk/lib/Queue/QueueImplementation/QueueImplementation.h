@@ -33,6 +33,7 @@
 template <typename T> class QueueImplementation
 {
     public:
+        virtual ~QueueImplementation(){}
         virtual void insert(boost::shared_ptr<T> elementToInsert) = 0;
         virtual boost::shared_ptr<T> extract() = 0;
         virtual boost::shared_ptr<T> front() = 0;

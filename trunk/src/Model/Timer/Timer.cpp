@@ -40,6 +40,8 @@ Timer::Timer
     clock = 0;
 }
 
+Timer::~Timer(){}
+
 unsigned int Timer::getTimeSlice()
 {
     return timeSlice;

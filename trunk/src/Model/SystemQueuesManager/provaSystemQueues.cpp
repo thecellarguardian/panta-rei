@@ -1,5 +1,6 @@
 #include "SystemQueuesManager.h"
 #include "../Task/PeriodicTask/PeriodicTask.h"
+#include "../Activator/Activator.h"
 #include "../Timer/Timer.h"
 #include "../../../lib/Queue/QueueImplementation/QueueImplementation.h"
 #include "../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
@@ -7,7 +8,7 @@
 #include <boost/shared_ptr.hpp>
 #include <iostream>
 
-class TaskArrivalComparator
+/*class TaskArrivalComparator
 {
     public:
     	bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
@@ -43,13 +44,13 @@ class Activator : public QueueImplementationProvider<Task>
 		{
 			activationQueue->print();
 		}
-};
+};*/
 
 int main()
 {
 	Timer timer(1, 100);
 	boost::shared_ptr<SystemQueuesManager> systemQueues(new SystemQueuesManager());
-	Activator activator(systemQueues);
+	Activator activator(systemQueues, &timer);
 	boost::shared_ptr<Task> p0(new PeriodicTask(0, 0, 3, 4, 6, &timer));
 	boost::shared_ptr<Task> p1(new PeriodicTask(1, 2, 2, 3, 4, &timer));
 	boost::shared_ptr<Task> p2(new PeriodicTask(2, 3, 4, 4, 6, &timer));
@@ -64,4 +65,5 @@ int main()
 	activator.registerForActivation(p5);
 	activator.print();
 	timer.start();
+	return 0;
 }

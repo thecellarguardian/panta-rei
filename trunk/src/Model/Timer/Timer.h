@@ -49,6 +49,7 @@ class Timer : public Subject
             unsigned int timeSliceToSet,
             unsigned int finalTimeToSet
         );
+        virtual ~Timer();
         unsigned int getTimeSlice();
         unsigned int getFinalTime();
         unsigned int getCurrentTime();

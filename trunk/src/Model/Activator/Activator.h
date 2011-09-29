@@ -18,9 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include "../Timer/Timer.h"
+#include "../Task/Task.h"
+#include "../SystemQueuesManager/SystemQueuesManager.h"
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
-#include
-"../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
+#include "../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
 
 #ifndef ACTIVATOR_H
 #define ACTIVATOR_H
@@ -38,15 +40,24 @@ class ArrivalTimeComparator
         }
 };
 
-class Activator : public Observer, public QueueImplementationProvider
+class Activator : public Observer, public QueueImplementationProvider<Task>
 {
     private:
-        ArrivalTimeComparator taskComparator;
-        boost::shared_ptr< QueueImplementation<Task> > activationQueue;
+        boost::shared_ptr<SystemQueuesManager> systemQueues;
+        boost::shared_ptr< QueueInterface<Task> > activationQueue;
+        boost::shared_ptr< QueueInterface<Task> > readyQueue;
+        Timer* timer;
     public:
-        Activator();
+        Activator
+            (
+                boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
+                Timer* timerToSet
+            );
+        virtual ~Activator();
         void update();
         boost::shared_ptr< QueueImplementation<Task> > getImplementation();
+        void registerForActivation(boost::shared_ptr<Task> taskToRegister);
+        void print();
 };
 
 #endif

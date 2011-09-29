@@ -37,6 +37,7 @@
 class Command
 {
     public:
+        virtual ~Command(){}
         virtual void execute();
 };
 

@@ -36,6 +36,7 @@ class Observer
          * registered. The specific actions to be done can be defined through
          * polimorphism.
          **/
+        virtual ~Observer(){}
         virtual void update() = 0;
 };
 
