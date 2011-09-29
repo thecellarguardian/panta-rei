@@ -71,7 +71,7 @@ int PeriodicTask::getRemainingPeriod()
 
 void PeriodicTask::update()
 {
-    testPrint();
+    print();
     //AUTOMATA BASED MODEL
     switch(currentState)
     {
@@ -137,7 +137,7 @@ void PeriodicTask::reset()
     instantaneousExceedingTime = 0;
 }
 
-void PeriodicTask::testPrint()
+void PeriodicTask::print()
 {
     std::cout << "-----------------------------------------------" << std::endl;
     std::cout << "TaskID: " << getTaskID() <<

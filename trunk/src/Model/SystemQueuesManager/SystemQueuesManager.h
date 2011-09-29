@@ -1,5 +1,5 @@
 /**
- * @file QueueImplementation.h
+ * @file SystemQueuesManager.h
  * @author Cosimo Sacco <cosimosacco@gmail.com>
  *
  * @section LICENSE
@@ -19,25 +19,20 @@
  **/
 
 #include <boost/shared_ptr.hpp>
+#include <map>
+#include "../../../lib/Queue/QueueInterface/QueueInterface.h"
+#include "../Task/Task.h"
 
-#ifndef QUEUE_IMPLEMENTATION_H
-#define QUEUE_IMPLEMENTATION_H
+#ifndef SYSTEM_QUEUES_MANAGER_H
+#define SYSTEM_QUEUES_MANAGER_H
 
-/**
- * @class QueueImplementation
- * @brief Interface of a queue implementation class.
- * This class provides the interface for a queue implementation class. By mean
- * of derivation, a particular class can define particular data structures to be
- * used and particular policies for the insert and extract operations.
- **/
-template <typename T> class QueueImplementation
+class SystemQueuesManager
 {
+    private:
+        std::map< std::string, boost::shared_ptr< QueueInterface<Task> > >
+        queueRegistry;
     public:
-        virtual void insert(boost::shared_ptr<T> elementToInsert) = 0;
-        virtual boost::shared_ptr<T> extract() = 0;
-        virtual boost::shared_ptr<T> front() = 0;
-        virtual boost::shared_ptr<T> back() = 0;
-        virtual void print() = 0;
+        boost::shared_ptr< QueueInterface<Task> >& operator[](std::string key);
 };
 
 #endif

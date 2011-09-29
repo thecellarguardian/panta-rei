@@ -55,6 +55,23 @@ class OrderedQueueImplementation : public QueueImplementation<ElementType>
             boost::shared_ptr<ElementType> nullPointer;
             return nullPointer;
         }
+        boost::shared_ptr<ElementType> front()
+        {
+            return dataStructure.front();
+        }
+        boost::shared_ptr<ElementType> back()
+        {
+            return dataStructure.back();
+        }
+        void print() //TODO remove this!
+        {
+            typename std::list< boost::shared_ptr<ElementType> >::iterator i =
+            dataStructure.begin();
+            for(; i != dataStructure.end(); i++)
+            {
+                (*i)->print();
+            }
+        }
 };
 
 #endif

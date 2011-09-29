@@ -21,6 +21,7 @@
 
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
 #include "../Timer/Timer.h"
+#include <ostream>
 
 #ifndef TASK_H
 #define TASK_H
@@ -104,6 +105,7 @@ class Task : public Observer
     void setState(TaskState stateToSet);
     TaskState getState();
     virtual void update() = 0;
+    virtual void print() = 0;
 };
 
 #endif
