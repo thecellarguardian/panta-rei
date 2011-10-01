@@ -1,5 +1,5 @@
 /**
- * @file QueueImplementationProvider.h
+ * @file DeadlineMonotonic.h
  * @author Cosimo Sacco <cosimosacco@gmail.com>
  *
  * @section LICENSE
@@ -18,24 +18,27 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
- #include "../QueueImplementation/QueueImplementation.h"
- #include <boost/shared_ptr.hpp>
+#include <boost/shared_ptr.hpp>
+#include "../Scheduler.h"
 
- #ifndef QUEUE_IMPLEMENTATION_PROVIDER_H
- #define QUEUE_IMPLEMENTATION_PROVIDER_H
-
-template <typename T> class QueueImplementationProvider
+class RelativeDeadlineComparator
 {
     public:
-        virtual ~QueueImplementationProvider(){}
-        virtual boost::shared_ptr<T> getImplementation()
+        bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
         {
-            boost::shared_ptr<T> queueImplementationToReturn
-                (
-                    new T;
-                );
-            return queueImplementationToReturn;
+            return (a->getRelativeDeadline() < b->getRelativeDeadline());
         }
 };
 
-#endif
+class DeadlineMonotonic : public Scheduler
+{
+    private:
+        QueueImplementationProvider
+            <OrderedQueueImplementation< Task, RelativeDeadlineComparator> >
+            readyQueueImplementationProvider;
+        QueueImplementationProvider< SingleSlotQueueImplementation<Task> >
+            executionQueueImplementationProvider;
+    public:
+        DeadlineMonotonic();
+        void update();
+};

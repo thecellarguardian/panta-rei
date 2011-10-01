@@ -21,6 +21,16 @@
 #include "Activator.h"
 #include "../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
 
+bool ArrivalTimeComparator::operator()
+    (boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
+{
+    return
+        (
+            a->getCurrentInstanceArrivalTime() <
+            b->getCurrentInstanceArrivalTime()
+        );
+}
+
 Activator::Activator
     (
         boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
@@ -31,7 +41,8 @@ Activator::Activator
     timer->attach(this);
     activationQueue = (*systemQueues)["activation"];
     readyQueue = (*systemQueues)["ready"];
-    activationQueue->setImplementation(getImplementation());
+    activationQueue->setImplementation
+        (queueImplementationProvider.getImplementation());
 }
 
 Activator::~Activator(){}

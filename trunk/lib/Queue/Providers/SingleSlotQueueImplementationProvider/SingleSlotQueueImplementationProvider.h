@@ -1,5 +1,5 @@
 /**
- * @file QueueImplementationProvider.h
+ * @file SingleSlotQueueImplementationProvider.h
  * @author Cosimo Sacco <cosimosacco@gmail.com>
  *
  * @section LICENSE
@@ -18,24 +18,23 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
- #include "../QueueImplementation/QueueImplementation.h"
- #include <boost/shared_ptr.hpp>
+#include "../../QueueImplementationProvider/QueueImplementationProvider.h"
+#include "../../QueueImplementation/QueueImplementation.h"
+#include "../../Implementations/SingleSlotQueueImplementation/SingleSlotQueueImplementation.h"
 
- #ifndef QUEUE_IMPLEMENTATION_PROVIDER_H
- #define QUEUE_IMPLEMENTATION_PROVIDER_H
-
-template <typename T> class QueueImplementationProvider
+template <typename ElementType>
+    class SingleSlotQueueImplementationProvider
+    : public virtual QueueImplementationProvider<ElementType>
 {
     public:
-        virtual ~QueueImplementationProvider(){}
-        virtual boost::shared_ptr<T> getImplementation()
+        boost::shared_ptr< QueueImplementation<ElementType> >
+            getImplementation()
         {
-            boost::shared_ptr<T> queueImplementationToReturn
+            boost::shared_ptr< QueueImplementation<ElementType> >
+                implementationToReturn
                 (
-                    new T;
+                    new SingleSlotQueueImplementation<ElementType>
                 );
-            return queueImplementationToReturn;
+            return implementationToReturn;
         }
 };
-
-#endif

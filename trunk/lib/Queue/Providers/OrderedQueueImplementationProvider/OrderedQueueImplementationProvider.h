@@ -24,7 +24,7 @@
 
 template <typename ElementType, typename Comparator>
     class OrderedQueueImplementationProvider
-    : public QueueImplementationProvider<ElementType>
+    : public virtual QueueImplementationProvider<ElementType>
 {
     public:
         boost::shared_ptr< QueueImplementation<ElementType> >
