@@ -20,6 +20,13 @@
 
 #include <boost/shared_ptr.hpp>
 #include "../Scheduler.h"
+#include "../../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
+#include "../../../../lib/Queue/Implementations/OrderedQueueImplementation.h"
+#include "../../../../lib/Queue/Implementations/SingleSlotQueueImplementation.h"
+#include "../../Task/Task.h"
+
+#ifndef DEADLINE_MONOTONIC_H
+#define DEADLINE_MONOTONIC_H
 
 class RelativeDeadlineComparator
 {
@@ -42,3 +49,5 @@ class DeadlineMonotonic : public Scheduler
         DeadlineMonotonic();
         void update();
 };
+
+#endif
