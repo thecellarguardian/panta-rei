@@ -22,7 +22,8 @@
 #include "../Task/Task.h"
 #include "../SystemQueuesManager/SystemQueuesManager.h"
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
-#include "../../../lib/Queue/Providers/OrderedQueueImplementationProvider/OrderedQueueImplementationProvider.h"
+#include "../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
+#include "../../../lib/Queue/Implementations/OrderedQueueImplementation.h"
 
 #ifndef ACTIVATOR_H
 #define ACTIVATOR_H
@@ -30,22 +31,15 @@
 class ArrivalTimeComparator
 {
     public:
-        bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
-        {
-            return
-                (
-                    a->getCurrentInstanceArrivalTime() <
-                    b->getCurrentInstanceArrivalTime()
-                );
-        }
+        bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b);
 };
 
-class Activator
-    :
-    public Observer,
-    public OrderedQueueImplementationProvider<Task, ArrivalTimeComparator>
+class Activator : public Observer
 {
     private:
+        QueueImplementationProvider
+            < OrderedQueueImplementation<Task, ArrivalTimeComparator> >
+            queueImplementationProvider;
         boost::shared_ptr<SystemQueuesManager> systemQueues;
         boost::shared_ptr< QueueInterface<Task> > activationQueue;
         boost::shared_ptr< QueueInterface<Task> > readyQueue;

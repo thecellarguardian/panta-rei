@@ -20,8 +20,7 @@
 
 #include "../../../lib/Queue/Providers/OrderedQueueImplementationProvider/OrderedQueueImplementationProvider.h"
 
-class Scheduler :
-    public Observer
+class Scheduler : public Observer
 {
     private:
         boost::shared_ptr<SystemQueuesManager> systemQueues;
