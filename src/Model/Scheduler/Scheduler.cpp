@@ -1,5 +1,5 @@
 /**
- * @file Activator.cpp
+ * @file Scheduler.cpp
  * @author Cosimo Sacco <cosimosacco@gmail.com>
  *
  * @section LICENSE
@@ -18,10 +18,9 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "Activator.h"
-#include "../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
+#include "Scheduler.h"
 
-Activator::Activator
+Scheduler::Scheduler
     (
         boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
         Timer* timerToSet
@@ -29,33 +28,13 @@ Activator::Activator
     : systemQueues(systemQueuesToSet), timer(timerToSet)
 {
     timer->attach(this);
-    activationQueue = (*systemQueues)["activation"];
     readyQueue = (*systemQueues)["ready"];
-    activationQueue->setImplementation(getImplementation());
+    executionQueue = (*systemQueues)["execution"];
+    /*
+     * Notice that the queue implementation initialization has to be done in
+     * the derived classes, since only the particular scheduler knows which is
+     * the queue implementation it needs.
+     */
 }
 
-Activator::~Activator(){}
-
-void Activator::update()
-{
-    if
-        (
-            (activationQueue->front())->getCurrentInstanceArrivalTime() ==
-            timer->getCurrentTime()
-        )
-    {
-        boost::shared_ptr<Task> taskToActivate = activationQueue->extract();
-        taskToActivate->setState(READY);
-        readyQueue->insert(taskToActivate);
-    }
-}
-
-void Activator::registerForActivation(boost::shared_ptr<Task> taskToRegister)
-{
-    activationQueue->insert(taskToRegister);
-}
-
-void Activator::print()
-{
-    activationQueue->print();
-}
+virtual ~Scheduler();

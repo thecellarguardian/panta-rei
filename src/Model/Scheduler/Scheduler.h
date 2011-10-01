@@ -1,5 +1,5 @@
 /**
- * @file Activator.h
+ * @file Scheduler.h
  * @author Cosimo Sacco <cosimosacco@gmail.com>
  *
  * @section LICENSE
@@ -18,48 +18,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include "../Timer/Timer.h"
-#include "../Task/Task.h"
-#include "../SystemQueuesManager/SystemQueuesManager.h"
-#include "../../../lib/DesignPatterns/Observer/Observer.h"
 #include "../../../lib/Queue/Providers/OrderedQueueImplementationProvider/OrderedQueueImplementationProvider.h"
 
-#ifndef ACTIVATOR_H
-#define ACTIVATOR_H
-
-class ArrivalTimeComparator
-{
-    public:
-        bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
-        {
-            return
-                (
-                    a->getCurrentInstanceArrivalTime() <
-                    b->getCurrentInstanceArrivalTime()
-                );
-        }
-};
-
-class Activator
-    :
-    public Observer,
-    public OrderedQueueImplementationProvider<Task, ArrivalTimeComparator>
+class Scheduler :
+    public Observer
 {
     private:
         boost::shared_ptr<SystemQueuesManager> systemQueues;
-        boost::shared_ptr< QueueInterface<Task> > activationQueue;
         boost::shared_ptr< QueueInterface<Task> > readyQueue;
+        boost::shared_ptr< QueueInterface<Task> > executionQueue;
         Timer* timer;
     public:
-        Activator
+        Scheduler
             (
                 boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
                 Timer* timerToSet
             );
-        virtual ~Activator();
-        void update();
-        void registerForActivation(boost::shared_ptr<Task> taskToRegister);
-        void print();
+        virtual ~Scheduler();
 };
-
-#endif
