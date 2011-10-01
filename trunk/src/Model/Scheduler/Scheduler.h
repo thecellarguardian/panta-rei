@@ -18,7 +18,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include "../../../lib/DesignPatterns/Observer/Observer.h"
 #include "../../../lib/Queue/Providers/OrderedQueueImplementationProvider/OrderedQueueImplementationProvider.h"
+#include "../../../lib/Queue/QueueInterface/QueueInterface.h"
+#include "../SystemQueuesManager/SystemQueuesManager.h"
+#include "../Task/Task.h"
+#include "../Timer/Timer.h"
+#include <boost/shared_ptr.hpp>
+
+#ifndef SCHEDULER_H
+#define SCHEDULER_H
 
 class Scheduler : public Observer
 {
@@ -35,3 +44,5 @@ class Scheduler : public Observer
             );
         virtual ~Scheduler();
 };
+
+#endif
