@@ -22,10 +22,14 @@
 
 Scheduler::Scheduler
     (
+        bool preemptiveFlag,
         boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
         Timer* timerToSet
     )
-    : systemQueues(systemQueuesToSet), timer(timerToSet)
+    :
+    preemptionActivated(preemptiveFlag),
+    systemQueues(systemQueuesToSet),
+    timer(timerToSet)
 {
     timer->attach(this);
     readyQueue = (*systemQueues)["ready"];

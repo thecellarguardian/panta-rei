@@ -137,6 +137,7 @@ void PeriodicTask::reset()
     absoluteDeadline = currentInstanceArrivalTime + relativeDeadline;
     remainingComputationTime = computationTime;
     instantaneousExceedingTime = 0;
+    currentState = NEW;
 }
 
 void PeriodicTask::print()

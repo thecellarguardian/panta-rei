@@ -31,10 +31,7 @@
 class RelativeDeadlineComparator
 {
     public:
-        bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
-        {
-            return (a->getRelativeDeadline() < b->getRelativeDeadline());
-        }
+        bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b);
 };
 
 class DeadlineMonotonic : public Scheduler
@@ -45,8 +42,15 @@ class DeadlineMonotonic : public Scheduler
             readyQueueImplementationProvider;
         QueueImplementationProvider< SingleSlotQueueImplementation<Task> >
             executionQueueImplementationProvider;
+        boost::shared_ptr<Activator> activator;
     public:
-        DeadlineMonotonic();
+        DeadlineMonotonic
+            (
+                bool preemptiveFlag,
+                boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
+                Timer* timerToSet,
+                boost::shared_ptr<Activator> activatorToSet
+            );
         void update();
 };
 
