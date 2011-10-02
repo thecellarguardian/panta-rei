@@ -114,7 +114,10 @@ template<typename T> class QueueInterface
         void insert(boost::shared_ptr<T> elementToInsert)
         {
             assert(queueImplementation.get() != NULL);
-            queueImplementation->insert(elementToInsert);
+            if(elementToInsert.get() != NULL)
+            {
+                queueImplementation->insert(elementToInsert);
+            }
         }
         /**
          * The extraction method is bound to the implementation method.

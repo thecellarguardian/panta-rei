@@ -32,6 +32,7 @@
 class Scheduler : public Observer
 {
     private:
+        bool preemptionActivated;
         boost::shared_ptr<SystemQueuesManager> systemQueues;
         boost::shared_ptr< QueueInterface<Task> > readyQueue;
         boost::shared_ptr< QueueInterface<Task> > executionQueue;
@@ -39,6 +40,7 @@ class Scheduler : public Observer
     public:
         Scheduler
             (
+                bool preemptiveFlag,
                 boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
                 Timer* timerToSet
             );
