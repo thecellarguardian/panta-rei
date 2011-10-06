@@ -20,6 +20,7 @@
 
 #include "Timer.h"
 #include <boost/thread/thread.hpp>
+#include <iostream>
 
 Timer::Timer()
 {
@@ -71,6 +72,9 @@ void Timer::start()
 {
     for(; clock != finalTime; clock++)
     {
+        std::cout << std::endl << std::endl;
+        std::cout << "<<<<<<<<<<CURRENT TIME: " << clock << std::endl;
+        std::cout << std::endl << std::endl;
         notify();
         boost::this_thread::sleep(boost::posix_time::milliseconds(timeSlice));
         //Boost sleep is used for portability

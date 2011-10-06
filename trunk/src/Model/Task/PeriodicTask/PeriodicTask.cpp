@@ -79,12 +79,12 @@ void PeriodicTask::update()
     {
         case NEW:
         {
-            assert(timer->getCurrentTime() < arrivalTime);
+            assert(timer->getCurrentTime() < getCurrentInstanceArrivalTime());
             break;
         }
         case READY:
         {
-            assert(timer->getCurrentTime() >= arrivalTime);
+            assert(timer->getCurrentTime() >= getCurrentInstanceArrivalTime());
             elapsedTime++;
             instantaneousExceedingTime =
                 (elapsedTime > relativeDeadline)?
@@ -94,7 +94,7 @@ void PeriodicTask::update()
         }
         case EXECUTING:
         {
-            assert(timer->getCurrentTime() >= arrivalTime);
+            assert(timer->getCurrentTime() >= getCurrentInstanceArrivalTime());
             elapsedTime++;
             instantaneousExceedingTime =
                 (elapsedTime > relativeDeadline)?
@@ -139,6 +139,8 @@ void PeriodicTask::print()
             (currentState == READY)? "READY" :
             (currentState == EXECUTING)? "EXECUTING" : "UNKNOWN STATE!"
         ) << std::endl;
+    std::cout << "Current instance arrival time: " <<
+        getCurrentInstanceArrivalTime() << std::endl;
     std::cout << "Computation time left: " << getRemainingComputationTime()
     << std::endl;
     std::cout << "Elapsed time: " << getElapsedTime() << std::endl;
