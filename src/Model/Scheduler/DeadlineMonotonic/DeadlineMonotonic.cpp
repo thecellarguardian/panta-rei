@@ -76,20 +76,8 @@ void DeadlineMonotonic::update()
         boost::shared_ptr<Task> nextExecutingTask(readyQueue->extract());
         nextExecutingTask->setState(EXECUTING);
         executionQueue->insert(nextExecutingTask);
-        if
-            (
-                (
-                    executingTask.get() != NULL
-                    /*
-                     * We're taking advantage of the AND short-circuit
-                     * evaluation.
-                     */
-                )
-                &&
-                (
-                    executingTask->getRemainingComputationTime() == 0
-                )
-            )
+        if(executingTask.get() == NULL) return;
+        if(executingTask->getRemainingComputationTime() == 0)
         {
             executingTask->reset();
             activator->registerForActivation(executingTask);
