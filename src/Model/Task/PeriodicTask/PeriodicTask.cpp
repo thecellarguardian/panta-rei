@@ -101,25 +101,9 @@ void PeriodicTask::update()
                 elapsedTime - relativeDeadline : 0;
             remainingComputationTime--;
             remainingPeriod--;
-        }
-        case SUSPENDED:
-        {
-            assert(remainingComputationTime == 0 && remainingPeriod > 0);
-            elapsedTime++;
-            remainingPeriod--;
+            break;
         }
     }
-    /*if(timer->getCurrentTime() >= arrivalTime)
-    {
-        elapsedTime++;
-        instantaneousExceedingTime =
-            (elapsedTime > relativeDeadline)?
-            elapsedTime - relativeDeadline : 0;
-        remainingComputationTime =
-            (currentState == EXECUTING && remainingComputationTime > 0)?
-            remainingComputationTime - 1 : remainingComputationTime;
-        remainingPeriod--;
-    }*/
 }
 
 
@@ -144,8 +128,17 @@ void PeriodicTask::print()
 {
     std::cout << "-----------------------------------------------" << std::endl;
     std::cout << "TaskID: " << getTaskID() <<
-    ((timer->getCurrentTime() == getCurrentInstanceArrivalTime())? " ACTIVATED" : "")
+        (
+            (timer->getCurrentTime() == getCurrentInstanceArrivalTime())?
+            " ACTIVATED" : ""
+        )
     << std::endl;
+    std::cout <<
+        (
+            (currentState == NEW)? "NEW" :
+            (currentState == READY)? "READY" :
+            (currentState == EXECUTING)? "EXECUTING" : "UNKNOWN STATE!"
+        ) << std::endl;
     std::cout << "Computation time left: " << getRemainingComputationTime()
     << std::endl;
     std::cout << "Elapsed time: " << getElapsedTime() << std::endl;

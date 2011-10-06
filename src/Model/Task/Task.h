@@ -30,8 +30,8 @@ enum TaskState
 {
     NEW,
     READY,
-    EXECUTING,
-    SUSPENDED
+    EXECUTING/*,
+    SUSPENDED*/
 };
 
 /**
@@ -106,6 +106,7 @@ class Task : public Observer
     void setState(TaskState stateToSet);
     TaskState getState();
     virtual void update() = 0;
+    virtual void reset() = 0;
     virtual void print() = 0;
 };
 

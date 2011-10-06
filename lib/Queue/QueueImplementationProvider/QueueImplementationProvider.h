@@ -30,10 +30,7 @@ template <typename T> class QueueImplementationProvider
         virtual ~QueueImplementationProvider(){}
         virtual boost::shared_ptr<T> getImplementation()
         {
-            boost::shared_ptr<T> queueImplementationToReturn
-                (
-                    new T;
-                );
+            boost::shared_ptr<T> queueImplementationToReturn(new T());
             return queueImplementationToReturn;
         }
 };

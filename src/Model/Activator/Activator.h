@@ -23,7 +23,7 @@
 #include "../SystemQueuesManager/SystemQueuesManager.h"
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
 #include "../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
-#include "../../../lib/Queue/Implementations/OrderedQueueImplementation.h"
+#include "../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
 
 #ifndef ACTIVATOR_H
 #define ACTIVATOR_H

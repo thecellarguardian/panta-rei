@@ -21,8 +21,9 @@
 #include <boost/shared_ptr.hpp>
 #include "../Scheduler.h"
 #include "../../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
-#include "../../../../lib/Queue/Implementations/OrderedQueueImplementation.h"
-#include "../../../../lib/Queue/Implementations/SingleSlotQueueImplementation.h"
+#include "../../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
+#include "../../../../lib/Queue/Implementations/SingleSlotQueueImplementation/SingleSlotQueueImplementation.h"
+#include "../../Activator/Activator.h"
 #include "../../Task/Task.h"
 
 #ifndef DEADLINE_MONOTONIC_H

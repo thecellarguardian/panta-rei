@@ -38,6 +38,7 @@ template <typename T> class QueueImplementation
         virtual boost::shared_ptr<T> extract() = 0;
         virtual boost::shared_ptr<T> front() = 0;
         virtual boost::shared_ptr<T> back() = 0;
+        virtual unsigned int size() = 0;
         virtual void print() = 0;
 };
 
