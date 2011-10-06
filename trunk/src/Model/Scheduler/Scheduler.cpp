@@ -41,4 +41,4 @@ Scheduler::Scheduler
      */
 }
 
-virtual ~Scheduler();
+Scheduler::~Scheduler(){}

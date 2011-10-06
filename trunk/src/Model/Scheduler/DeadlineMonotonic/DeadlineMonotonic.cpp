@@ -35,7 +35,7 @@ DeadlineMonotonic::DeadlineMonotonic
     )
     :
     Scheduler(preemptiveFlag, systemQueuesToSet, timerToSet),
-    activator(activatoToSet)
+    activator(activatorToSet)
 {
     readyQueue->setImplementation
         (readyQueueImplementationProvider.getImplementation());
@@ -45,12 +45,22 @@ DeadlineMonotonic::DeadlineMonotonic
 
 void DeadlineMonotonic::update()
 {
+    std::cout << "Scheduler is active" << std::endl;
+    if(readyQueue->size() == 0) return;
+    std::cout << "The ready queue is not empty" << std::endl;
     if
         (
             (
+                executionQueue->size() == 0
+                /*
+                 * We're taking advantage of the OR short-circuit evaluation.
+                 */
+            )
+            ||
+            (
                 (
-                    readyQueue->first()->getRelativeDeadline() <
-                    executionQueue->first()->getRelativeDeadline()
+                    (readyQueue->front())->getRelativeDeadline() <
+                    (executionQueue->front())->getRelativeDeadline()
                 )
                 &&
                 (
@@ -58,11 +68,13 @@ void DeadlineMonotonic::update()
                 )
             )
             ||
-            (executionQueue->getRemainingComputationTime() == 0)
+            (executionQueue->front()->getRemainingComputationTime() == 0)
         )
     {
+        std::cout << "A task is being scheduled" << std::endl;
         boost::shared_ptr<Task> executingTask(executionQueue->extract());
         boost::shared_ptr<Task> nextExecutingTask(readyQueue->extract());
+        nextExecutingTask->setState(EXECUTING);
         executionQueue->insert(nextExecutingTask);
         if
             (
@@ -84,7 +96,8 @@ void DeadlineMonotonic::update()
         }
         else
         {
-            readyQueue.insert(executingTask);
+            executingTask->setState(READY);
+            readyQueue->insert(executingTask);
         }
     }
 }

@@ -57,11 +57,19 @@ class OrderedQueueImplementation : public QueueImplementation<ElementType>
         }
         boost::shared_ptr<ElementType> front()
         {
-            return dataStructure.front();
+            boost::shared_ptr<ElementType> nullPointer;
+            return (dataStructure.size() > 0)?
+                dataStructure.front() : nullPointer;
         }
         boost::shared_ptr<ElementType> back()
         {
-            return dataStructure.back();
+            boost::shared_ptr<ElementType> nullPointer;
+            return (dataStructure.size() > 0)?
+                dataStructure.back() : nullPointer;
+        }
+        unsigned int size()
+        {
+            return dataStructure.size();
         }
         void print() //TODO remove this!
         {

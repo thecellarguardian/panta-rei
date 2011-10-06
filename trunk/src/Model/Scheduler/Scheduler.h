@@ -19,7 +19,6 @@
  **/
 
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
-#include "../../../lib/Queue/Providers/OrderedQueueImplementationProvider/OrderedQueueImplementationProvider.h"
 #include "../../../lib/Queue/QueueInterface/QueueInterface.h"
 #include "../SystemQueuesManager/SystemQueuesManager.h"
 #include "../Task/Task.h"
@@ -31,7 +30,7 @@
 
 class Scheduler : public Observer
 {
-    private:
+    protected:
         bool preemptionActivated;
         boost::shared_ptr<SystemQueuesManager> systemQueues;
         boost::shared_ptr< QueueInterface<Task> > readyQueue;

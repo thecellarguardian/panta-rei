@@ -22,9 +22,9 @@
 #include "../../QueueImplementation/QueueImplementation.h"
 
 #ifndef SINGLE_SLOT_QUEUE_IMPLEMENTATION_H
-#define SINGLE_SLOT_IMPLEMENTATION_H
+#define SINGLE_SLOT_QUEUE_IMPLEMENTATION_H
 
-template <typename ElementType, typename Comparator>
+template <typename ElementType>
 class SingleSlotQueueImplementation : public QueueImplementation<ElementType>
 {
     private:
@@ -52,7 +52,11 @@ class SingleSlotQueueImplementation : public QueueImplementation<ElementType>
         }
         boost::shared_ptr<ElementType> back()
         {
-            return dataStructure;
+            return front();
+        }
+        unsigned int size()
+        {
+            return (dataStructure.get() == NULL)? 0 : 1;
         }
         void print() //TODO remove this!
         {

@@ -41,9 +41,9 @@ Task::Task
             )
         ),
     elapsedTime(0),
-    instantaneousExceedingTime(0),
     remainingComputationTime(computationTimeToSet),
-    currentState(EXECUTING),
+    instantaneousExceedingTime(0),
+    currentState(NEW),
     timer(timerToSet)
 {
     absoluteDeadline = arrivalTimeToSet + relativeDeadlineToSet;

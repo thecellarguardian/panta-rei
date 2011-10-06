@@ -49,13 +49,17 @@ Activator::~Activator(){}
 
 void Activator::update()
 {
+    if(activationQueue->size() == 0) return;
     if
         (
             (activationQueue->front())->getCurrentInstanceArrivalTime() ==
             timer->getCurrentTime()
         )
     {
+        std::cout << "A task is being activated" << std::endl;
         boost::shared_ptr<Task> taskToActivate = activationQueue->extract();
+        std::cout << "The task to activate is: " <<
+            taskToActivate->getTaskID() << std::endl;
         taskToActivate->setState(READY);
         readyQueue->insert(taskToActivate);
     }
@@ -63,6 +67,8 @@ void Activator::update()
 
 void Activator::registerForActivation(boost::shared_ptr<Task> taskToRegister)
 {
+    std::cout << "Task" << taskToRegister->getTaskID() << " is being enqueued \
+        for activation" << std::endl;
     activationQueue->insert(taskToRegister);
 }
 
