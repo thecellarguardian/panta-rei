@@ -89,7 +89,12 @@ unsigned int Task::getInstantaneousExceedingTime()
 
 bool Task::deadlineMiss()
 {
-    return instantaneousExceedingTime > 0;
+    return
+        (
+            (remainingComputationTime > 0)
+            &&
+            (timer->getCurrentTime() >= getAbsoluteDeadline())
+        );
 }
 
 void Task::setState(TaskState stateToSet)
