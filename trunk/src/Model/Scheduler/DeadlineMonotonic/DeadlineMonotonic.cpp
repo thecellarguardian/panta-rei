@@ -19,6 +19,7 @@
  **/
 
 #include "DeadlineMonotonic.h"
+#include "../../Task/PeriodicTask/PeriodicTask.h"
 
 bool RelativeDeadlineComparator::
     operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
@@ -45,58 +46,103 @@ DeadlineMonotonic::DeadlineMonotonic
 
 void DeadlineMonotonic::update()
 {
-    if
-    (
-        (
-            (readyQueue->size() == 0)
-            &&
-            (
-                executionQueue->size() == 0
-                ||
-                (executionQueue->front())->getRemainingComputationTime() > 0
-            )
-        )
-        ||
-        (
-            (readyQueue->size() > 0)
-            &&
-            (executionQueue->size() > 0)
-            &&
-            ((executionQueue->front())->getRemainingComputationTime() > 0)
-            &&
-            (
-                (!preemptionActivated)
-                ||
-                (
-                    (readyQueue->front())->getRelativeDeadline() >=
-                    (executionQueue->front())->getRelativeDeadline()
-                )
-            )
-        )
-    )
+    bool A = readyQueue->size() == 0;
+    bool B = executionQueue->size() == 0;
+    bool C =
+        (B == false)
+        &&
+        (executionQueue->front())->getRemainingComputationTime() == 0;
+    boost::shared_ptr<PeriodicTask> polymorphicCheck =
+        boost::dynamic_pointer_cast<PeriodicTask>(executionQueue->front());
+    bool D = false;
+    if(polymorphicCheck.get() != NULL)
     {
+        D = polymorphicCheck->getRemainingPeriod() == 0;
+    }
+    bool E = preemptionActivated;
+    bool F =
+        (A == false && B == false)
+        &&
+        (
+            (readyQueue->front())->getRelativeDeadline()
+            <
+            (executionQueue->front())->getRelativeDeadline()
+        );
+    if((A && (B || (!C))) || ((!A) && (!B) && (!C) && ((!E) || (!F))))
+    {
+        std::cout << "SCHEDULING DECISION: return" << std::endl;
         return;
     }
-    if
-    (
-        (readyQueue->size() > 0)
-        &&
-        (executionQueue->size() > 0)
-        &&
-        ((executionQueue->front())->getRemainingComputationTime() == 0)
-        &&
-        (
-            ((executionQueue->front())->getRemainingPeriod() > 0)
-            ||
-            (!preemptionActivated)
-        )
-    )
+    if((!B) && C && D && (A || (E && F)))
     {
-        (executionQueue->first())->reset();
-        activator->registerForActivation(executionQueue->first());
-        executionQueue->extract();
-        executionQueue->insert(readyQueue->extract());
+        std::cout << "SCHEDULING DECISION: reset execution and re-schedule it"
+            << std::endl;
+        (executionQueue->front())->reset();
+        (executionQueue->front())->setState(EXECUTING);
+        return;
     }
+    if(A && (!B) && C && (!D))
+    {
+        std::cout << "SCHEDULING DECISION: reactivate execution" << std::endl;
+        (executionQueue->front())->reset();
+        activator->registerForActivation(executionQueue->extract());
+        return;
+    }
+    if((!A) && B)
+    {
+        std::cout << "SCHEDULING DECISION: schedule a ready task" << std::endl;
+        (readyQueue->front())->setState(EXECUTING);
+        executionQueue->insert(readyQueue->extract());
+        return;
+    }
+    if((!A) && (!B) && C && ((!D) || (!E)))
+    {
+        std::cout <<
+            "SCHEDULING DECISION: reactivate execution, schedule a ready task"
+            << std::endl;
+        (executionQueue->front())->reset();
+        activator->registerForActivation(executionQueue->front());
+        executionQueue->extract();
+        (readyQueue->front())->setState(EXECUTING);
+        executionQueue->insert(readyQueue->extract());
+        return;
+    }
+    if((!A) && (!B) && C && (!D) && E && F)
+    {
+        std::cout <<
+            "SCHEDULING DECISION: reset execution and put it in ready, \
+            schedule a ready task"
+            << std::endl;
+        (executionQueue->front())->reset();
+        (executionQueue->front())->setState(READY);
+        readyQueue->insert(executionQueue->extract());
+        (readyQueue->front())->setState(EXECUTING);
+        executionQueue->insert(readyQueue->extract());
+        return;
+    }
+    if((!A) && (!B) && (!C) && E && F)
+    {
+        std::cout <<
+            "SCHEDULING DECISION: put execution in ready and schedule a ready \
+            task"
+            << std::endl;
+        (executionQueue->front())->setState(READY);
+        readyQueue->insert(executionQueue->extract());
+        (readyQueue->front())->setState(EXECUTING);
+        executionQueue->insert(readyQueue->extract());
+        return;
+    }
+    if((!A) && (!B) && C && D && E && (!F)) //Why has this to be here???
+    {
+        std::cout << "SCHEDULING DECISION: reset execution and re-schedule it"
+            << std::endl;
+        (executionQueue->front())->reset();
+        (executionQueue->front())->setState(EXECUTING);
+        return;
+    }
+    std::cout << "This should never be printed" << std::endl;
+    assert(false);
+    return;
     //std::cout << "Scheduler is active" << std::endl;
     //if(readyQueue->size() == 0) return;
     //std::cout << "The ready queue is not empty" << std::endl;
