@@ -120,6 +120,7 @@ void PeriodicTask::reset()
     elapsedTime = 0;
     absoluteDeadline = currentInstanceArrivalTime + relativeDeadline;
     remainingComputationTime = computationTime;
+    remainingPeriod = period;
     instantaneousExceedingTime = 0;
     currentState = NEW;
 }

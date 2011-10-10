@@ -68,6 +68,18 @@ void DeadlineMonotonic::update()
             <
             (executionQueue->front())->getRelativeDeadline()
         );
+
+        std::cout << "readyQueue empty: " << ((A)? "true" : "false") << std::endl;
+        std::cout << "executionQueue empty: "
+            << ((B)? "true" : "false") << std::endl;
+        std::cout << "executing Task terminated: "
+            << ((C)? "true" : "false") << std::endl;
+        std::cout << "executing Task period terminated: "
+            << ((D)? "true" : "false") << std::endl;
+        std::cout << "preemption: " << ((E)? "true" : "false") << std::endl;
+        std::cout << "Is there a ready Task with greater priority: "
+            << ((F)? "true" : "false") << std::endl;
+
     if((A && (B || (!C))) || ((!A) && (!B) && (!C) && ((!E) || (!F))))
     {
         std::cout << "SCHEDULING DECISION: return" << std::endl;
