@@ -8,4 +8,4 @@ provaScheduling.cpp \
 ../src/Model/Task/PeriodicTask/*.cpp \
 ../src/Model/Timer/Timer.cpp \
 ../lib/DesignPatterns/Observer/Subject.cpp \
--lboost_thread -lpthread -pg -Wall
+-lboost_thread -lpthread -g -p -Wall -pedantic-errors
