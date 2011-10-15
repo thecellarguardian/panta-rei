@@ -141,48 +141,4 @@ void DeadlineMonotonic::update()
     std::cout << "This should never be printed" << std::endl;
     assert(false);
     return;
-    //std::cout << "Scheduler is active" << std::endl;
-    //if(readyQueue->size() == 0) return;
-    //std::cout << "The ready queue is not empty" << std::endl;
-    //if
-        //(
-            //(
-                //executionQueue->size() == 0
-                ///*
-                 //* We're taking advantage of the OR short-circuit evaluation.
-                 //*/
-            //)
-            //||
-            //(
-                //(
-                    //(readyQueue->front())->getRelativeDeadline() <
-                    //(executionQueue->front())->getRelativeDeadline()
-                //)
-                //&&
-                //(
-                    //preemptionActivated
-                //)
-            //)
-            //||
-            //(executionQueue->front()->getRemainingComputationTime() == 0)
-        //)
-    //{
-        //std::cout << "A task is being scheduled" << std::endl;
-        //boost::shared_ptr<Task> executingTask(executionQueue->extract());
-        //boost::shared_ptr<Task> nextExecutingTask(readyQueue->extract());
-        //nextExecutingTask->setState(EXECUTING);
-        //executionQueue->insert(nextExecutingTask);
-        //if(executingTask.get() == NULL) return;
-        //if(executingTask->getRemainingComputationTime() == 0)
-        //{
-            ////What happens if the exiting task must be immediately re-scheduled?
-            //executingTask->reset();
-            //activator->registerForActivation(executingTask);
-        //}
-        //else
-        //{
-            //executingTask->setState(READY);
-            //readyQueue->insert(executingTask);
-        //}
-    //}
 }
