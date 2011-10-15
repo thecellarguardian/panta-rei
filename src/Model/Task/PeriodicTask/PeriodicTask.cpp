@@ -90,6 +90,10 @@ void PeriodicTask::update()
                 (elapsedTime > relativeDeadline)?
                 elapsedTime - relativeDeadline : 0;
             remainingPeriod--;
+            if((elapsedTime % period) == 0)
+            {
+                pendingInstances++;
+            }
             break;
         }
         case EXECUTING:
@@ -101,27 +105,36 @@ void PeriodicTask::update()
                 elapsedTime - relativeDeadline : 0;
             remainingComputationTime--;
             remainingPeriod--;
+            if((elapsedTime % period) == 0)
+            {
+                pendingInstances++;
+            }
+            if(remainingComputationTime == 0)
+            {
+                pendingInstances--;
+            }
             break;
         }
     }
 }
 
-
+//Precondition: the task has terminated its execution right now
 void PeriodicTask::reset()
 {
-    unsigned int activityInterval =
-        timer->getCurrentTime() - currentInstanceArrivalTime;
-    //Next arrival time: (ceiling((now - arrival)/period))*period
-    currentInstanceArrivalTime +=
-        (
-            (activityInterval/period) +
-            ((activityInterval%period == 0)? 0 : 1)
-        )*period;
-    elapsedTime = 0;
-    absoluteDeadline = currentInstanceArrivalTime + relativeDeadline;
+    currentInstanceArrivalTime += period;
+    elapsedTime =
+        (timer->getCurrentTime() <= currentInstanceArrivalTime)?
+        0 : timer->getCurrentTime() - currentInstanceArrivalTime;
+    absoluteDeadline += period;
     remainingComputationTime = computationTime;
-    remainingPeriod = period;
-    instantaneousExceedingTime = 0;
+    remainingPeriod =
+        (pendingInstances > 0)?
+        period - ((timer->getCurrentTime() - arrivalTime) % period)
+        : period;
+    pendingInstances++;
+    instantaneousExceedingTime =
+        (timer->getCurrentTime() > absoluteDeadline)?
+        (timer->getCurrentTime() - absoluteDeadline) : 0;
     currentState = NEW;
 }
 
@@ -147,5 +160,6 @@ void PeriodicTask::print()
     std::cout << "Elapsed time: " << getElapsedTime() << std::endl;
     std::cout << "Instantaneous exceeding time: " <<
     getInstantaneousExceedingTime() << std::endl;
+    std::cout << "Pending instances: " << getPendingInstances() << std::endl;
     std::cout << ((deadlineMiss())? "DEADLINE MISS!" : "") << std::endl;
 }
