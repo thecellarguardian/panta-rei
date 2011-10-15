@@ -54,8 +54,10 @@ void Activator::update()
         std::cout << "The activation queue is empty" << std::endl;
         return;
     }
-    if
+    while
         (
+            (activationQueue->size() > 0)
+            &&
             (activationQueue->front())->getCurrentInstanceArrivalTime() ==
             timer->getCurrentTime()
         )
