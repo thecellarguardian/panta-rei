@@ -21,12 +21,6 @@
 #include "DeadlineMonotonic.h"
 #include "../../Task/PeriodicTask/PeriodicTask.h"
 
-bool RelativeDeadlineComparator::
-    operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
-{
-    return (a->getRelativeDeadline() < b->getRelativeDeadline());
-}
-
 DeadlineMonotonic::DeadlineMonotonic
     (
         bool preemptiveFlag,
