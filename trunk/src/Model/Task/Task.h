@@ -63,6 +63,7 @@ class Task : public Observer
         unsigned int elapsedTime; /**< Time elapsed since activation.**/
         unsigned int remainingComputationTime;
         unsigned int instantaneousExceedingTime;
+        unsigned int pendingInstances;
         TaskState currentState;
         Timer* timer;
     protected:
@@ -93,6 +94,7 @@ class Task : public Observer
     unsigned int getAbsoluteDeadline();
     unsigned int getElapsedTime();
     unsigned int getInstantaneousExceedingTime();
+    unsigned int getPendingInstances();
     /**
      * It returns true if the instantaneousExceedingTime is greater than 0.
      * @return True if there has been a deadline miss.

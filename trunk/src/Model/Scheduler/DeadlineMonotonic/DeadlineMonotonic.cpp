@@ -52,13 +52,10 @@ void DeadlineMonotonic::update()
         (B == false)
         &&
         (executionQueue->front())->getRemainingComputationTime() == 0;
-    boost::shared_ptr<PeriodicTask> polymorphicCheck =
-        boost::dynamic_pointer_cast<PeriodicTask>(executionQueue->front());
-    bool D = false;
-    if(polymorphicCheck.get() != NULL)
-    {
-        D = polymorphicCheck->getRemainingPeriod() == 0;
-    }
+    bool D =
+        (B == false)
+        &&
+        ((executionQueue->front())->getPendingInstances() == 0);
     bool E = preemptionActivated;
     bool F =
         (A == false && B == false)
@@ -68,24 +65,22 @@ void DeadlineMonotonic::update()
             <
             (executionQueue->front())->getRelativeDeadline()
         );
-
         std::cout << "readyQueue empty: " << ((A)? "true" : "false") << std::endl;
         std::cout << "executionQueue empty: "
             << ((B)? "true" : "false") << std::endl;
         std::cout << "executing Task terminated: "
             << ((C)? "true" : "false") << std::endl;
-        std::cout << "executing Task period terminated: "
-            << ((D)? "true" : "false") << std::endl;
+        std::cout << "Are there pending instances of the executing task: "
+            << ((D)? "false" : "true") << std::endl;
         std::cout << "preemption: " << ((E)? "true" : "false") << std::endl;
         std::cout << "Is there a ready Task with greater priority: "
             << ((F)? "true" : "false") << std::endl;
-
-    if((A && (B || (!C))) || ((!A) && (!B) && (!C) && ((!E) || (!F))))
+    if(((!B) && (!C) && ((!E) || (!F))) || (A && ((!C) || B)))
     {
         std::cout << "SCHEDULING DECISION: return" << std::endl;
         return;
     }
-    if((!B) && C && D && (A || (E && F)))
+    if((!B) && C & (!D) && ((!F) || A))
     {
         std::cout << "SCHEDULING DECISION: reset execution and re-schedule it"
             << std::endl;
@@ -93,7 +88,7 @@ void DeadlineMonotonic::update()
         (executionQueue->front())->setState(EXECUTING);
         return;
     }
-    if(A && (!B) && C && (!D))
+    if(A && (!B) && C && D)
     {
         std::cout << "SCHEDULING DECISION: reactivate execution" << std::endl;
         (executionQueue->front())->reset();
@@ -107,19 +102,18 @@ void DeadlineMonotonic::update()
         executionQueue->insert(readyQueue->extract());
         return;
     }
-    if((!A) && (!B) && C && ((!D) || (!E)))
+    if((!A) && (!B) && C && D)
     {
         std::cout <<
             "SCHEDULING DECISION: reactivate execution, schedule a ready task"
             << std::endl;
         (executionQueue->front())->reset();
-        activator->registerForActivation(executionQueue->front());
-        executionQueue->extract();
-        (readyQueue->front())->setState(EXECUTING);
+        activator->registerForActivation(executionQueue->extract());
         executionQueue->insert(readyQueue->extract());
+        (executionQueue->front())->setState(EXECUTING);
         return;
     }
-    if((!A) && (!B) && C && (!D) && E && F)
+    if((!A) && (!B) && C && (!D) && F)
     {
         std::cout <<
             "SCHEDULING DECISION: reset execution and put it in ready, \
@@ -128,8 +122,8 @@ void DeadlineMonotonic::update()
         (executionQueue->front())->reset();
         (executionQueue->front())->setState(READY);
         readyQueue->insert(executionQueue->extract());
-        (readyQueue->front())->setState(EXECUTING);
         executionQueue->insert(readyQueue->extract());
+        (executionQueue->front())->setState(EXECUTING);
         return;
     }
     if((!A) && (!B) && (!C) && E && F)
@@ -142,14 +136,6 @@ void DeadlineMonotonic::update()
         readyQueue->insert(executionQueue->extract());
         (readyQueue->front())->setState(EXECUTING);
         executionQueue->insert(readyQueue->extract());
-        return;
-    }
-    if((!A) && (!B) && C && D && E && (!F)) //Why has this to be here???
-    {
-        std::cout << "SCHEDULING DECISION: reset execution and re-schedule it"
-            << std::endl;
-        (executionQueue->front())->reset();
-        (executionQueue->front())->setState(EXECUTING);
         return;
     }
     std::cout << "This should never be printed" << std::endl;

@@ -43,6 +43,7 @@ Task::Task
     elapsedTime(0),
     remainingComputationTime(computationTimeToSet),
     instantaneousExceedingTime(0),
+    pendingInstances(1),
     currentState(NEW),
     timer(timerToSet)
 {
@@ -85,6 +86,11 @@ unsigned int Task::getElapsedTime()
 unsigned int Task::getInstantaneousExceedingTime()
 {
     return instantaneousExceedingTime;
+}
+
+unsigned int Task::getPendingInstances()
+{
+    return pendingInstances;
 }
 
 bool Task::deadlineMiss()
