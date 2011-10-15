@@ -131,7 +131,7 @@ void PeriodicTask::reset()
         (pendingInstances > 0)?
         period - ((timer->getCurrentTime() - arrivalTime) % period)
         : period;
-    pendingInstances++;
+    if(pendingInstances == 0) {pendingInstances++;}
     instantaneousExceedingTime =
         (timer->getCurrentTime() > absoluteDeadline)?
         (timer->getCurrentTime() - absoluteDeadline) : 0;
