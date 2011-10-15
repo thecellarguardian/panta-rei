@@ -129,8 +129,7 @@ void DeadlineMonotonic::update()
     if((!A) && (!B) && (!C) && E && F)
     {
         std::cout <<
-            "SCHEDULING DECISION: put execution in ready and schedule a ready \
-            task"
+            "SCHEDULING DECISION: put execution in ready and schedule a ready task"
             << std::endl;
         (executionQueue->front())->setState(READY);
         readyQueue->insert(executionQueue->extract());

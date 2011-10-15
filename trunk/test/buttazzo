@@ -1,0 +1,3116 @@
+The activation queue is being created
+The ready queue is being created
+The execution queue is being created
+Task1 is being insert in the ready queue
+Task2 is being insert in the ready queue
+
+
+<<<<<<<<<<CURRENT TIME: 0
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: true
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 0
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+READY
+Current instance arrival time: 0
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 1
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 0
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 0
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 2
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 5
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 0
+Computation time left: 4
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 3
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 5
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 0
+Computation time left: 3
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 4
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 5
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 0
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 5
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 5
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 0
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 6
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 5
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 0
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 7
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 10
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 0
+Computation time left: 1
+Elapsed time: 7
+Instantaneous exceeding time: 0
+Pending instances: 2
+DEADLINE MISS!
+
+
+<<<<<<<<<<CURRENT TIME: 8
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 10
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 7
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 9
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 10
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 7
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 10
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 10
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 7
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 11
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 10
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 7
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 12
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 15
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 7
+Computation time left: 2
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 13
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 15
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 7
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 14
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 15
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+EXECUTING
+Current instance arrival time: 14
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 15
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 15
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 14
+Computation time left: 3
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 16
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 15
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 14
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 17
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 20
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 14
+Computation time left: 3
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 18
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 20
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 14
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 19
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 20
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 14
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 20
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task2 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 20
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+NEW
+Current instance arrival time: 21
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 21
+
+
+A task is being activated
+The task to activate is: 2
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 20
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+READY
+Current instance arrival time: 21
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 22
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 25
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 21
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 23
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 25
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 21
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 24
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 25
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 21
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 25
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 25
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 21
+Computation time left: 1
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 26
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 25
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 21
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 27
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 30
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 21
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 28
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 30
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+EXECUTING
+Current instance arrival time: 28
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 29
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 30
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 28
+Computation time left: 3
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 30
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 30
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 28
+Computation time left: 2
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 31
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 30
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 28
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 32
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 35
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 28
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 33
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 35
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 28
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 34
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution
+Task2 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 35
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+NEW
+Current instance arrival time: 35
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 35
+
+
+A task is being activated
+The task to activate is: 1
+A task is being activated
+The task to activate is: 2
+readyQueue empty: false
+executionQueue empty: true
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 35
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+READY
+Current instance arrival time: 35
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 36
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 35
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 35
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 37
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 40
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 35
+Computation time left: 4
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 38
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 40
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 35
+Computation time left: 3
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 39
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 40
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 35
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 40
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 40
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 35
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 41
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 40
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 35
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 42
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 45
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 35
+Computation time left: 1
+Elapsed time: 7
+Instantaneous exceeding time: 0
+Pending instances: 2
+DEADLINE MISS!
+
+
+<<<<<<<<<<CURRENT TIME: 43
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 45
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 42
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 44
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 45
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 42
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 45
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 45
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 42
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 46
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 45
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 42
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 47
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 50
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 42
+Computation time left: 2
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 48
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 50
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 42
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 49
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 50
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+EXECUTING
+Current instance arrival time: 49
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 50
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 50
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 49
+Computation time left: 3
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 51
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 50
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 49
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 52
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 55
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 49
+Computation time left: 3
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 53
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 55
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 49
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 54
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 55
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 49
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 55
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task2 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 55
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+NEW
+Current instance arrival time: 56
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 56
+
+
+A task is being activated
+The task to activate is: 2
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 55
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+READY
+Current instance arrival time: 56
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 57
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 60
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 56
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 58
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 60
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 56
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 59
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 60
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 56
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 60
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 60
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 56
+Computation time left: 1
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 61
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 60
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 56
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 62
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 65
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 56
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 63
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 65
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+EXECUTING
+Current instance arrival time: 63
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 64
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 65
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 63
+Computation time left: 3
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 65
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 65
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 63
+Computation time left: 2
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 66
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 65
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 63
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 67
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 70
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 63
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 68
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 70
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 63
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 69
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution
+Task2 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 70
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+NEW
+Current instance arrival time: 70
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 70
+
+
+A task is being activated
+The task to activate is: 1
+A task is being activated
+The task to activate is: 2
+readyQueue empty: false
+executionQueue empty: true
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 70
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+READY
+Current instance arrival time: 70
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 71
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 70
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 70
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 72
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 75
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 70
+Computation time left: 4
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 73
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 75
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 70
+Computation time left: 3
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 74
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 75
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 70
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 75
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 75
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 70
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 76
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 75
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 70
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 77
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 80
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 70
+Computation time left: 1
+Elapsed time: 7
+Instantaneous exceeding time: 0
+Pending instances: 2
+DEADLINE MISS!
+
+
+<<<<<<<<<<CURRENT TIME: 78
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 80
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 77
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 79
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 80
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 77
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 80
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 80
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 77
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 81
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 80
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 77
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 82
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 85
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 77
+Computation time left: 2
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 83
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 85
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 77
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 84
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 85
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+EXECUTING
+Current instance arrival time: 84
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 85
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 85
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 84
+Computation time left: 3
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 86
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 85
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 84
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 87
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 90
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 84
+Computation time left: 3
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 88
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 90
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 84
+Computation time left: 2
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 89
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 90
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 84
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 90
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task2 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 90
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+NEW
+Current instance arrival time: 91
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 91
+
+
+A task is being activated
+The task to activate is: 2
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 90
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+READY
+Current instance arrival time: 91
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 92
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 95
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 91
+Computation time left: 4
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 93
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 95
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 91
+Computation time left: 3
+Elapsed time: 2
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 94
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 95
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 91
+Computation time left: 2
+Elapsed time: 3
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 95
+
+
+A task is being activated
+The task to activate is: 1
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put execution in ready and schedule a ready task
+-----------------------------------------------
+TaskID: 1 ACTIVATED
+EXECUTING
+Current instance arrival time: 95
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 91
+Computation time left: 1
+Elapsed time: 4
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 96
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+EXECUTING
+Current instance arrival time: 95
+Computation time left: 1
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+READY
+Current instance arrival time: 91
+Computation time left: 1
+Elapsed time: 5
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 97
+
+
+The activation queue is empty
+readyQueue empty: false
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: false
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reactivate execution, schedule a ready task
+Task1 is being enqueued for activation
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 100
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 91
+Computation time left: 1
+Elapsed time: 6
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 98
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: true
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: reset execution and re-schedule it
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 100
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2 ACTIVATED
+EXECUTING
+Current instance arrival time: 98
+Computation time left: 4
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+
+
+<<<<<<<<<<CURRENT TIME: 99
+
+
+readyQueue empty: true
+executionQueue empty: false
+executing Task terminated: false
+Are there pending instances of the executing task: true
+preemption: true
+Is there a ready Task with greater priority: false
+SCHEDULING DECISION: return
+-----------------------------------------------
+TaskID: 1
+NEW
+Current instance arrival time: 100
+Computation time left: 2
+Elapsed time: 0
+Instantaneous exceeding time: 0
+Pending instances: 1
+
+-----------------------------------------------
+TaskID: 2
+EXECUTING
+Current instance arrival time: 98
+Computation time left: 3
+Elapsed time: 1
+Instantaneous exceeding time: 0
+Pending instances: 1
+

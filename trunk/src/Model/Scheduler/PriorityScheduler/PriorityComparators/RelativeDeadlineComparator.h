@@ -19,7 +19,7 @@
  **/
 
 #include <boost/shared_ptr.hpp>
-#include "../../Task/Task.h"
+#include "../../../Task/Task.h"
 
 #ifndef RELATIVE_DEADLINE_COMPARATOR_H
 #define RELATIVE_DEADLINE_COMPARATOR_H
@@ -27,7 +27,7 @@
 class RelativeDeadlineComparator
 {
     public:
-        bool operator()(boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
+        bool operator()(boost::shared_ptr<Task> a, boost::shared_ptr<Task> b)
         {
             return (a->getRelativeDeadline() < b->getRelativeDeadline());
         }
