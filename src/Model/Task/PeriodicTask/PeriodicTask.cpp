@@ -66,6 +66,11 @@ unsigned int PeriodicTask::getCurrentInstanceArrivalTime()
     return currentInstanceArrivalTime;
 }
 
+unsigned int PeriodicTask::getPeriod()
+{
+    return period;
+}
+
 int PeriodicTask::getRemainingPeriod()
 {
     return remainingPeriod;
