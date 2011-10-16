@@ -19,7 +19,7 @@
  **/
 
 #include "../PriorityScheduler/PriorityScheduler.h"
-#include "../PriorityScheduler/PriorityComparators/AbsoluteDeadlineComparator.h"
+#include "AbsoluteDeadlineComparator.h"
 
 #ifndef EARLIEST_DEADLINE_FIRST_H
 #define EARLIEST_DEADLINE_FIRST_H

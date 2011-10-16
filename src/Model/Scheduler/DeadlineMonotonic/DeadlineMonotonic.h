@@ -19,7 +19,7 @@
  **/
 
 #include "../PriorityScheduler/PriorityScheduler.h"
-#include "../PriorityScheduler/PriorityComparators/RelativeDeadlineComparator.h"
+#include "RelativeDeadlineComparator.h"
 
 #ifndef DEADLINE_MONOTONIC_H
 #define DEADLINE_MONOTONIC_H
