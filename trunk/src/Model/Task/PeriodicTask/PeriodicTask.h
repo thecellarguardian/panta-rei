@@ -51,6 +51,7 @@ class PeriodicTask : public Task
         );
         ~PeriodicTask();
         unsigned int getCurrentInstanceArrivalTime();
+        unsigned int getPeriod();
         int getRemainingPeriod();
         void update();
         void reset();

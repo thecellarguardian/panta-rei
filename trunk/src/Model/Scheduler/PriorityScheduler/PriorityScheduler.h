@@ -29,7 +29,8 @@
 #ifndef PRIORITY_SCHEDULER_H
 #define PRIORITY_SCHEDULER_H
 
-template <typename PriorityComparator> class PriorityScheduler : public Scheduler
+template <typename PriorityComparator>class PriorityScheduler
+    : public Scheduler
 {
     private:
         PriorityComparator comparator;
@@ -39,6 +40,28 @@ template <typename PriorityComparator> class PriorityScheduler : public Schedule
         QueueImplementationProvider< SingleSlotQueueImplementation<Task> >
             executionQueueImplementationProvider;
         boost::shared_ptr<Activator> activator;
+        void reExecute()
+        {
+            (executionQueue->front())->reset();
+            (executionQueue->front())->setState(EXECUTING);
+        }
+        void reActivate()
+        {
+            (executionQueue->front())->reset();
+            activator->registerForActivation(executionQueue->extract());
+        }
+        void schedule()
+        {
+            executionQueue->insert(readyQueue->extract());
+            (executionQueue->front())->setState(EXECUTING);
+        }
+        void preemption()
+        {
+            (executionQueue->front())->setState(READY);
+            readyQueue->insert(executionQueue->extract());
+            (readyQueue->front())->setState(EXECUTING);
+            executionQueue->insert(readyQueue->extract());
+        }
     public:
         PriorityScheduler
             (
@@ -73,18 +96,18 @@ template <typename PriorityComparator> class PriorityScheduler : public Schedule
                 (A == false && B == false)
                 &&
                 comparator(readyQueue->front(), executionQueue->front());
-                std::cout << "readyQueue empty: "
-                    << ((A)? "true" : "false") << std::endl;
-                std::cout << "executionQueue empty: "
-                    << ((B)? "true" : "false") << std::endl;
-                std::cout << "executing Task terminated: "
-                    << ((C)? "true" : "false") << std::endl;
-                std::cout << "Are there pending instances of the executing task: "
-                    << ((D)? "false" : "true") << std::endl;
-                std::cout << "preemption: "
-                    << ((E)? "true" : "false") << std::endl;
-                std::cout << "Is there a ready Task with greater priority: "
-                    << ((F)? "true" : "false") << std::endl;
+            std::cout << "readyQueue empty: "
+                << ((A)? "true" : "false") << std::endl;
+            std::cout << "executionQueue empty: "
+                << ((B)? "true" : "false") << std::endl;
+            std::cout << "executing Task terminated: "
+                << ((C)? "true" : "false") << std::endl;
+            std::cout << "Are there pending instances of the executing task: "
+                << ((D)? "false" : "true") << std::endl;
+            std::cout << "preemption: "
+                << ((E)? "true" : "false") << std::endl;
+            std::cout << "Is there a ready Task with greater priority: "
+                << ((F)? "true" : "false") << std::endl;
             if(((!B) && (!C) && ((!E) || (!F))) || (A && ((!C) || B)))
             {
                 std::cout << "SCHEDULING DECISION: return" << std::endl;
@@ -95,24 +118,21 @@ template <typename PriorityComparator> class PriorityScheduler : public Schedule
                 std::cout
                     << "SCHEDULING DECISION: reset execution and re-schedule it"
                     << std::endl;
-                (executionQueue->front())->reset();
-                (executionQueue->front())->setState(EXECUTING);
+                reExecute();
                 return;
             }
             if(A && (!B) && C && D)
             {
                 std::cout << "SCHEDULING DECISION: reactivate execution"
                     << std::endl;
-                (executionQueue->front())->reset();
-                activator->registerForActivation(executionQueue->extract());
+                reActivate();
                 return;
             }
             if((!A) && B)
             {
                 std::cout << "SCHEDULING DECISION: schedule a ready task"
                     << std::endl;
-                (readyQueue->front())->setState(EXECUTING);
-                executionQueue->insert(readyQueue->extract());
+                schedule();
                 return;
             }
             if((!A) && (!B) && C && D)
@@ -120,10 +140,8 @@ template <typename PriorityComparator> class PriorityScheduler : public Schedule
                 std::cout <<
                     "SCHEDULING DECISION: reactivate execution, schedule a ready task"
                     << std::endl;
-                (executionQueue->front())->reset();
-                activator->registerForActivation(executionQueue->extract());
-                executionQueue->insert(readyQueue->extract());
-                (executionQueue->front())->setState(EXECUTING);
+                reActivate();
+                schedule();
                 return;
             }
             if((!A) && (!B) && C && (!D) && F)
@@ -133,10 +151,7 @@ template <typename PriorityComparator> class PriorityScheduler : public Schedule
                     schedule a ready task"
                     << std::endl;
                 (executionQueue->front())->reset();
-                (executionQueue->front())->setState(READY);
-                readyQueue->insert(executionQueue->extract());
-                executionQueue->insert(readyQueue->extract());
-                (executionQueue->front())->setState(EXECUTING);
+                preemption();
                 return;
             }
             if((!A) && (!B) && (!C) && E && F)
@@ -144,10 +159,7 @@ template <typename PriorityComparator> class PriorityScheduler : public Schedule
                 std::cout <<
                     "SCHEDULING DECISION: put execution in ready and schedule a ready task"
                     << std::endl;
-                (executionQueue->front())->setState(READY);
-                readyQueue->insert(executionQueue->extract());
-                (readyQueue->front())->setState(EXECUTING);
-                executionQueue->insert(readyQueue->extract());
+                preemption();
                 return;
             }
             std::cout << "This should never be printed" << std::endl;
