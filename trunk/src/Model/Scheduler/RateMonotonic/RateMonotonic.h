@@ -19,7 +19,7 @@
  **/
 
 #include "../PriorityScheduler/PriorityScheduler.h"
-#include "../PriorityScheduler/PriorityComparators/PeriodComparator.h"
+#include "PeriodComparator.h"
 
 #ifndef RATE_MONOTONIC_H
 #define RATE_MONOTONIC_H

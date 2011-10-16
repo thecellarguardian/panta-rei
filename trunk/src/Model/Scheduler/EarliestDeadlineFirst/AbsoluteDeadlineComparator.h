@@ -19,7 +19,7 @@
  **/
 
 #include <boost/shared_ptr.hpp>
-#include "../../../Task/Task.h"
+#include "../../Task/Task.h"
 
 #ifndef ABSOLUTE_DEADLINE_COMPARATOR_H
 #define ABSOLUTE_DEADLINE_COMPARATOR_H

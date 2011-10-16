@@ -19,8 +19,8 @@
  **/
 
 #include <boost/shared_ptr.hpp>
-#include "../../../Task/Task.h"
-#include "../../../Task/PeriodicTask/PeriodicTask.h"
+#include "../../Task/Task.h"
+#include "../../Task/PeriodicTask/PeriodicTask.h"
 
 #ifndef PERIOD_COMPARATOR_H
 #define PERIOD_COMPARATOR_H
