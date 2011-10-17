@@ -24,6 +24,12 @@
 #ifndef SINGLE_SLOT_QUEUE_IMPLEMENTATION_H
 #define SINGLE_SLOT_QUEUE_IMPLEMENTATION_H
 
+/**
+ * @class SingleSlotQueueImplementation
+ * @brief A single slot queue implementation.
+ * This is a bounded queue implementation, it refers a queue that can maintain
+ * no more than one element.
+ **/
 template <typename ElementType>
 class SingleSlotQueueImplementation : public QueueImplementation<ElementType>
 {
@@ -31,7 +37,8 @@ class SingleSlotQueueImplementation : public QueueImplementation<ElementType>
         boost::shared_ptr<ElementType> dataStructure;
     public:
         /**
-         * Insertion complexity: O(1) (Merge Sort).
+         * Insertion complexity: O(1). The insertion is always possible, but if
+         * the queue is not empty, the previous element is lost.
          **/
         void insert(boost::shared_ptr<ElementType> elementToInsert)
         {
@@ -46,14 +53,24 @@ class SingleSlotQueueImplementation : public QueueImplementation<ElementType>
             dataStructure.reset();
             return pointerToReturn;
         }
+        /**
+         * This method returns a shared pointer to the maintained element.
+         **/
         boost::shared_ptr<ElementType> front()
         {
             return dataStructure;
         }
+        /**
+         * This method returns a shared pointer to the maintained element.
+         **/
         boost::shared_ptr<ElementType> back()
         {
             return front();
         }
+        /**
+         * This method returns the size of the queue. Notice that this method
+         * could be intended as a bool isFull method.
+         **/
         unsigned int size()
         {
             return (dataStructure.get() == NULL)? 0 : 1;

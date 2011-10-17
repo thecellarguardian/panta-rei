@@ -24,6 +24,13 @@
  #ifndef QUEUE_IMPLEMENTATION_PROVIDER_H
  #define QUEUE_IMPLEMENTATION_PROVIDER_H
 
+/**
+ * @class QueueImplementationProvider
+ * @brief Object interface to provide queue implementations.
+ * A class inheriting QueueImplementationProvider<T> is able to provide a
+ * particular implementation for a queue. This can be useful to initialize
+ * a QueueInterface object with the proper implementation.
+ **/
 template <typename T> class QueueImplementationProvider
 {
     public:
