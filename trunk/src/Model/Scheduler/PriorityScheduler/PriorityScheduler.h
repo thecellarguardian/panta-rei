@@ -50,24 +50,52 @@ template <typename PriorityComparator>class PriorityScheduler
         QueueImplementationProvider
             <OrderedQueueImplementation< Task, PriorityComparator> >
             readyQueueImplementationProvider;
+        /**<
+         * This member provides the ready queue implementation. A ordered
+         * priority queue is a good choice.
+         **/
         QueueImplementationProvider< SingleSlotQueueImplementation<Task> >
             executionQueueImplementationProvider;
+        /**<
+         * This member provides the execution queue implementation. Since our
+         * simulation is concerned in single CPU systems, the best
+         * implementation for the execution queue is a SingleSlotQueue.
+         **/
         boost::shared_ptr<Activator> activator;
+        /**<
+         * Shared pointer to the activator. The scheduler may need to reactivate
+         * a task, that operation is provided by the activator.
+         **/
+         /**
+          * Scheduling decision: the task in the execution queue is reactivated
+          * and rescheduled at once.
+          **/
         void reExecute()
         {
             (executionQueue->front())->reset();
             (executionQueue->front())->setState(EXECUTING);
         }
+        /**
+         * Scheduling decision: the executing task is reactivated.
+         **/
         void reActivate()
         {
             (executionQueue->front())->reset();
             activator->registerForActivation(executionQueue->extract());
         }
+        /**
+         * Scheduling decision: a ready task is scheduled.
+         **/
         void schedule()
         {
             executionQueue->insert(readyQueue->extract());
             (executionQueue->front())->setState(EXECUTING);
         }
+        /**
+         * Scheduling decision: a task with priority over the executing task
+         * has become ready, and the scheduler is set to be preemptive, so the
+         * ready task takes the CPU while the executing becomes ready.
+         **/
         void preemption()
         {
             (executionQueue->front())->setState(READY);
