@@ -29,6 +29,7 @@
  * This class provides the interface for a queue implementation class. By mean
  * of derivation, a particular class can define particular data structures to be
  * used and particular policies for the insert and extract operations.
+ * @tparam T The element type.
  **/
 template <typename T> class QueueImplementation
 {

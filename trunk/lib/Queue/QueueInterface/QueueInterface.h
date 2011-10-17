@@ -39,6 +39,7 @@
  * A QueueInterface object exposes the queue interface and holds a reference to
  * a QueueImplementation object, which implements the data structure and access
  * policy for the particular queue.
+ * @tparam T The type of elements.
  **/
 template<typename T> class QueueInterface
 {
