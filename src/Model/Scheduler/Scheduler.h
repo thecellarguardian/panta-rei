@@ -28,14 +28,33 @@
 #ifndef SCHEDULER_H
 #define SCHEDULER_H
 
+/**
+ * @class Scheduler
+ * @brief A task manager for task activation.
+ * An Scheduler is a Timer observer. It has references to the ready and the
+ * execution queue. In particular, it owns those queues, so it has to provide
+ * proper implementations for their QueueInterfaces, which are obtained through
+ * the queue naming system. When a scheduler is updated, a scheduling step is
+ * done according to the particular scheduling policy implemented. Particular
+ * scheduling policies are defined by mean of inheritance, through the
+ * definition of the update method.
+ **/
 class Scheduler : public Observer
 {
     protected:
         bool preemptionActivated;
+        /**< This flag indicates if the scheduler is preemptive. **/
         boost::shared_ptr<SystemQueuesManager> systemQueues;
+        /**< Shared pointer to the queue naming system. **/
         boost::shared_ptr< QueueInterface<Task> > readyQueue;
+        /**< Shared pointer to the ready queue. **/
         boost::shared_ptr< QueueInterface<Task> > executionQueue;
+        /**< Shared pointer to the execution queue. **/
         Timer* timer;
+        /**<
+         * Pointer to the Timer. A normal pointer is used, due to avoid
+         * the shared pointer circular reference problem.
+         **/
     public:
         Scheduler
             (

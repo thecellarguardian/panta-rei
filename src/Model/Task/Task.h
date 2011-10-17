@@ -38,9 +38,9 @@ enum TaskState
  * @class Task
  * @brief This class models a generic task.
  * The data part of a Task object models the task state, while the update method
- * modifies the state according in function of the present state. In particular,
+ * modifies the state in function of the present state. In particular,
  * we can define:
- * - a macro-state: indicates the "functioning modality" of the task;
+ * - a macro-state: it indicates the "functioning modality" of the task;
  * - a micro-state: the micro state defines the nuances into the macro-state;
  *
  * Here it is an exemple: a task could be READY (macro-state) to be scheduled,
@@ -107,7 +107,15 @@ class Task : public Observer
      **/
     void setState(TaskState stateToSet);
     TaskState getState();
+    /**
+     * At this level, update remains an abstract method, since the update law
+     * could change according to the particular task tipe.
+     **/
     virtual void update() = 0;
+    /**
+     * This abstract method is intended to bring the task back to an initial
+     * situation (for example, when a re-activation occurs).
+     **/
     virtual void reset() = 0;
     virtual void print() = 0;
 };

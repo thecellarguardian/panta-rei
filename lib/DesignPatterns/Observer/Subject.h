@@ -52,7 +52,7 @@ class Subject
         void attach(Observer* observerToAttach);
         /**
          * You can de-register an Observer using this method.
-         * * @param observerToDetach Observer object to de-register.
+         * @param observerToDetach Observer object to de-register.
          **/
         void detach(Observer* observerToDetach);
         /**

@@ -29,6 +29,19 @@
 #ifndef PRIORITY_SCHEDULER_H
 #define PRIORITY_SCHEDULER_H
 
+/**
+ * @class PriorityScheduler
+ * @brief Generic scheduler with priority check.
+ * A PriorityScheduler implements a generic scheduler based on priorities. The
+ * priority law (the law that states when a task has priority over another task)
+ * is provided through the template parameter PriorityComparator.
+ * The implementation is based on the concept of decision tree.
+ * @tparam PriorityComparator This parameter refers a functor class whose
+ * operator() takes two boost::shared_ptr<Task> and returns true if the first
+ * parameter has priority over the second. The use of different comparators
+ * lets the programmer bind this generic priority based scheduler to particular
+ * priority policies.
+ **/
 template <typename PriorityComparator>class PriorityScheduler
     : public Scheduler
 {
@@ -79,6 +92,29 @@ template <typename PriorityComparator>class PriorityScheduler
             executionQueue->setImplementation
                 (executionQueueImplementationProvider.getImplementation());
         }
+        /**The update method implementation is based on the concept of decision
+         * tree. A decision tree is a tree where each node represents a
+         * condition and each arch represents the actual value of that
+         * condition, while its leaves represent the decision that has to be
+         * taken when the condition represented by the AND between all the
+         * conditions associated with the set of archs composing a certain path
+         * occurs. When an update occurs, the state of the system queues is
+         * captured as a boolean vector which defines a path from the root to a
+         * particular leave, and the related decision is taken. The
+         * implementation strategy is the following:
+         * - for each set of leaves which represent the same decision:
+         * -# write the general condition which individuates all those leaves in
+         * the sum of products form, where each product is the AND between the
+         * conditions which label each arch of a valid path and the overall sum
+         * is the OR between all the products;
+         * -# using a compound method (Quine McLuskey optimization and heuristic
+         * optimization) reduce the sum of products to a short form, fast to
+         * evaluate
+         * (notice that Quine McLuskey optimization is not always the best
+         * choice in this sense);
+         * -# use the obtained boolean expression as a condition for an if
+         * statement whose then block contains the related decision;
+         **/
         void update()
         {
             bool A = readyQueue->size() == 0;

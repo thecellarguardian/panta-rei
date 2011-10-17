@@ -56,7 +56,8 @@ class Timer : public Subject
         void setFinalTime(unsigned int finalTimeToSet);
         void setTimeSlice(unsigned int timeSliceToSet);
         /**
-         * Avvia il timer.
+         * Starts the Timer. For finalTime times the timer updates its observers
+         * and then waits for timeSlice ms.
          **/
         void start();
 };

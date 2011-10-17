@@ -123,7 +123,6 @@ void PeriodicTask::update()
     }
 }
 
-//Precondition: the task has terminated its execution right now
 void PeriodicTask::reset()
 {
     currentInstanceArrivalTime += period;

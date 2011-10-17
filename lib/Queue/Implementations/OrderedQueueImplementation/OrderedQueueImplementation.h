@@ -25,6 +25,16 @@
  #ifndef ORDERED_QUEUE_IMPLEMENTATION_H
  #define ORDERED_QUEUE_IMPLEMENTATION_H
 
+/**
+ * @class OrderedQueueImplementation
+ * @brief An ordered queue implementation.
+ * This queue implementation maintains an ordered queue of ElementType objects.
+ * The objects are ordered using the Comparator sorting relation. A Comparator
+ * is a functor which takes two arguments and returns true if the first is minor
+ * than the second. This particular implementation adds a level of indirection:
+ * the actual elements stored in the queue are shared pointers to the meaningful
+ * elements to manipulate.
+ **/
 template <typename ElementType, typename Comparator>
 class OrderedQueueImplementation : public QueueImplementation<ElementType>
 {
@@ -55,18 +65,29 @@ class OrderedQueueImplementation : public QueueImplementation<ElementType>
             boost::shared_ptr<ElementType> nullPointer;
             return nullPointer;
         }
+        /**
+         * This method returns a shared pointer to the first element. Remember,
+         * boost::shared_ptr is copy safe.
+         **/
         boost::shared_ptr<ElementType> front()
         {
             boost::shared_ptr<ElementType> nullPointer;
             return (dataStructure.size() > 0)?
                 dataStructure.front() : nullPointer;
         }
+        /**
+         * This method returns a shared pointer to the last element. Remember,
+         * boost::shared_ptr is copy safe.
+         **/
         boost::shared_ptr<ElementType> back()
         {
             boost::shared_ptr<ElementType> nullPointer;
             return (dataStructure.size() > 0)?
                 dataStructure.back() : nullPointer;
         }
+        /**
+         * This method returns the size of the queue.
+         **/
         unsigned int size()
         {
             return dataStructure.size();
