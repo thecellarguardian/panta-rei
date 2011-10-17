@@ -34,6 +34,8 @@
  * than the second. This particular implementation adds a level of indirection:
  * the actual elements stored in the queue are shared pointers to the meaningful
  * elements to manipulate.
+ * @tparam ElementType The type of the elements.
+ * @tparam Comparator The ordering law.
  **/
 template <typename ElementType, typename Comparator>
 class OrderedQueueImplementation : public QueueImplementation<ElementType>
