@@ -122,14 +122,14 @@ template <typename PriorityComparator>class PriorityScheduler
         }
         /**The update method implementation is based on the concept of decision
          * tree. A decision tree is a tree where each node represents a
-         * condition and each arch represents the actual value of that
-         * condition, while its leaves represent the decision that has to be
-         * taken when the condition represented by the AND between all the
-         * conditions associated with the set of archs composing a certain path
-         * occurs. When an update occurs, the state of the system queues is
-         * captured as a boolean vector which defines a path from the root to a
-         * particular leave, and the related decision is taken. The
-         * implementation strategy is the following:
+         * condition and each arch represents the actual value of the condition
+         * node from which it exits, while its leaves represent the decision
+         * that has to be taken when the condition represented by the AND
+         * between all the condition values associated with the set of archs
+         * composing a certain path is true. When an update occurs, the state of
+         * the system queues is captured as a boolean vector which defines a
+         * path from the root to a particular leave, and the related decision is
+         *  taken. The implementation strategy is the following:
          * - for each set of leaves which represent the same decision:
          * -# write the general condition which individuates all those leaves in
          * the sum of products form, where each product is the AND between the
@@ -137,11 +137,10 @@ template <typename PriorityComparator>class PriorityScheduler
          * is the OR between all the products;
          * -# using a compound method (Quine McLuskey optimization and heuristic
          * optimization) reduce the sum of products to a short form, fast to
-         * evaluate
-         * (notice that Quine McLuskey optimization is not always the best
-         * choice in this sense);
+         * evaluate (notice that Quine McLuskey optimization is not always the
+         * best choice in this sense);
          * -# use the obtained boolean expression as a condition for an if
-         * statement whose then block contains the related decision;
+         * statement whose then-block contains the related decision;
          **/
         void update()
         {
