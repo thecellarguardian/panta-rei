@@ -1,5 +1,5 @@
 /**
- * @file Observer.h
+ * @file VisitorAcceptor.h
  * @author Cosimo Sacco <cosimosacco@gmail.com>
  *
  * @section LICENSE
@@ -18,26 +18,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#ifndef OBSERVER_H
-#define OBSERVER_H
+#include "Visitor.h"
+
+#ifndef VISITOR_ACCEPTOR_H
+#define VISITOR_ACCEPTOR_H
 
 /**
- * @class Observer
- * @brief This class models a state observer.
- * An Observer object has to be registered to a Subject object in order to be
- * notified when its state changes, and act properly.
- * @see Observer Design Pattern.
+ * @class VisitorAcceptor
+ * @brief Acceptor interface in the Visitor design pattern.
+ * A VisitorAcceptor accepts the visit from a Visitor and calls, on the accepted
+ * Visitor, the appropriate method for handling the objects of its class.
+ * @see "Visitor design pattern", Visitor.
  **/
-class Observer
+class VisitorAcceptor
 {
     public:
-        virtual ~Observer(){}
-        /**
-         * This method is called by the Subject to the which this Observer is
-         * registered. The specific actions to be done can be defined through
-         * polimorphism.
-         **/
-        virtual void update() = 0;
+        virtual void accept(Visitor* visitor) = 0;
 };
 
 #endif
