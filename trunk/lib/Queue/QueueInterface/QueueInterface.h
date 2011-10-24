@@ -81,6 +81,7 @@ template<typename T> class QueueInterface
          * The constructor takes a QueueImplementationProvider as an argument.
          * The implementation reference will be provided by this object, and
          * the QueueInterface will become the owner of the implementation.
+         * @param implementationProvider Provider of queue implementations.
          **/
         QueueInterface(QueueImplementationProvider<T>* implementationProvider)
             : queueImplementation(implementationProvider->getImplementation()){}

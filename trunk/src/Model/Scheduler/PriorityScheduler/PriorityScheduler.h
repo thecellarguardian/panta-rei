@@ -120,7 +120,8 @@ template <typename PriorityComparator>class PriorityScheduler
             executionQueue->setImplementation
                 (executionQueueImplementationProvider.getImplementation());
         }
-        /**The update method implementation is based on the concept of decision
+        /**
+         * The update method implementation is based on the concept of decision
          * tree. A decision tree is a tree where each node represents a
          * condition and each arch represents the actual value of the condition
          * node from which it exits, while its leaves represent the decision
