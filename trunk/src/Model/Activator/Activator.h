@@ -80,7 +80,7 @@ class Activator : public Observer
          * When the activator is updated, it moves the ready to be activated
          * tasks into the ready queue.
          **/
-        void update();
+        void update(Subject* subject);
         /**
          * This method registers a task for activation, that is, a shared
          * pointer to it is placed into the activation queue.

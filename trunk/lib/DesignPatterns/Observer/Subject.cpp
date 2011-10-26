@@ -37,6 +37,6 @@ void Subject::notify()
     std::list<Observer*>::iterator i = attachedObservers.begin();
     for(; i != attachedObservers.end(); i++)
     {
-        (*i)->update();
+        (*i)->update(this);
     }
 }

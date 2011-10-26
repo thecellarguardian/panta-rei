@@ -76,7 +76,7 @@ int PeriodicTask::getRemainingPeriod()
     return remainingPeriod;
 }
 
-void PeriodicTask::update()
+void PeriodicTask::update(Subject* subject)
 {
     print();
     //AUTOMATA BASED MODEL

@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+class Subject;
+
 #ifndef OBSERVER_H
 #define OBSERVER_H
 
@@ -37,7 +39,7 @@ class Observer
          * registered. The specific actions to be done can be defined through
          * polimorphism.
          **/
-        virtual void update() = 0;
+        virtual void update(Subject*) = 0;
 };
 
 #endif

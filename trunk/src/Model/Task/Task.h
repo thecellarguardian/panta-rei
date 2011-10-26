@@ -111,7 +111,7 @@ class Task : public Observer
      * At this level, update remains an abstract method, since the update law
      * could change according to the particular task tipe.
      **/
-    virtual void update() = 0;
+    virtual void update(Subject*) = 0;
     /**
      * This abstract method is intended to bring the task back to an initial
      * situation (for example, when a re-activation occurs).
