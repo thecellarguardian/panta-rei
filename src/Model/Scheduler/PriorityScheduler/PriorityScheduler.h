@@ -143,7 +143,7 @@ template <typename PriorityComparator>class PriorityScheduler
          * -# use the obtained boolean expression as a condition for an if
          * statement whose then-block contains the related decision;
          **/
-        void update()
+        void update(Subject* subject)
         {
             bool A = readyQueue->size() == 0;
             bool B = executionQueue->size() == 0;

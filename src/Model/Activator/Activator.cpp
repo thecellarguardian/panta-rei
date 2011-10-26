@@ -47,7 +47,7 @@ Activator::Activator
 
 Activator::~Activator(){}
 
-void Activator::update()
+void Activator::update(Subject* subject)
 {
     if(activationQueue->size() == 0)
     {
