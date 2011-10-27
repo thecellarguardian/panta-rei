@@ -38,6 +38,17 @@ class SingleSlotQueueImplementation : public QueueImplementation<ElementType>
         boost::shared_ptr<ElementType> dataStructure;
     public:
         /**
+         * The default copy constructor is suitable for this copy,
+         * since boost::shared_ptr<ElementType> is copy safe (a copy of a shared
+         * pointer is a valid shared pointer which points the same object).
+         * Remember, the cloned queue will refer the same object referred by the
+         * original one.
+         **/
+        virtual QueueImplementation<ElementType>* clone()
+        {
+            return new SingleSlotQueueImplementation<ElementType>(*this);
+        }
+        /**
          * Insertion complexity: O(1). The insertion is always possible, but if
          * the queue is not empty, the previous element is lost.
          **/

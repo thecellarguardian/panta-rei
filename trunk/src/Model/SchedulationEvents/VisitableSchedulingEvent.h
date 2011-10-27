@@ -25,7 +25,7 @@
 #include <iostream>
 
 /**
- * @enum VisitableSchedulingEvent
+ * @class VisitableSchedulingEvent
  * @brief Generic visitable scheduling event.
  * An Event, as said in the Event class description, is composed by 3
  * information: a subject, an instant of happening and the particular action
