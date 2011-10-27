@@ -145,6 +145,17 @@ template<typename T> class QueueInterface
             assert(queueImplementation.get() != NULL);
             return queueImplementation->size();
         }
+        void erase()
+        {
+            boost::shared_ptr< QueueImplementation<T> > nullPointer;
+            setImplementation(nullPointer);
+            /*
+             * Notice that the previous statement won' t cause any memory leak,
+             * since a shared_ptr assignment, if necessary
+             * (reference count == 0), will destroy the previously owned
+             * instance.
+             */
+        }
         void print()
         {
             queueImplementation->print();

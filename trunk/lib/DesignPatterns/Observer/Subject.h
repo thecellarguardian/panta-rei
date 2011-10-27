@@ -49,17 +49,17 @@ class Subject
          * You can register an Observer using this method.
          * @param observerToAttach Observer object to register.
          **/
-        void attach(Observer* observerToAttach);
+        virtual void attach(Observer* observerToAttach);
         /**
          * You can de-register an Observer using this method.
          * @param observerToDetach Observer object to de-register.
          **/
-        void detach(Observer* observerToDetach);
+        virtual void detach(Observer* observerToDetach);
         /**
          * Each registered Observer is notified about the new state of
          * the Subject.
          **/
-        void notify();
+        virtual void notify();
 };
 
 #endif
