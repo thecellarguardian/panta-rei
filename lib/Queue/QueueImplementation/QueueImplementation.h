@@ -19,6 +19,7 @@
  **/
 
 #include <boost/shared_ptr.hpp>
+#include "../../DesignPatterns/Prototype/Prototype.h"
 
 #ifndef QUEUE_IMPLEMENTATION_H
 #define QUEUE_IMPLEMENTATION_H
@@ -32,6 +33,7 @@
  * @tparam T The element type.
  **/
 template <typename T> class QueueImplementation
+    : public Prototype< QueueImplementation<T> >
 {
     public:
         virtual ~QueueImplementation(){}

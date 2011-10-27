@@ -33,7 +33,8 @@
  * is a functor which takes two arguments and returns true if the first is minor
  * than the second. This particular implementation adds a level of indirection:
  * the actual elements stored in the queue are shared pointers to the meaningful
- * elements to manipulate.
+ * elements to manipulate. Notice that the use of shared pointers implies that
+ * the managed objects could be shared with other entities.
  * @tparam ElementType The type of the elements.
  * @tparam Comparator The ordering law.
  **/
@@ -45,9 +46,23 @@ class OrderedQueueImplementation : public QueueImplementation<ElementType>
         Comparator comparationOperator;
     public:
         /**
+         * The default copy constructor is suitable for this copy. It will
+         * call the std::list< boost::shared_ptr<ElementType> > copy
+         * constructor, which makes a simple copy element by element, and
+         * that's not a problem, since boost::shared_ptr<ElementType> is
+         * copy safe (a copy of a shared pointer is a valid shared pointer
+         * which points the same object). Remember, the cloned queue will
+         * refer the same objects referred by the original one.
+         **/
+        virtual QueueImplementation<ElementType>* clone()
+        {
+            return
+                new OrderedQueueImplementation<ElementType, Comparator>(*this);
+        }
+        /**
          * Insertion complexity: O(n*log(n)) (Merge Sort).
          **/
-        void insert(boost::shared_ptr<ElementType> elementToInsert)
+        virtual void insert(boost::shared_ptr<ElementType> elementToInsert)
         {
             dataStructure.push_back(elementToInsert);
             dataStructure.sort(comparationOperator);
