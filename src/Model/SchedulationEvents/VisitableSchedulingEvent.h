@@ -24,6 +24,9 @@
 #include "SchedulingEventType.h"
 #include <iostream>
 
+#ifndef VISITABLE_SCHEDULING_EVENT_H
+#define VISITABLE_SCHEDULING_EVENT_H
+
 /**
  * @class VisitableSchedulingEvent
  * @brief Generic visitable scheduling event.
@@ -61,3 +64,5 @@ template <enum SchedulingEventType> class VisitableSchedulingEvent :
             visitor->visit(this);
         }
 };
+
+#endif
