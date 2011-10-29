@@ -34,7 +34,7 @@
  **/
 class Subject
 {
-    private:
+    protected:
         std::list<Observer*> attachedObservers;
         /**<
          * Registered Observers list. These object have to be notified when the

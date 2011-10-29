@@ -20,6 +20,8 @@
  */
 
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
+#include "../../../lib/EventManagement/EventSource/EventSource.h"
+#include "../SchedulationEvents/SchedulingEventType.h"
 #include "../Timer/Timer.h"
 #include <ostream>
 
@@ -30,16 +32,15 @@ enum TaskState
 {
     NEW,
     READY,
-    EXECUTING/*,
-    SUSPENDED*/
+    EXECUTING
 };
 
 /**
  * @class Task
  * @brief This class models a generic task.
- * The data part of a Task object models the task state, while the update method
- * modifies the state in function of the present state. In particular,
- * we can define:
+ * The data part of a Task object models the task temporal state, while the
+ * update method modifies the state in function of the present state. In
+ * particular, we can define:
  * - a macro-state: it indicates the "functioning modality" of the task;
  * - a micro-state: the micro state defines the nuances into the macro-state;
  *
@@ -51,8 +52,19 @@ enum TaskState
  * event in different ways according to its current macro-state. Each task is
  * a Timer observer, and each time event triggers the micro-state update, while
  * the macro-state is set by a task manager.
+ * A Task is also an EventSource, that is, a QueueInterface which stores events
+ * of a particular kind (the pair of types related to the actors and the
+ * instants) in a particular queue whose default policy is set to FIFO. When an
+ * event happens (deadline miss, preemption...) in the update method, a new
+ * Event<unsigned int, unsigned int> is produced and stored in the FIFO queue.
+ * When at the very end of the update method, there's a call to the notify
+ * method inherited from EventSource, in order to make the task Observers know
+ * which events happened in the last time slice.
  **/
-class Task : public Observer
+class Task
+    :
+    public Observer,
+    public EventSource< Event< unsigned int, unsigned int > >
 {
     protected:
         const unsigned int taskID; /**< It must be univocal for each task.**/
@@ -117,6 +129,7 @@ class Task : public Observer
      * situation (for example, when a re-activation occurs).
      **/
     virtual void reset() = 0;
+    virtual void publishEvent(SchedulingEventType typeOfEvent);
     virtual void print() = 0;
 };
 

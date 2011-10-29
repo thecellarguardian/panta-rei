@@ -90,6 +90,10 @@ void PeriodicTask::update(Subject* subject)
         case READY:
         {
             assert(timer->getCurrentTime() >= getCurrentInstanceArrivalTime());
+            if(deadlineMiss())
+            {
+                publishEvent(DEADLINE_MISS);
+            }
             elapsedTime++;
             instantaneousExceedingTime =
                 (elapsedTime > relativeDeadline)?
@@ -98,12 +102,17 @@ void PeriodicTask::update(Subject* subject)
             if((elapsedTime % period) == 0)
             {
                 pendingInstances++;
+                publishEvent(ARRIVAL);
             }
             break;
         }
         case EXECUTING:
         {
             assert(timer->getCurrentTime() >= getCurrentInstanceArrivalTime());
+            if(deadlineMiss())
+            {
+                publishEvent(DEADLINE_MISS);
+            }
             elapsedTime++;
             instantaneousExceedingTime =
                 (elapsedTime > relativeDeadline)?
@@ -113,13 +122,19 @@ void PeriodicTask::update(Subject* subject)
             if((elapsedTime % period) == 0)
             {
                 pendingInstances++;
+                publishEvent(ARRIVAL);
             }
             if(remainingComputationTime == 0)
             {
                 pendingInstances--;
+                publishEvent(END_OF_COMPUTATION);
             }
             break;
         }
+    }
+    if(size() > 0)
+    {
+        notify();
     }
 }
 

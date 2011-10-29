@@ -21,6 +21,8 @@
 #ifndef VISITOR_H
 #define VISITOR_H
 
+class VisitorAcceptor;
+
 /**
  * @class Visitor
  * @brief Visitor concept in the Visitor design pattern.
