@@ -20,8 +20,9 @@
 
 #include "../../../lib/DesignPatterns/Visitor/VisitorAcceptor.h"
 #include "../../../lib/DesignPatterns/Visitor/Visitor.h"
-#include "../../../lib/Event/Event.h"
+#include "../../../lib/EventManagement/Event/Event.h"
 #include "SchedulingEventType.h"
+#include "SchedulingEventVisitor.h"
 #include <iostream>
 
 #ifndef VISITABLE_SCHEDULING_EVENT_H
@@ -31,7 +32,7 @@
  * @class VisitableSchedulingEvent
  * @brief Generic visitable scheduling event.
  * An Event, as said in the Event class description, is composed by 3
- * information: a subject, an instant of happening and the particular action
+ * information: a subject, an instant (happening) and the particular action
  * performed. This last information can be deduced looking at the particular
  * event type. What's the point of the enumerate template parametrization? It's
  * only a silly trick to avoid the re-writing of the same class: every
@@ -58,10 +59,18 @@ template <enum SchedulingEventType> class VisitableSchedulingEvent :
     public VisitorAcceptor
 {
     public:
+        VisitableSchedulingEvent
+            (
+                unsigned int subjectToSet,
+                unsigned int instantToSet
+            )
+            : Event<unsigned int, unsigned int>(subjectToSet, instantToSet){}
         virtual void accept(Visitor* visitor)
         {
-            std::cout << typeid(this).name() << std::endl;
-            visitor->visit(this);
+            SchedulingEventVisitor* schedulingEventVisitor =
+                dynamic_cast<SchedulingEventVisitor*>(visitor);
+            assert(schedulingEventVisitor != NULL);
+            schedulingEventVisitor->visit(this);
         }
 };
 

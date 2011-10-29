@@ -43,7 +43,7 @@
  **/
 template<typename T> class QueueInterface
 {
-    private:
+    protected:
         boost::shared_ptr< QueueImplementation<T> > queueImplementation;
     public:
         /**
@@ -85,6 +85,7 @@ template<typename T> class QueueInterface
          **/
         QueueInterface(QueueImplementationProvider<T>* implementationProvider)
             : queueImplementation(implementationProvider->getImplementation()){}
+        virtual ~QueueInterface(){}
         void attachImplementation
             (
                 boost::shared_ptr< QueueImplementation<T> >
@@ -94,7 +95,21 @@ template<typename T> class QueueInterface
             assert(queueImplementationToSet.get() != NULL);
             queueImplementation = queueImplementationToSet;
         }
-        virtual ~QueueInterface(){}
+        void detachImplementation()
+        {
+            boost::shared_ptr< QueueImplementation<T> > nullPointer;
+            setImplementation(nullPointer);
+            /*
+             * Notice that the previous statement won' t cause any memory leak,
+             * since a shared_ptr assignment, if necessary
+             * (reference count == 0), will destroy the previously owned
+             * instance.
+             */
+        }
+        void resetQueue()
+        {
+            queueImplementation->resetQueue();
+        }
         /**
          * This method attaches a particular implementation to the queue
          * interface. If the interface was made using the default constructor,
@@ -144,17 +159,6 @@ template<typename T> class QueueInterface
         {
             assert(queueImplementation.get() != NULL);
             return queueImplementation->size();
-        }
-        void erase()
-        {
-            boost::shared_ptr< QueueImplementation<T> > nullPointer;
-            setImplementation(nullPointer);
-            /*
-             * Notice that the previous statement won' t cause any memory leak,
-             * since a shared_ptr assignment, if necessary
-             * (reference count == 0), will destroy the previously owned
-             * instance.
-             */
         }
         void print()
         {

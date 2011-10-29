@@ -18,6 +18,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include <iostream>
+
 #ifndef SIMPLE_EVENT_H
 #define SIMPLE_EVENT_H
 
@@ -41,6 +43,11 @@ template <typename SubjectIdentifier, typename Time> class Event
         virtual ~Event(){}
         SubjectIdentifier getSubject(){return subject;}
         Time getInstant(){return instant;}
+        void print()
+        {
+            std::cout << "event<SubjectID: " << subject << ", instant: "
+                << instant << ")" << std::endl;
+        }
 };
 
 #endif

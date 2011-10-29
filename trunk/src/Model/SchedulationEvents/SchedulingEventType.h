@@ -33,6 +33,8 @@
  **/
 enum SchedulingEventType
 {
+    ARRIVAL,
+    END_OF_COMPUTATION,
     DEADLINE_MISS,
     SCHEDULATION,
     PREEMPTION //TODO complete the list

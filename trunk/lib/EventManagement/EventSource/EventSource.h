@@ -19,6 +19,7 @@
  **/
 
 #include "../../Queue/QueueInterface/QueueInterface.h"
+#include "../../Queue/QueueImplementation/QueueImplementation.h"
 #include "../../DesignPatterns/Observer/Subject.h"
 #include "../Event/Event.h"
 
@@ -38,15 +39,15 @@
  * @tparam QueueImplementor A particular QueueImplementation class.
  * @see Subject, QueueInterface, QueueImplementation, Event
  **/
-template <typename QueueImplementor> class EventSource
-    : public QueueInterface< Event< SubjectIdentifier, Time > >, public Subject
+//TODO: add a withMemory flag to give the possibility to store all past events
+//even after a notify call. Notice that this change could make the interface
+//grow with temporal query wrappers and stuff...
+template <typename EventType> class EventSource
+    :
+    public QueueInterface<EventType>, public Subject
 {
     public:
-        EventSource()
-        {
-            boost::shared_ptr<QueueImplementor> implementation;
-            setImplementation(implementation);
-        }
+        EventSource(){}
         virtual void notify()
         {
             std::list<Observer*>::iterator i = attachedObservers.begin();
@@ -54,20 +55,16 @@ template <typename QueueImplementor> class EventSource
             {
                 (*i)->update(this);
             }
-            // With the following statements we flush the event queue
-            erase();
-            boost::shared_ptr<QueueImplementor>
-                newImplementation(new QueueImplementor);
-            setImplementation(newImplementation);
+            this->resetQueue();
         }
         /**
          * This method returns a copy of the event queue. It is intended to be
-         * used by he notified objects.
+         * used by the notified objects.
          **/
-        boost::shared_ptr<QueueImplementor> getEventList()
+        boost::shared_ptr< QueueImplementation<EventType> > getEventList()
         {
-            boost::shared_ptr<QueueImplementor>
-                eventQueue(queueImplementation->clone());
+            boost::shared_ptr< QueueImplementation<EventType> >
+                eventQueue(this->queueImplementation->clone());
             return eventQueue;
         }
 };

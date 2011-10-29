@@ -20,6 +20,8 @@
  */
 
 #include "Task.h"
+#include "../SchedulationEvents/VisitableSchedulingEvent.h"
+#include "../../../lib/Queue/Implementations/FIFOQueueImplementation/FIFOQueueImplementation.h"
 
 Task::Task
     (
@@ -47,6 +49,29 @@ Task::Task
     currentState(NEW),
     timer(timerToSet)
 {
+    boost::shared_ptr
+        <
+        FIFOQueueImplementation
+            <
+            Event
+                <
+                unsigned int,
+                unsigned int
+                >
+            >
+        >
+        implementation
+        (
+            new FIFOQueueImplementation
+            <
+            Event
+                <
+                unsigned int,
+                unsigned int
+                >
+            >
+        );
+    setImplementation(implementation);
     absoluteDeadline = arrivalTimeToSet + relativeDeadlineToSet;
     timer->attach(this);
 }
@@ -111,4 +136,31 @@ void Task::setState(TaskState stateToSet)
 TaskState Task::getState()
 {
     return currentState;
+}
+
+void Task::publishEvent(SchedulingEventType typeOfEvent)
+{
+    boost::shared_ptr< Event<unsigned int, unsigned int> > newEvent
+        (
+            (typeOfEvent == ARRIVAL)?
+                static_cast< Event<unsigned int, unsigned int>* >
+                (
+                    new VisitableSchedulingEvent<ARRIVAL>
+                    (taskID, timer->getCurrentTime())
+                )
+                :
+            (typeOfEvent == END_OF_COMPUTATION)?
+                static_cast< Event<unsigned int, unsigned int>* >
+                (
+                    new VisitableSchedulingEvent<END_OF_COMPUTATION>
+                    (taskID, timer->getCurrentTime())
+                )
+                :
+                static_cast< Event<unsigned int, unsigned int>* >
+                (
+                    new VisitableSchedulingEvent<DEADLINE_MISS>
+                    (taskID, timer->getCurrentTime())
+                )
+        );
+    insert(newEvent);
 }
