@@ -102,7 +102,7 @@ void PeriodicTask::update(Subject* subject)
             if((elapsedTime % period) == 0)
             {
                 pendingInstances++;
-                publishEvent(ARRIVAL);
+                publishEvent(PENDING_ARRIVAL);
             }
             break;
         }
@@ -122,7 +122,7 @@ void PeriodicTask::update(Subject* subject)
             if((elapsedTime % period) == 0)
             {
                 pendingInstances++;
-                publishEvent(ARRIVAL);
+                publishEvent(PENDING_ARRIVAL);
             }
             if(remainingComputationTime == 0)
             {

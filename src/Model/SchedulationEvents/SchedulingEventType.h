@@ -34,10 +34,13 @@
 enum SchedulingEventType
 {
     ARRIVAL,
+    PENDING_ARRIVAL,
     END_OF_COMPUTATION,
     DEADLINE_MISS,
-    SCHEDULATION,
-    PREEMPTION //TODO complete the list
+    SCHEDULE,
+    PREEMPTION_ORIGIN,
+    PREEMPTION_DESTINATION,
+    IDLE
 };
 
 #endif

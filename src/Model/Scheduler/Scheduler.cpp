@@ -19,6 +19,7 @@
  **/
 
 #include "Scheduler.h"
+#include "../../../lib/Queue/Implementations/FIFOQueueImplementation/FIFOQueueImplementation.h"
 
 Scheduler::Scheduler
     (
@@ -39,6 +40,32 @@ Scheduler::Scheduler
      * the derived classes, since only the particular scheduler knows which is
      * the queue implementation it needs.
      */
+     //TODO
+    //<reduntant code to refactor>
+    boost::shared_ptr
+        <
+        FIFOQueueImplementation
+            <
+            Event
+                <
+                unsigned int,
+                unsigned int
+                >
+            >
+        >
+        implementation
+        (
+            new FIFOQueueImplementation
+            <
+            Event
+                <
+                unsigned int,
+                unsigned int
+                >
+            >
+        );
+    setImplementation(implementation);
+    //</reduntant code to refactor>
 }
 
 Scheduler::~Scheduler(){}

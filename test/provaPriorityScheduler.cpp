@@ -11,25 +11,54 @@
 class TestVisitor : public SchedulingEventVisitor
 {
 	public:
-	void visit(VisitableSchedulingEvent<ARRIVAL>*)
+	void visit(VisitableSchedulingEvent<ARRIVAL>* event)
 	{
-		std::cout << "VISITOR: ARRIVAL EVENT VISITED" << std::endl;
+		std::cout << "VISITOR: ARRIVAL EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
 	}
-	void visit(VisitableSchedulingEvent<END_OF_COMPUTATION>*)
+	void visit(VisitableSchedulingEvent<PENDING_ARRIVAL>* event)
 	{
-		std::cout << "VISITOR: END_OF_COMPUTATION EVENT VISITED" << std::endl;
+		std::cout << "VISITOR: PENDING_ARRIVAL EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
 	}
-	void visit(VisitableSchedulingEvent<DEADLINE_MISS>*)
+	void visit(VisitableSchedulingEvent<END_OF_COMPUTATION>* event)
 	{
-		std::cout << "VISITOR: DEADLINE_MISS EVENT VISITED" << std::endl;
+		std::cout << "VISITOR: END_OF_COMPUTATION EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
 	}
-	void visit(VisitableSchedulingEvent<SCHEDULATION>*)
+	void visit(VisitableSchedulingEvent<DEADLINE_MISS>* event)
 	{
-		std::cout << "VISITOR: SCHEDULATION EVENT VISITED" << std::endl;
+		std::cout << "VISITOR: DEADLINE_MISS EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
+
 	}
-	void visit(VisitableSchedulingEvent<PREEMPTION>*)
+	void visit(VisitableSchedulingEvent<SCHEDULE>* event)
 	{
-		std::cout << "VISITOR: PREEMPTION EVENT VISITED" << std::endl;
+		std::cout << "VISITOR: SCHEDULE EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
+	}
+	void visit(VisitableSchedulingEvent<PREEMPTION_ORIGIN>* event)
+	{
+		std::cout << "VISITOR: PREEMPTION_ORIGIN EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
+	}
+	void visit(VisitableSchedulingEvent<PREEMPTION_DESTINATION>* event)
+	{
+		std::cout << "VISITOR: PREEMPTION_DESTINATION EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
+	}
+	void visit(VisitableSchedulingEvent<IDLE>* event)
+	{
+		std::cout << "VISITOR: IDLE EVENT VISITED" <<
+		             "<" << event->getSubject() << ", " <<
+		             event->getInstant() << ">" << std::endl;
 	}
 };
 
@@ -41,11 +70,13 @@ int main()
 	boost::shared_ptr<Scheduler> scheduler(new DeadlineMonotonic(true, systemQueues, &timer, activator));
 	boost::shared_ptr<Task> p1(new PeriodicTask(1, 0, 2, 5, 5, &timer));
 	boost::shared_ptr<Task> p2(new PeriodicTask(2, 0, 4, 7, 7, &timer));
-	activator->registerForActivation(p1);
-	activator->registerForActivation(p2);
 	History< Event<unsigned int, unsigned int> > history;
+	history.registerToEventSource(activator.get());
+	history.registerToEventSource(scheduler.get());
 	history.registerToEventSource(p1.get());
 	history.registerToEventSource(p2.get());
+	activator->registerForActivation(p1);
+	activator->registerForActivation(p2);
 	timer.start();
 	SchedulingEventVisitor* visitor = new TestVisitor;
 	history.accept(visitor);

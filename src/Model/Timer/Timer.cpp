@@ -76,7 +76,8 @@ void Timer::start()
         std::cout << "<<<<<<<<<<CURRENT TIME: " << clock << std::endl;
         std::cout << std::endl << std::endl;
         notify();
-        boost::this_thread::sleep(boost::posix_time::milliseconds(timeSlice));
+        std::cout << "---" << std::endl;
+        //boost::this_thread::sleep(boost::posix_time::milliseconds(timeSlice)); THIS MAKES VALGRIND ANGRY!
         //Boost sleep is used for portability
     }
 }

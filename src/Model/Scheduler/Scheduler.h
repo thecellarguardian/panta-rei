@@ -21,6 +21,7 @@
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
 #include "../../../lib/Queue/QueueInterface/QueueInterface.h"
 #include "../SystemQueuesManager/SystemQueuesManager.h"
+#include "../../../lib/EventManagement/EventSource/EventSource.h"
 #include "../Task/Task.h"
 #include "../Timer/Timer.h"
 #include <boost/shared_ptr.hpp>
@@ -39,7 +40,8 @@
  * scheduling policies are defined by mean of inheritance, through the
  * definition of the update method.
  **/
-class Scheduler : public Observer
+class Scheduler
+    : public Observer, public EventSource< Event< unsigned int, unsigned int > >
 {
     protected:
         bool preemptionActivated;
@@ -63,6 +65,8 @@ class Scheduler : public Observer
                 Timer* timerToSet
             );
         virtual ~Scheduler();
+        virtual void publishEvent
+            (unsigned int taskID, SchedulingEventType typeOfEvent) = 0;
 };
 
 #endif

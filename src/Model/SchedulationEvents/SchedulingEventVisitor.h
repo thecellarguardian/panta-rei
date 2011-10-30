@@ -37,10 +37,13 @@ class SchedulingEventVisitor : public Visitor
 {
     public:
     	virtual void visit(VisitableSchedulingEvent<ARRIVAL>*) = 0;
+        virtual void visit(VisitableSchedulingEvent<PENDING_ARRIVAL>*) = 0;
     	virtual void visit(VisitableSchedulingEvent<END_OF_COMPUTATION>*) = 0;
     	virtual void visit(VisitableSchedulingEvent<DEADLINE_MISS>*) = 0;
-    	virtual void visit(VisitableSchedulingEvent<SCHEDULATION>*) = 0;
-    	virtual void visit(VisitableSchedulingEvent<PREEMPTION>*) = 0;
+    	virtual void visit(VisitableSchedulingEvent<SCHEDULE>*) = 0;
+    	virtual void visit(VisitableSchedulingEvent<PREEMPTION_ORIGIN>*) = 0;
+        virtual void visit(VisitableSchedulingEvent<PREEMPTION_DESTINATION>*) = 0;
+        virtual void visit(VisitableSchedulingEvent<IDLE>*) = 0;
 };
 
 #endif

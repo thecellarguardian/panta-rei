@@ -22,6 +22,7 @@
 #include "../Task/Task.h"
 #include "../SystemQueuesManager/SystemQueuesManager.h"
 #include "../../../lib/DesignPatterns/Observer/Observer.h"
+#include "../../../lib/EventManagement/EventSource/EventSource.h"
 #include "../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
 #include "../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
 
@@ -45,7 +46,8 @@ class ArrivalTimeComparator
  * O(1) and the insertion in the ready queue (also an ordered queue) is, in the
  * worst case, O(nlog(n)) (Merge Sort).
  **/
-class Activator : public Observer
+class Activator
+    : public Observer, public EventSource< Event< unsigned int, unsigned int > >
 {
     private:
         QueueImplementationProvider
@@ -69,6 +71,7 @@ class Activator : public Observer
          * Pointer to the Timer. A normal pointer is used, due to avoid
          * the shared pointer circular reference problem.
          **/
+         void publishArrivalEvent(unsigned int taskID);
     public:
         Activator
             (
