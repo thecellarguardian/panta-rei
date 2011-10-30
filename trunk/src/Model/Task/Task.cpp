@@ -49,6 +49,8 @@ Task::Task
     currentState(NEW),
     timer(timerToSet)
 {
+    //TODO
+    //<reduntant code to refactor>
     boost::shared_ptr
         <
         FIFOQueueImplementation
@@ -72,6 +74,7 @@ Task::Task
             >
         );
     setImplementation(implementation);
+    //</reduntant code to refactor>
     absoluteDeadline = arrivalTimeToSet + relativeDeadlineToSet;
     timer->attach(this);
 }
@@ -149,11 +152,18 @@ void Task::publishEvent(SchedulingEventType typeOfEvent)
                     (taskID, timer->getCurrentTime())
                 )
                 :
+            (typeOfEvent == PENDING_ARRIVAL)?
+                static_cast< Event<unsigned int, unsigned int>* >
+                (
+                    new VisitableSchedulingEvent<PENDING_ARRIVAL>
+                    (taskID, timer->getCurrentTime() + 1)
+                )
+                :
             (typeOfEvent == END_OF_COMPUTATION)?
                 static_cast< Event<unsigned int, unsigned int>* >
                 (
                     new VisitableSchedulingEvent<END_OF_COMPUTATION>
-                    (taskID, timer->getCurrentTime())
+                    (taskID, timer->getCurrentTime() + 1)
                 )
                 :
                 static_cast< Event<unsigned int, unsigned int>* >

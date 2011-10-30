@@ -23,6 +23,7 @@
 #include "../../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
 #include "../../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
 #include "../../../../lib/Queue/Implementations/SingleSlotQueueImplementation/SingleSlotQueueImplementation.h"
+#include "../../SchedulationEvents/VisitableSchedulingEvent.h"
 #include "../../Activator/Activator.h"
 #include "../../Task/Task.h"
 
@@ -74,6 +75,7 @@ template <typename PriorityComparator>class PriorityScheduler
         {
             (executionQueue->front())->reset();
             (executionQueue->front())->setState(EXECUTING);
+            publishEvent((executionQueue->front())->getTaskID(), SCHEDULE);
         }
         /**
          * Scheduling decision: the executing task is reactivated.
@@ -82,6 +84,7 @@ template <typename PriorityComparator>class PriorityScheduler
         {
             (executionQueue->front())->reset();
             activator->registerForActivation(executionQueue->extract());
+            publishEvent(0, IDLE);
         }
         /**
          * Scheduling decision: a ready task is scheduled.
@@ -90,6 +93,7 @@ template <typename PriorityComparator>class PriorityScheduler
         {
             executionQueue->insert(readyQueue->extract());
             (executionQueue->front())->setState(EXECUTING);
+            publishEvent((executionQueue->front())->getTaskID(), SCHEDULE);
         }
         /**
          * Scheduling decision: a task with priority over the executing task
@@ -99,9 +103,15 @@ template <typename PriorityComparator>class PriorityScheduler
         void preemption()
         {
             (executionQueue->front())->setState(READY);
+            publishEvent
+                ((executionQueue->front())->getTaskID(), PREEMPTION_ORIGIN);
             readyQueue->insert(executionQueue->extract());
             (readyQueue->front())->setState(EXECUTING);
             executionQueue->insert(readyQueue->extract());
+            publishEvent
+                ((executionQueue->front())->getTaskID(), PREEMPTION_DESTINATION);
+            publishEvent
+                ((executionQueue->front())->getTaskID(), SCHEDULE);
         }
     public:
         PriorityScheduler
@@ -183,6 +193,7 @@ template <typename PriorityComparator>class PriorityScheduler
                     << "SCHEDULING DECISION: reset execution and re-schedule it"
                     << std::endl;
                 reExecute();
+                notify();
                 return;
             }
             if(A && (!B) && C && D)
@@ -190,6 +201,7 @@ template <typename PriorityComparator>class PriorityScheduler
                 std::cout << "SCHEDULING DECISION: reactivate execution"
                     << std::endl;
                 reActivate();
+                notify();
                 return;
             }
             if((!A) && B)
@@ -197,6 +209,7 @@ template <typename PriorityComparator>class PriorityScheduler
                 std::cout << "SCHEDULING DECISION: schedule a ready task"
                     << std::endl;
                 schedule();
+                notify();
                 return;
             }
             if((!A) && (!B) && C && D)
@@ -206,6 +219,7 @@ template <typename PriorityComparator>class PriorityScheduler
                     << std::endl;
                 reActivate();
                 schedule();
+                notify();
                 return;
             }
             if((!A) && (!B) && C && (!D) && F)
@@ -216,6 +230,7 @@ template <typename PriorityComparator>class PriorityScheduler
                     << std::endl;
                 (executionQueue->front())->reset();
                 preemption();
+                notify();
                 return;
             }
             if((!A) && (!B) && (!C) && E && F)
@@ -224,11 +239,45 @@ template <typename PriorityComparator>class PriorityScheduler
                     "SCHEDULING DECISION: put execution in ready and schedule a ready task"
                     << std::endl;
                 preemption();
+                notify();
                 return;
             }
             std::cout << "This should never be printed" << std::endl;
             assert(false);
             return;
+        }
+        void publishEvent(unsigned int taskID, SchedulingEventType typeOfEvent)
+        {
+            boost::shared_ptr< Event<unsigned int, unsigned int> > newEvent
+            (
+                (typeOfEvent == SCHEDULE)?
+                    static_cast< Event<unsigned int, unsigned int>* >
+                    (
+                        new VisitableSchedulingEvent<SCHEDULE>
+                        (taskID, timer->getCurrentTime())
+                    )   
+                :
+                (typeOfEvent == IDLE)?
+                    static_cast< Event<unsigned int, unsigned int>* >
+                    (
+                        new VisitableSchedulingEvent<IDLE>
+                        (taskID, timer->getCurrentTime())
+                    )
+                :
+                (typeOfEvent == PREEMPTION_ORIGIN)?
+                    static_cast< Event<unsigned int, unsigned int>* >
+                    (
+                        new VisitableSchedulingEvent<PREEMPTION_ORIGIN>
+                        (taskID, timer->getCurrentTime())
+                    )
+                :
+                    static_cast< Event<unsigned int, unsigned int>* >
+                    (
+                        new VisitableSchedulingEvent<PREEMPTION_DESTINATION>
+                        (taskID, timer->getCurrentTime())
+                    )
+            );
+            insert(newEvent);
         }
 };
 

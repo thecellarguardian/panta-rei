@@ -20,6 +20,8 @@
 
 #include "Activator.h"
 #include "../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
+#include "../../../lib/Queue/Implementations/FIFOQueueImplementation/FIFOQueueImplementation.h"
+#include "../SchedulationEvents/VisitableSchedulingEvent.h"
 
 bool ArrivalTimeComparator::operator()
     (boost::shared_ptr<Task>& a, boost::shared_ptr<Task>& b)
@@ -43,6 +45,32 @@ Activator::Activator
     readyQueue = (*systemQueues)["ready"];
     activationQueue->setImplementation
         (queueImplementationProvider.getImplementation());
+    //TODO
+    //<reduntant code to refactor>
+    boost::shared_ptr
+        <
+        FIFOQueueImplementation
+            <
+            Event
+                <
+                unsigned int,
+                unsigned int
+                >
+            >
+        >
+        implementation
+        (
+            new FIFOQueueImplementation
+            <
+            Event
+                <
+                unsigned int,
+                unsigned int
+                >
+            >
+        );
+    setImplementation(implementation);
+    //</reduntant code to refactor>
 }
 
 Activator::~Activator(){}
@@ -67,7 +95,10 @@ void Activator::update(Subject* subject)
         std::cout << "The task to activate is: " <<
             taskToActivate->getTaskID() << std::endl;
         taskToActivate->setState(READY);
+        std::cout << "ACTIVATOR: publishing arrival event" << std::endl;
+        publishArrivalEvent(taskToActivate->getTaskID());
         readyQueue->insert(taskToActivate);
+        notify();
     }
 }
 
@@ -82,7 +113,9 @@ void Activator::registerForActivation(boost::shared_ptr<Task> taskToRegister)
         std::cout << "Task" << taskToRegister->getTaskID() <<
             " is being insert in the ready queue" << std::endl;
         taskToRegister->setState(READY);
+        publishArrivalEvent(taskToRegister->getTaskID());
         readyQueue->insert(taskToRegister);
+        notify();
     }
     else
     {
@@ -90,6 +123,19 @@ void Activator::registerForActivation(boost::shared_ptr<Task> taskToRegister)
             " is being enqueued for activation" << std::endl;
         activationQueue->insert(taskToRegister);
     }
+}
+
+void Activator::publishArrivalEvent(unsigned int taskID)
+{
+    boost::shared_ptr< Event<unsigned int, unsigned int> > newEvent
+        (
+            static_cast< Event<unsigned int, unsigned int>* >
+            (
+                new VisitableSchedulingEvent<ARRIVAL>
+                (taskID, timer->getCurrentTime())
+            )
+        );
+    insert(newEvent);
 }
 
 void Activator::print()
