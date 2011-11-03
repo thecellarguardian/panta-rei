@@ -43,7 +43,6 @@ class SchedulingEventVisitor : public Visitor
     	virtual void visit(VisitableSchedulingEvent<SCHEDULE>*) = 0;
     	virtual void visit(VisitableSchedulingEvent<PREEMPTION_ORIGIN>*) = 0;
         virtual void visit(VisitableSchedulingEvent<PREEMPTION_DESTINATION>*) = 0;
-        virtual void visit(VisitableSchedulingEvent<IDLE>*) = 0;
 };
 
 #endif
