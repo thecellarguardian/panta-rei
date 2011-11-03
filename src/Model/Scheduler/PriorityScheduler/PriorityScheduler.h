@@ -84,7 +84,7 @@ template <typename PriorityComparator>class PriorityScheduler
         {
             (executionQueue->front())->reset();
             activator->registerForActivation(executionQueue->extract());
-            publishEvent(0, IDLE);
+            publishEvent(0, SCHEDULE);
         }
         /**
          * Scheduling decision: a ready task is scheduled.
@@ -185,6 +185,13 @@ template <typename PriorityComparator>class PriorityScheduler
             if(((!B) && (!C) && ((!E) || (!F))) || (A && ((!C) || B)))
             {
                 std::cout << "SCHEDULING DECISION: return" << std::endl;
+                publishEvent
+                (
+                    ((executionQueue->front()).get() == NULL)?
+                    0 : (executionQueue->front())->getTaskID()
+                    ,
+                    SCHEDULE
+                );
                 return;
             }
             if((!B) && C & (!D) && ((!F) || A))
@@ -256,13 +263,6 @@ template <typename PriorityComparator>class PriorityScheduler
                         new VisitableSchedulingEvent<SCHEDULE>
                         (taskID, timer->getCurrentTime())
                     )   
-                :
-                (typeOfEvent == IDLE)?
-                    static_cast< Event<unsigned int, unsigned int>* >
-                    (
-                        new VisitableSchedulingEvent<IDLE>
-                        (taskID, timer->getCurrentTime())
-                    )
                 :
                 (typeOfEvent == PREEMPTION_ORIGIN)?
                     static_cast< Event<unsigned int, unsigned int>* >

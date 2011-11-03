@@ -39,8 +39,7 @@ enum SchedulingEventType
     DEADLINE_MISS,
     SCHEDULE,
     PREEMPTION_ORIGIN,
-    PREEMPTION_DESTINATION,
-    IDLE
+    PREEMPTION_DESTINATION
 };
 
 #endif
