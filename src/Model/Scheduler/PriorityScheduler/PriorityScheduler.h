@@ -84,7 +84,6 @@ template <typename PriorityComparator>class PriorityScheduler
         {
             (executionQueue->front())->reset();
             activator->registerForActivation(executionQueue->extract());
-            publishEvent(0, SCHEDULE);
         }
         /**
          * Scheduling decision: a ready task is scheduled.
@@ -208,6 +207,7 @@ template <typename PriorityComparator>class PriorityScheduler
                 std::cout << "SCHEDULING DECISION: reactivate execution"
                     << std::endl;
                 reActivate();
+                publishEvent(0, SCHEDULE);
                 notify();
                 return;
             }

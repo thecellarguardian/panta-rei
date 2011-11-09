@@ -7,4 +7,4 @@ g++ \
 ../src/Model/Timer/Timer.cpp \
 ../lib/DesignPatterns/Observer/Subject.cpp \
 provaPriorityScheduler.cpp \
--lboost_thread -lpthread -g -p -Wall -pedantic-errors
+-lboost_thread -lpthread -g -p

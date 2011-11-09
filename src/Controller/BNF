@@ -1,0 +1,30 @@
+create [periodic] task [args] (ret ID)
+set timer <tick, millis>
+set scheduler <EDF | RM | DM>
+simulate
+quit
+help
+
+create-statement
+	:create: object parameters
+	
+object
+	periodic-task
+	task
+	
+parameters
+	a C D
+	a C D T
+
+a
+	:literal:
+
+C
+	:literal:
+
+D
+	:literal:
+
+T
+	:literal:
+

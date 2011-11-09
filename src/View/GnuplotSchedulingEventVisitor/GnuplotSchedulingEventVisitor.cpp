@@ -20,96 +20,123 @@
 
 #include "GnuplotSchedulingEventVisitor.h"
 
-GnuplotSchedulingEventVisitor::GnuplotSchedulingEventVisitor() : plotter("lines")
-{}
+void GnuplotSchedulingEventVisitor::updateTaskIDRange(unsigned int subject)
+{
+    if(subject > highestTaskID)
+    {
+        highestTaskID = subject;
+        return;
+    }
+}
+
+GnuplotSchedulingEventVisitor::GnuplotSchedulingEventVisitor() : plotter("steps")
+{
+    plotter.set_ylabel("Time");
+    plotter.set_xlabel("Tasks");
+    plotter.cmd("set xtics 1");
+    plotter.cmd("set ytics 1,1");
+    plotter.set_grid();
+    lowestTaskID = 1;
+    highestTaskID = 1;
+}
 
 void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<ARRIVAL>* event)
 {
     unsigned int subject = event->getSubject();
     unsigned int instant = event->getInstant();
-    while(arrivalInstants[subject].size() < instant + 1)
-    {
-        arrivalInstants[subject].push_back(0);
-    }
-    arrivalInstants[subject][instant] = subject;
+    arrivalInstants[subject].push_back(instant);
+    updateTaskIDRange(subject);
 }
 
 void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<PENDING_ARRIVAL>* event)
 {
     unsigned int subject = event->getSubject();
     unsigned int instant = event->getInstant();
-    while(pendingArrivalInstants[subject].size() < instant + 1)
-    {
-        pendingArrivalInstants[subject].push_back(0);
-    }
-    pendingArrivalInstants[subject][instant] = subject;
+    arrivalInstants[subject].push_back(instant);
+    updateTaskIDRange(subject);
 }
 
 void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<DEADLINE_MISS>* event)
 {
     unsigned int subject = event->getSubject();
     unsigned int instant = event->getInstant();
-    while(deadlineMissInstants[subject].size() < instant + 1)
-    {
-        deadlineMissInstants[subject].push_back(0);
-    }
-    deadlineMissInstants[subject][instant] = subject;
+    deadlineMissInstants[subject].push_back(instant);
+    updateTaskIDRange(subject);
 }
 
 void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<END_OF_COMPUTATION>* event)
-
 {
     unsigned int subject = event->getSubject();
     unsigned int instant = event->getInstant();
-    while(endOfComputationInstants.size() < instant + 1)
-    {
-        endOfComputationInstants.push_back(0);
-    }
-    endOfComputationInstants[instant] = subject;
+    endOfComputationInstants.push_back(instant);
+    endingTasks.push_back(subject);
+    updateTaskIDRange(subject);
 }
 
 void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<SCHEDULE>* event)
 {
     unsigned int subject = event->getSubject();
     unsigned int instant = event->getInstant();
-    while(scheduleInstants.size() < instant + 1)
+    if(subject != 0)
     {
-        scheduleInstants.push_back(0);
+        scheduleInstants.push_back(instant);
+        scheduledTasks.push_back(subject);
+        updateTaskIDRange(subject);
     }
-    scheduleInstants[instant] = subject;
 }
 
 void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<PREEMPTION_ORIGIN>* event)
 {
     unsigned int subject = event->getSubject();
     unsigned int instant = event->getInstant();
-    while(preemptionOriginInstants.size() < instant + 1)
-    {
-        preemptionOriginInstants.push_back(0);
-    }
-    preemptionOriginInstants[instant] = subject;
+    preemptionOriginInstants.push_back(instant);
+    preemptingOutTasks.push_back(subject);
+    updateTaskIDRange(subject);
 }
 
 void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<PREEMPTION_DESTINATION>* event)
 {
     unsigned int subject = event->getSubject();
     unsigned int instant = event->getInstant();
-    while(preemptionDestinationInstants.size() < instant + 1)
-    {
-        preemptionDestinationInstants.push_back(0);
-    }
-    preemptionDestinationInstants[instant] = subject;
+    preemptionDestinationInstants.push_back(instant);
+    preemptingInTasks.push_back(subject);
+    updateTaskIDRange(subject);
 }
 
 void GnuplotSchedulingEventVisitor::plot()
 {
     plotter.set_style("points");
-    for(
+    std::cout << "lowest: " << lowestTaskID << ", highest: " << highestTaskID << std::endl;
+    plotter.set_yrange(lowestTaskID, 2*highestTaskID);
+    for
+        (
             std::map< unsigned int, std::vector<unsigned int> >::iterator i = arrivalInstants.begin();
             i != arrivalInstants.end();
             i++
         )
     {
-        plotter.plot_x((*i).second, "Arrival time for task i");
+        std::string legend("Arrival time for task ");
+        legend.append(boost::lexical_cast<std::string>((*i).first));
+        std::vector<unsigned int> task((*i).second.size(), (*i).first);
+        plotter.plot_xy((*i).second, task, legend);
     }
+    for
+        (
+            std::map< unsigned int, std::vector<unsigned int> >::iterator i = deadlineMissInstants.begin();
+            i != deadlineMissInstants.end();
+            i++
+        )
+    {
+        std::string legend("Deadline miss for task ");
+        legend.append(boost::lexical_cast<std::string>((*i).first));
+        std::vector<unsigned int> task((*i).second.size(), (*i).first);
+        plotter.plot_xy((*i).second, task, legend);
+    }
+    plotter.plot_xy(endOfComputationInstants, endingTasks, "End of computation");
+    plotter.plot_xy(preemptionOriginInstants, preemptingOutTasks, "Preemption origin");
+    plotter.plot_xy(preemptionDestinationInstants, preemptingInTasks, "Preemption origin");
+    plotter.set_style("steps");
+    plotter.plot_xy(scheduleInstants, scheduledTasks, "Schedule");
+    char a = 'a';
+    std::cin >> a;
 }
