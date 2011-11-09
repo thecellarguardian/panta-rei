@@ -24,6 +24,7 @@
 #include "SchedulingEventType.h"
 #include "SchedulingEventVisitor.h"
 #include <iostream>
+#include <cassert>
 
 #ifndef VISITABLE_SCHEDULING_EVENT_H
 #define VISITABLE_SCHEDULING_EVENT_H
