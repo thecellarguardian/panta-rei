@@ -1,30 +1,25 @@
-create [periodic] task [args] (ret ID)
-set timer <tick, millis>
-set scheduler <EDF | RM | DM>
-simulate
-quit
-help
+
+command
+	create-statement
+	set-statement
+	:simulate:
+	:help:
+	:quit:
 
 create-statement
-	:create: object parameters
+	:create: object-statement
 	
-object
-	periodic-task
-	task
+object-statement
+	:periodic-task: int_(a) int_(C) int_(D) int_(T)
 	
-parameters
-	a C D
-	a C D T
-
-a
-	:literal:
-
-C
-	:literal:
-
-D
-	:literal:
-
-T
-	:literal:
-
+set-statement
+	:set: property-statement
+		
+property-statement
+	:timer-length: int_(length)
+	:scheduler: scheduling-algorithm
+	
+scheduling-algorithm
+	:RM:
+	:DM:
+	:EDF:
