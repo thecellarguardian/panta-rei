@@ -5,6 +5,15 @@
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
 
+class Interpreter
+{
+    
+};
+
+void f()
+{
+    std::cout << "ciao" << std::endl;
+}
 
 template <typename Iterator>
     int parse_integer(Iterator first, Iterator last)
@@ -18,7 +27,8 @@ template <typename Iterator>
         bool r = phrase_parse(first, last,
             //  Begin grammar
             (
-                    '(' >> boost::spirit::qi::int_[ref(rN) = _1] >> ')'
+                    "(" >> boost::spirit::qi::int_[ref(rN) = _1] >> ')' |
+                    boost::spirit::qi::string("ciao")[f]
             ),
             //  End grammar
             space);
