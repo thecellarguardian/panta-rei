@@ -25,6 +25,7 @@
 #include <vector>
 #include <map>
 #include <string>
+#include <iostream>
 
 #ifndef GNUPLOT_SCHEDULING_EVENT_VISITOR_H
 #define GNUPLOT_SCHEDULING_EVENT_VISITOR_H
@@ -76,6 +77,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         unsigned int instant = event->getInstant();
         arrivalInstants[subject].push_back(instant);
         updateTaskIDRange(subject);
+        std::cout
+            << "ARRIVAL scheduling event visited"
+            << std::endl;
     }
     void visit(VisitableSchedulingEvent<PENDING_ARRIVAL>* event)
     {
@@ -83,6 +87,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         unsigned int instant = event->getInstant();
         arrivalInstants[subject].push_back(instant);
         updateTaskIDRange(subject);
+        std::cout
+            << "PENDING_ARRIVAL scheduling event visited"
+            << std::endl;
     }
     void visit(VisitableSchedulingEvent<DEADLINE_MISS>* event)
     {
@@ -90,6 +97,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         unsigned int instant = event->getInstant();
         deadlineMissInstants[subject].push_back(instant);
         updateTaskIDRange(subject);
+        std::cout
+            << "DEADLINE_MISS scheduling event visited"
+            << std::endl;
     }
     void visit(VisitableSchedulingEvent<END_OF_COMPUTATION>* event)
     {
@@ -98,6 +108,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         endOfComputationInstants.push_back(instant);
         endingTasks.push_back(subject);
         updateTaskIDRange(subject);
+        std::cout
+            << "END_OF_COMPUTATION scheduling event visited"
+            << std::endl;
     }
     void visit(VisitableSchedulingEvent<SCHEDULE>* event)
     {
@@ -106,6 +119,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         scheduleInstants.push_back(instant);
         scheduledTasks.push_back(subject);
         updateTaskIDRange(subject);
+        std::cout
+            << "SCHEDULE scheduling event visited"
+            << std::endl;
     }
     void visit(VisitableSchedulingEvent<PREEMPTION_ORIGIN>* event)
     {
@@ -114,6 +130,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         preemptionOriginInstants.push_back(instant);
         preemptingOutTasks.push_back(subject);
         updateTaskIDRange(subject);
+        std::cout
+            << "PREEMPRION_ORIGIN scheduling event visited"
+            << std::endl;
     }
     void visit(VisitableSchedulingEvent<PREEMPTION_DESTINATION>* event)
     {
@@ -122,6 +141,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         preemptionDestinationInstants.push_back(instant);
         preemptingInTasks.push_back(subject);
         updateTaskIDRange(subject);
+        std::cout
+            << "PREEMPTION_DESTINATION scheduling event visited"
+            << std::endl;
     }
     void plot()
     {
@@ -152,11 +174,44 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
             std::vector<unsigned int> task((*i).second.size(), (*i).first);
             plotter.plot_xy((*i).second, task, legend);
         }
-        plotter.plot_xy(endOfComputationInstants, endingTasks, "End of computation");
-        plotter.plot_xy(preemptionOriginInstants, preemptingOutTasks, "Preemption origin");
-        plotter.plot_xy(preemptionDestinationInstants, preemptingInTasks, "Preemption origin");
+        char a = 'a';
+        std::cin >> a;
+        if(endOfComputationInstants.size() > 0)
+        {
+            plotter.plot_xy
+                (endOfComputationInstants, endingTasks, "End of computation");
+        }
+        std::cin >> a;
+        if(preemptionOriginInstants.size() > 0)
+        {
+            plotter.plot_xy
+                (
+                    preemptionOriginInstants,
+                    preemptingOutTasks,
+                    "Preemption origin"
+                );
+        }
+        std::cin >> a;
+        if(preemptionDestinationInstants.size() > 0)
+        {
+            plotter.plot_xy
+                (
+                    preemptionDestinationInstants,
+                    preemptingInTasks,
+                    "Preemption origin"
+                );
+        }
         plotter.set_style("steps");
-        plotter.plot_xy(scheduleInstants, scheduledTasks, "Schedule");
+        std::cin >> a;
+        if(scheduleInstants.size() > 0)
+        {
+            plotter.plot_xy
+                (
+                    scheduleInstants,
+                    scheduledTasks,
+                    "Schedule"
+                );
+        }
         plotter.plot_slope(0, 0, "IDLE");
         std::string continueString("unknown");
         while(continueString.compare("C") != 0 && continueString.compare("c") != 0)

@@ -18,6 +18,16 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include <boost/shared_ptr.hpp>
+#include "../Timer/Timer.h"
+#include "../SystemQueuesManager/SystemQueuesManager.h"
+#include "../Activator/Activator.h"
+#include "../Scheduler/Scheduler.h"
+#include "../Task/Task.h"
+#include "../History/History.h"
+#include "../../../lib/DesignPatterns/Visitor/VisitorAcceptor.h"
+#include "../../../lib/DesignPatterns/Visitor/Visitor.h"
+
 #ifndef SCHEDULING_SIMULATION_H
 #define SCHEDULING_SIMULATION_H
 
@@ -29,33 +39,55 @@
  * simulation property.
  **/
 
-class SchedulingSimulation
+class SchedulingSimulation : public VisitorAcceptor
 {
     private:
         Timer timer;
-        boost::shared_ptr<SystemQueuesManager>
+        boost::shared_ptr<SystemQueuesManager> systemQueues;
         boost::shared_ptr<Activator> activator;
         boost::shared_ptr<Scheduler> scheduler;
-        std::vector< boost::shared_ptr<Task> > tasks;
-        History< Event<unsigned int, unsigned int> >
-        boost::shared_ptr<SchedulingEventVisitor> simulationVisitor;
+        std::list< boost::shared_ptr<Task> > tasks;
+        History< Event<unsigned int, unsigned int> > history;
+        unsigned int taskIDGenerator;
     public:
         SchedulingSimulation();
         SchedulingSimulation
         (
             int simulationLength,
-            boost::shared_ptr<Scheduler> schedulerToSet,
-            boost::shared_ptr<SchedulingEventVisitor> simulationVisitorToSet
+            boost::shared_ptr<Scheduler> schedulerToSet
         );
-        void createPeriodicTask
+        unsigned int createPeriodicTask
         (
-            int arrivalTime,
-            int computationTime,
-            int relativeDeadline,
-            int period
+            unsigned int arrivalTime,
+            unsigned int computationTime,
+            unsigned int relativeDeadline,
+            unsigned int period
         );
         //TODO void removeTask ??
-        void setSimulationLength(int simulationLengthToSet);
-        template <typename SchedulingAlgorithm> void setSchedulingAlgorithm();
+        void setSimulationLength(unsigned int simulationLengthToSet);
+        /**
+         * @pre SchedulingAlgorithm must extend Scheduler.
+         **/
+        template <typename SchedulingAlgorithm> void setSchedulingAlgorithm
+            (
+                bool preemptiveFlag
+            )
+        {
+            boost::shared_ptr<Scheduler>
+                schedulingAlgorithm
+                    (
+                        new SchedulingAlgorithm
+                            (
+                                preemptiveFlag,
+                                systemQueues,
+                                &timer,
+                                activator
+                            )
+                    );
+            scheduler = schedulingAlgorithm;
+        }
         void simulate();
+        void accept(Visitor* visitor);
 };
+
+#endif

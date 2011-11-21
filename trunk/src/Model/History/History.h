@@ -61,6 +61,10 @@ template <typename EventType> class History
         }
         void accept(Visitor* visitor) //TODO IMPLEMENT ITERATORS FOR THE QUEUE LIB!
         {
+            std::cout
+                << "Accepting visitor, total history size: "
+                << this->size()
+                << std::endl;
             for(unsigned int i = 0; i < this->size(); i++)
             {
                 boost::shared_ptr<VisitorAcceptor> acceptor =
