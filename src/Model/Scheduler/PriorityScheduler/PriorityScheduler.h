@@ -43,6 +43,7 @@
  * lets the programmer bind this generic priority based scheduler to particular
  * priority policies.
  **/
+//TODO Use Boost Concept Check Library!
 template <typename PriorityComparator>class PriorityScheduler
     : public Scheduler
 {
