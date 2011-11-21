@@ -5,6 +5,7 @@
 #include <exception>
 #include <boost/spirit/include/phoenix_core.hpp>
 #include <boost/spirit/include/phoenix_operator.hpp>
+#include <boost/spirit/home/phoenix/bind/bind_member_function.hpp>
 
 void f()
 {
@@ -68,17 +69,21 @@ class CommandInterpreter
     	virtual void execute(std::string command) = 0;
 };
 
-class PantaReiCommandInterpreter : public CommandInterpreter
+/*template <Visitor>*/ class PantaReiCommandInterpreter : public CommandInterpreter
 {
+	private:
+		//SchedulingSimulation simulation;
+		//Visitor simulationVisitor;
+		void exit()
+		{
+			std::cout << "EXIT" << std::endl;
+			ExitException e;
+			throw e;
+		}
 	public:
 		PantaReiCommandInterpreter() : CommandInterpreter("Welcome!"){}
 		void execute(std::string command)
     	{
-    		if(command.compare("exit") == 0)
-    		{
-    			ExitException e;
-    			throw e;
-    		}
     		bool validCommand =
     			boost::spirit::qi::phrase_parse
     				(
@@ -86,8 +91,9 @@ class PantaReiCommandInterpreter : public CommandInterpreter
     					command.end(),
             			//  Begin grammar
             			(
-                    	boost::spirit::qi::string("f")[f] |
-                    	boost::spirit::qi::string("g")[g]
+            				boost::spirit::qi::string("exit")[boost::phoenix::bind(&PantaReiCommandInterpreter::exit, *this)] |
+                    		boost::spirit::qi::string("f")[f] |
+                    		boost::spirit::qi::string("g")[g]
             			),
             			//  End grammar
             			boost::spirit::ascii::space
