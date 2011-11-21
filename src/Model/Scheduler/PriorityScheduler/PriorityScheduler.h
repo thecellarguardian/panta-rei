@@ -62,11 +62,6 @@ template <typename PriorityComparator>class PriorityScheduler
          * simulation is concerned in single CPU systems, the best
          * implementation for the execution queue is a SingleSlotQueue.
          **/
-        boost::shared_ptr<Activator> activator;
-        /**<
-         * Shared pointer to the activator. The scheduler may need to reactivate
-         * a task, that operation is provided by the activator.
-         **/
          /**
           * Scheduling decision: the task in the execution queue is reactivated
           * and rescheduled at once.
@@ -121,8 +116,13 @@ template <typename PriorityComparator>class PriorityScheduler
                 boost::shared_ptr<Activator> activatorToSet
             )
             :
-            Scheduler(preemptiveFlag, systemQueuesToSet, timerToSet),
-            activator(activatorToSet)
+            Scheduler
+            (
+                preemptiveFlag,
+                systemQueuesToSet,
+                timerToSet,
+                activatorToSet
+            )
         {
             readyQueue->setImplementation
                 (readyQueueImplementationProvider.getImplementation());

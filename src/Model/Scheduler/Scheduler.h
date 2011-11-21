@@ -24,6 +24,7 @@
 #include "../../../lib/EventManagement/EventSource/EventSource.h"
 #include "../Task/Task.h"
 #include "../Timer/Timer.h"
+#include "../Activator/Activator.h"
 #include <boost/shared_ptr.hpp>
 
 #ifndef SCHEDULER_H
@@ -57,12 +58,18 @@ class Scheduler
          * Pointer to the Timer. A normal pointer is used, due to avoid
          * the shared pointer circular reference problem.
          **/
+         boost::shared_ptr<Activator> activator;
+        /**<
+         * Shared pointer to the activator. The scheduler may need to reactivate
+         * a task, that operation is provided by the activator.
+         **/
     public:
         Scheduler
             (
                 bool preemptiveFlag,
                 boost::shared_ptr<SystemQueuesManager> systemQueuesToSet,
-                Timer* timerToSet
+                Timer* timerToSet,
+                boost::shared_ptr<Activator> activatorToSet
             );
         virtual ~Scheduler();
         virtual void publishEvent
