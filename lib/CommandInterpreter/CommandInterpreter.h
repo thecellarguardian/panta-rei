@@ -21,17 +21,21 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <string>
+#include <exception>
 
 #ifndef COMMAND_INTERPRETER_H
 #define COMMAND_INTERPRETER_H
 
 /**
  * @class CommandInterpreter
- * @brief Brief.
- * Long explaination.
+ * @brief Generic command interpreter.
+ * A generic command interpreter. It's built using the Boost Spirit Qi
+ * framework. The particular grammar and behaviour can be defined in a Grammar
+ * class inheriting drom boost::spirit::qi::grammar, where it can be described
+ * using an EBNF-fashioned C++, toghether with the related semantic actions.
  **/
 
-template <typename Grammar> class CommandInterpreter
+template <typename EBNFGrammar> class CommandInterpreter
 {
     private:
         BOOST_STATIC_ASSERT
@@ -44,38 +48,45 @@ template <typename Grammar> class CommandInterpreter
                                     std::string::const_iterator,
                                     boost::spirit::ascii::space_type
                                 >,
-                            Grammar
+                            EBNFGrammar
                         >
                     ::value
                 )
             );
-        std::string command;
+        EBNFGrammar grammar;
         const std::string welcomeMessage;
     public:
-    	CommandInterpreter(std::string welcomeMessageToSet)
-    		: welcomeMessage(welcomeMessageToSet)
+        CommandInterpreter(std::string welcomeMessageToSet)
+            : welcomeMessage(welcomeMessageToSet)
+            {}
         void prompt()
-    	{
-    		std::cout << welcomeMessage << std::endl;
-    		std::string command;
-    		while(true)
-    		{
-    			std::cout << ">> ";
-    			std::cin >> command;
-    			try
-    			{
-    				execute(command);
-    			}
-    			catch(ExitException& exit)
-    			{
-    				break;
-    			}
-    			catch(std::exception& caughtException)
-    			{
-    				std::cout << caughtException.what() << std::endl;
-    			}
-    		}
-    	}
-}
+        {
+            std::cout << welcomeMessage << std::endl;
+            std::string command;
+            bool successfullParsing = false;
+            while(true)
+            {
+                try
+                {
+                    std::cout << ">> ";
+                    std::cin >> command;
+                    std::string::const_iterator commandBegin = command.begin();
+                    std::string::const_iterator commandEnd = command.end();
+                    successfullParsing =
+                        boost::spirit::qi::phrase_parse
+                            (
+                                commandBegin,
+                                commandEnd,
+                                grammar,
+                                boost::spirit::ascii::space
+                            );
+                }
+                catch(std::exception& caughtException)
+                {
+                    std::cout << caughtException.what() << std::endl;
+                }
+            }
+        }
+};
 
 #endif
