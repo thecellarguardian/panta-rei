@@ -14,8 +14,9 @@ void g()
 }
 
 template <typename Iterator>
-struct PantaReiGrammar : boost::spirit::qi::grammar<Iterator, /*valueType,*/ boost::spirit::ascii::space_type>
+class PantaReiGrammar : public boost::spirit::qi::grammar<Iterator, /*valueType,*/ boost::spirit::ascii::space_type>
 {
+    public:
     PantaReiGrammar() : PantaReiGrammar::base_type(start)
     {
         namespace qi = boost::spirit::qi;
