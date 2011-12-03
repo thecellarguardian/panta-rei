@@ -39,7 +39,7 @@ class InvalidCommandException : public std::exception
 class CommandInterpreter
 {
 	private:
-		std::string welcomeMessage;
+		const std::string welcomeMessage;
     public:
     	CommandInterpreter(std::string welcomeMessageToSet)
     		: welcomeMessage(welcomeMessageToSet)
@@ -75,8 +75,7 @@ class CommandInterpreter
 		//SchedulingSimulation simulation;
 		//Visitor simulationVisitor;
 		void exit()
-		{
-			std::cout << "EXIT" << std::endl;
+        {
 			ExitException e;
 			throw e;
 		}
@@ -87,12 +86,46 @@ class CommandInterpreter
     		bool validCommand =
     			boost::spirit::qi::phrase_parse
     				(
-    					command.begin(),
+                        command.begin(),
     					command.end(),
             			//  Begin grammar
             			(
-            				boost::spirit::qi::string("exit")[boost::phoenix::bind(&PantaReiCommandInterpreter::exit, *this)] |
-                    		boost::spirit::qi::string("f")[f] |
+                            //<command name="exit">
+            				(
+                                (
+                                    (
+                                        (
+                                            boost::spirit::qi::string("e")
+                                            |
+                                            boost::spirit::qi::string("E")
+                                        )
+                                        >>
+                                        -
+                                        (boost::spirit::qi::string("xit"))
+                                    )
+                                    |
+                                    (
+                                        boost::spirit::qi::string("q")
+                                        |
+                                        boost::spirit::qi::string("Q")
+                                    )
+                                    >>
+                                    -
+                                    (boost::spirit::qi::string("uit"))
+                                )
+                            )
+                            [boost::phoenix::bind(&PantaReiCommandInterpreter::exit, *this)]
+                            //</command>
+                            |
+                            //<command name="create">
+                    		boost::spirit::qi::string("create") 
+                            >>
+                            (
+                                boost::spirit::qi::string("periodictask")[f] |
+                                boost::spirit::qi::string("task")[g]
+                            )
+                            //</command">
+                            |
                     		boost::spirit::qi::string("g")[g]
             			),
             			//  End grammar
@@ -107,37 +140,10 @@ class CommandInterpreter
 
 };
 
-template <typename Iterator>
-    int parse_integer(Iterator first, Iterator last)
-    {
-        using boost::spirit::qi::double_;
-        using boost::spirit::qi::_1;
-        using boost::spirit::qi::phrase_parse;
-        using boost::spirit::ascii::space;
-        using boost::phoenix::ref;
-        int rN = 0;
-        bool r = phrase_parse(first, last,
-            //  Begin grammar
-            (
-                    "(" >> boost::spirit::qi::int_[ref(rN) = _1] >> ')' |
-                    boost::spirit::qi::string("ciao")[f]
-            ),
-            //  End grammar
-            space);
-
-        if (!r || first != last) // fail if we did not get a full match
-            return -1;
-        
-        return rN;
-    }
-
 //OK, IT WORKS!F
 
 int main()
 {
-    std::string s;
-    std::cin >> s;
-    std::cout << parse_integer(s.begin(), s.end()) << std::endl;
     PantaReiCommandInterpreter C;
     C.prompt();
     return 0;
