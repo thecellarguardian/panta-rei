@@ -35,7 +35,7 @@
  * using an EBNF-fashioned C++, toghether with the related semantic actions.
  **/
 
-template <typename EBNFGrammar> class CommandInterpreter
+template <typename Syntax> class CommandInterpreter
 {
     private:
         BOOST_STATIC_ASSERT
@@ -48,12 +48,12 @@ template <typename EBNFGrammar> class CommandInterpreter
                                     std::string::const_iterator,
                                     boost::spirit::ascii::space_type
                                 >,
-                            EBNFGrammar
+                            Syntax
                         >
                     ::value
                 )
             );
-        EBNFGrammar grammar;
+        Syntax grammar;
         const std::string welcomeMessage;
     public:
         CommandInterpreter(std::string welcomeMessageToSet)
@@ -73,7 +73,7 @@ template <typename EBNFGrammar> class CommandInterpreter
                     std::string::const_iterator commandBegin = command.begin();
                     std::string::const_iterator commandEnd = command.end();
                     successfullParsing =
-                        boost::spirit::qi::phrase_parse
+                        phrase_parse
                             (
                                 commandBegin,
                                 commandEnd,
