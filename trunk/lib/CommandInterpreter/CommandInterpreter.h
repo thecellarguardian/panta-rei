@@ -35,7 +35,7 @@
  * using an EBNF-fashioned C++, toghether with the related semantic actions.
  **/
 
-template <typename Syntax> class CommandInterpreter
+template <typename Language> class CommandInterpreter
 {
     private:
         BOOST_STATIC_ASSERT
@@ -48,12 +48,12 @@ template <typename Syntax> class CommandInterpreter
                                     std::string::const_iterator,
                                     boost::spirit::ascii::space_type
                                 >,
-                            Syntax
+                            Language
                         >
                     ::value
                 )
             );
-        Syntax grammar;
+        Language grammar;
         const std::string welcomeMessage;
     public:
         CommandInterpreter(std::string welcomeMessageToSet)

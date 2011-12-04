@@ -103,46 +103,12 @@ class PantaReiSyntax : public qi::grammar<Iterator, ascii::space_type>
             boost::spirit::qi::lit("EDF")
         ;
     }
-    boost::spirit::qi::rule
-        <
-            Iterator,
-            boost::spirit::ascii::space_type
-        >
-        command
-    ;
-    boost::spirit::qi::rule
-        <
-            Iterator,
-            boost::spirit::ascii::space_type
-        >
-        createStatement
-    ;
-    boost::spirit::qi::rule
-        <
-            Iterator,
-            boost::spirit::ascii::space_type
-        >
-        setStatement
-    ;
-    boost::spirit::qi::rule
-        <
-            Iterator,
-            boost::spirit::ascii::space_type
-        >
-        objectStatement
-    ;
-    boost::spirit::qi::rule
-        <
-            Iterator,
-            boost::spirit::ascii::space_type
-        >
-        propertyStatement
-    ;
-    boost::spirit::qi::rule
-        <
-            Iterator,
-            boost::spirit::ascii::space_type
-        >
+    boost::spirit::qi::rule<Iterator, boost::spirit::ascii::space_type>
+        command,
+        createStatement,
+        setStatement,
+        objectStatement,
+        propertyStatement,
         schedulingAlgorithm
     ;
 };
