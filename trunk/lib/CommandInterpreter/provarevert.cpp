@@ -19,6 +19,7 @@
 #include <boost/spirit/include/phoenix_operator.hpp>
 #include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/home/phoenix/bind/bind_function.hpp>
+#include <boost/spirit/home/phoenix/bind/bind_member_function.hpp>
 #include <boost/fusion/include/adapt_struct.hpp>
 #include <boost/fusion/include/io.hpp>
 #include <boost/bind.hpp>
@@ -53,11 +54,21 @@ void parametri(unsigned int a, unsigned int b, unsigned int c, unsigned int d)
     std::cout << a << b << c << d << std::endl;
 }
 
+class wrappingClass
+{
+    public:
+        void parametri(unsigned int a, unsigned int b, unsigned int c, unsigned int d)
+        {
+            std::cout << a << b << c << d << std::endl;
+        }
+};
+
 namespace qi = boost::spirit::qi;
 namespace ascii = boost::spirit::ascii;
 template <typename Iterator>
 class PantaReiSyntax : public qi::grammar<Iterator, ascii::space_type>
 {
+    wrappingClass wC;
     public:
     PantaReiSyntax() : PantaReiSyntax::base_type(command)
     {
@@ -86,7 +97,8 @@ class PantaReiSyntax : public qi::grammar<Iterator, ascii::space_type>
                 boost::spirit::qi::uint_
             )
             [
-                boost::phoenix::bind(&parametri, boost::spirit::qi::_1, boost::spirit::qi::_2, boost::spirit::qi::_3, boost::spirit::qi::_4)
+                //boost::phoenix::bind(&parametri, boost::spirit::qi::_1, boost::spirit::qi::_2, boost::spirit::qi::_3, boost::spirit::qi::_4)
+                boost::phoenix::bind(&wrappingClass::parametri, wC, boost::spirit::qi::_1, boost::spirit::qi::_2, boost::spirit::qi::_3, boost::spirit::qi::_4)
             ]
         ;
         propertyStatement %=
