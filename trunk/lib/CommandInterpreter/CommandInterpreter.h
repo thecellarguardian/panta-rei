@@ -63,28 +63,34 @@ template <typename Syntax> class CommandInterpreter
         {
             std::cout << welcomeMessage << std::endl;
             std::string command;
-            bool successfullParsing = false;
-            while(true)
+            std::cout << ">> ";
+            while(getline(std::cin, command))
             {
                 try
                 {
-                    std::cout << ">> ";
-                    std::cin >> command;
                     std::string::const_iterator commandBegin = command.begin();
                     std::string::const_iterator commandEnd = command.end();
-                    successfullParsing =
-                        phrase_parse
-                            (
-                                commandBegin,
-                                commandEnd,
-                                grammar,
-                                boost::spirit::ascii::space
-                            );
+                    if
+                        (
+                            !
+                            phrase_parse
+                                (
+                                    commandBegin,
+                                    commandEnd,
+                                    grammar,
+                                    boost::spirit::ascii::space
+                                )
+                        )
+                    {
+                        std::exception e;
+                        throw e;
+                    }
                 }
                 catch(std::exception& caughtException)
                 {
                     std::cout << caughtException.what() << std::endl;
                 }
+                std::cout << ">> ";
             }
         }
 };
