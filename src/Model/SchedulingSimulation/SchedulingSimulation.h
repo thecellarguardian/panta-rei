@@ -19,6 +19,8 @@
  **/
 
 #include <boost/shared_ptr.hpp>
+#include <iostream>
+#include <typeinfo>
 #include "../Timer/Timer.h"
 #include "../SystemQueuesManager/SystemQueuesManager.h"
 #include "../Activator/Activator.h"
@@ -73,6 +75,7 @@ class SchedulingSimulation : public VisitorAcceptor
                 bool preemptiveFlag
             )
         {
+            std::cout << "The old scheduler address was " << (void*)scheduler.get() << std::endl;
             boost::shared_ptr<Scheduler>
                 schedulingAlgorithm
                     (
@@ -85,6 +88,7 @@ class SchedulingSimulation : public VisitorAcceptor
                             )
                     );
             scheduler = schedulingAlgorithm;
+            std::cout << "The new scheduler address is " << (void*)scheduler.get() << std::endl;
         }
         void simulate();
         void accept(Visitor* visitor);

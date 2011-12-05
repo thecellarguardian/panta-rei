@@ -20,19 +20,14 @@
  
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/include/phoenix_core.hpp>
-#include <boost/spirit/include/phoenix_operator.hpp>
-#include <boost/spirit/include/phoenix_object.hpp>
 #include <boost/spirit/home/phoenix/bind/bind_function.hpp>
 #include <boost/spirit/home/phoenix/bind/bind_member_function.hpp>
-#include <boost/fusion/include/adapt_struct.hpp>
-#include <boost/fusion/include/io.hpp>
-#include <boost/bind.hpp>
-
 #include <iostream>
 #include <string>
-#include <complex>
-#include <typeinfo>
+#include "../../Model/SchedulingSimulation/SchedulingSimulation.h"
+#include "../../Model/Scheduler/RateMonotonic/RateMonotonic.h"
+#include "../../Model/Scheduler/DeadlineMonotonic/DeadlineMonotonic.h"
+#include "../../Model/Scheduler/EarliestDeadlineFirst/EarliestDeadlineFirst.h"
 
 #ifndef PANTA_REI_LANGUAGE_H
 #define PANTA_REI_LANGUAGE_H
@@ -49,21 +44,33 @@
 //TODO higher abstraction of the language concept, something like:
 //a Language is something composed by a Syntax, a Semantic and relations between
 //those objects.
-namespace qi = boost::spirit::qi;
-namespace ascii = boost::spirit::ascii;
-template <typename Iterator>
-class PantaReiSyntax : public qi::grammar<Iterator, ascii::space_type>
+
+class PantaReiLanguage :
+    public
+    boost::spirit::qi::grammar
+        <
+            std::string::const_iterator,
+            boost::spirit::ascii::space_type
+        >
 {
-    wrappingClass wC;
+    SchedulingSimulation simulationEnvironment;
     public:
-    PantaReiSyntax() : PantaReiSyntax::base_type(command)
+    PantaReiLanguage() : PantaReiLanguage::base_type(command)
     {
         command %=
             createStatement                    |
             setStatement                       |
-            boost::spirit::qi::lit("simulate")[f] |
-            boost::spirit::qi::lit("help")[g]     |
-            boost::spirit::qi::lit("quit")[h]
+            boost::spirit::qi::lit("simulate")
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::simulate,
+                            simulationEnvironment
+                        )
+                ]
+            |
+            boost::spirit::qi::lit("help")     |
+            boost::spirit::qi::lit("quit")
         ;
         createStatement %=
             boost::spirit::qi::lit("create") >>
@@ -76,27 +83,38 @@ class PantaReiSyntax : public qi::grammar<Iterator, ascii::space_type>
         objectStatement %=
             (
                 boost::spirit::qi::lit("periodic") >>
-                boost::spirit::qi::lit("task") >>
-                boost::spirit::qi::uint_ >>
-                boost::spirit::qi::uint_ >>
-                boost::spirit::qi::uint_ >>
+                boost::spirit::qi::lit("task")     >>
+                boost::spirit::qi::uint_           >>
+                boost::spirit::qi::uint_           >>
+                boost::spirit::qi::uint_           >>
                 boost::spirit::qi::uint_
             )
             [
-                //boost::phoenix::bind(&parametri, boost::spirit::qi::_1, boost::spirit::qi::_2, boost::spirit::qi::_3, boost::spirit::qi::_4)
-                boost::phoenix::bind(&wrappingClass::parametri, wC, boost::spirit::qi::_1, boost::spirit::qi::_2, boost::spirit::qi::_3, boost::spirit::qi::_4)
+                boost::phoenix::bind
+                    (
+                        &SchedulingSimulation::createPeriodicTask,
+                        simulationEnvironment,
+                        boost::spirit::qi::_1,
+                        boost::spirit::qi::_2,
+                        boost::spirit::qi::_3,
+                        boost::spirit::qi::_4
+                    )
             ]
         ;
         propertyStatement %=
             (
                 boost::spirit::qi::lit("simulation") >>
-                boost::spirit::qi::lit("length") >>
+                boost::spirit::qi::lit("length")     >>
                 boost::spirit::qi::uint_
             )
-            [
-                //boost::bind(&parametri, _2, 0, 0, 0)
-                f
-            ]
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::setSimulationLength,
+                            simulationEnvironment,
+                            boost::spirit::qi::_1
+                        )
+                ]
             |
             (
                 boost::spirit::qi::lit("scheduler") >>
@@ -104,12 +122,78 @@ class PantaReiSyntax : public qi::grammar<Iterator, ascii::space_type>
             )
         ;
         schedulingAlgorithm %=
-            boost::spirit::qi::lit("RM")  |
-            boost::spirit::qi::lit("DM")  |
-            boost::spirit::qi::lit("EDF")
+            boost::spirit::qi::lit("PRM")
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::
+                                setSchedulingAlgorithm<RateMonotonic>,
+                            simulationEnvironment,
+                            true
+                        )
+                ]
+            |
+            boost::spirit::qi::lit("NPRM")
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::
+                                setSchedulingAlgorithm<RateMonotonic>,
+                            simulationEnvironment,
+                            false
+                        )
+                ]
+            |
+            boost::spirit::qi::lit("PDM")
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::
+                                setSchedulingAlgorithm<DeadlineMonotonic>,
+                            simulationEnvironment,
+                            true
+                        )
+                ]
+            |
+            boost::spirit::qi::lit("NPDM")
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::
+                                setSchedulingAlgorithm<DeadlineMonotonic>,
+                            simulationEnvironment,
+                            false
+                        )
+                ]
+            |
+            boost::spirit::qi::lit("PEDF")
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::
+                                setSchedulingAlgorithm<EarliestDeadlineFirst>,
+                            simulationEnvironment,
+                            true
+                        )
+                ]
+            |
+            boost::spirit::qi::lit("NPEDF")
+                [
+                    boost::phoenix::bind
+                        (
+                            &SchedulingSimulation::
+                                setSchedulingAlgorithm<EarliestDeadlineFirst>,
+                            simulationEnvironment,
+                            false
+                        )
+                ]
         ;
     }
-    boost::spirit::qi::rule<Iterator, boost::spirit::ascii::space_type>
+    boost::spirit::qi::rule
+        <
+            std::string::const_iterator,
+            boost::spirit::ascii::space_type
+        >
         command,
         createStatement,
         setStatement,
