@@ -20,16 +20,20 @@
 
 #include "SchedulingSimulation.h"
 #include "../Task/PeriodicTask/PeriodicTask.h"
+#include "../Scheduler/RateMonotonic/RateMonotonic.h"
 #include <cassert>
+#include <iostream>
 
 SchedulingSimulation::SchedulingSimulation()
     :
     timer(1, 25),
     systemQueues(new SystemQueuesManager()),
     activator(new Activator(systemQueues, &timer)), //No initialization issues
-    //scheduler(NULL), This is done implicitly
     taskIDGenerator(1)
-{}
+{
+    std::cout << "SchedulingSimulation::SchedulingSimulation()" << std::endl;
+    setSchedulingAlgorithm<RateMonotonic>(true);
+}
 
 SchedulingSimulation::SchedulingSimulation
 (

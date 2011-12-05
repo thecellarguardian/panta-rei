@@ -70,4 +70,7 @@ Scheduler::Scheduler
     //</reduntant code to refactor>
 }
 
-Scheduler::~Scheduler(){}
+Scheduler::~Scheduler()
+{
+    timer->detach(this);
+}
