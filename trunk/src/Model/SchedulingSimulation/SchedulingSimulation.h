@@ -75,9 +75,17 @@ class SchedulingSimulation : public VisitorAcceptor
                 bool preemptiveFlag
             )
         {
+            //TODO: the registration mechanics are awful. The current situation
+            //is the following:
+            //the new scheduler has to relace exactly the old one in the timer's
+            //attachedObservers list, so it 
             std::cout << "The old scheduler address was " << (void*)scheduler.get() << std::endl;
+            if(scheduler.get() != NULL)
+            {
+                scheduler->detach(&history);
+            }
             boost::shared_ptr<Scheduler>
-                schedulingAlgorithm
+                newScheduler
                     (
                         new SchedulingAlgorithm
                             (
@@ -87,7 +95,9 @@ class SchedulingSimulation : public VisitorAcceptor
                                 activator
                             )
                     );
-            scheduler = schedulingAlgorithm;
+            timer.detach(newScheduler.get());
+            timer.substitute(scheduler.get(), newScheduler.get());
+            scheduler = newScheduler;
             std::cout << "The new scheduler address is " << (void*)scheduler.get() << std::endl;
         }
         void simulate();

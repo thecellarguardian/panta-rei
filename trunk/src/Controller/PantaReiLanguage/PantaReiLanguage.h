@@ -28,6 +28,7 @@
 #include "../../Model/Scheduler/RateMonotonic/RateMonotonic.h"
 #include "../../Model/Scheduler/DeadlineMonotonic/DeadlineMonotonic.h"
 #include "../../Model/Scheduler/EarliestDeadlineFirst/EarliestDeadlineFirst.h"
+#include "../../View/GnuplotSchedulingEventVisitor/GnuplotSchedulingEventVisitor.h"
 
 #ifndef PANTA_REI_LANGUAGE_H
 #define PANTA_REI_LANGUAGE_H
@@ -53,154 +54,166 @@ class PantaReiLanguage :
             boost::spirit::ascii::space_type
         >
 {
-    SchedulingSimulation simulationEnvironment;
+    private:
+        SchedulingSimulation simulationEnvironment;
+        GnuplotSchedulingEventVisitor viewVisitor;
     public:
-    PantaReiLanguage() : PantaReiLanguage::base_type(command)
-    {
-        command %=
-            createStatement                    |
-            setStatement                       |
-            boost::spirit::qi::lit("simulate")
+        PantaReiLanguage() : PantaReiLanguage::base_type(command)
+        {
+            command %=
+                createStatement                    |
+                setStatement                       |
+                boost::spirit::qi::lit("simulate")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::simulate,
+                                simulationEnvironment
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("view")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &GnuplotSchedulingEventVisitor::defaultVisit,
+                                viewVisitor,
+                                &simulationEnvironment
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("help")     |
+                boost::spirit::qi::lit("quit")
+            ;
+            createStatement %=
+                boost::spirit::qi::lit("create") >>
+                objectStatement
+            ;
+            setStatement %=
+                boost::spirit::qi::lit("set") >>
+                propertyStatement
+            ;
+            objectStatement %=
+                (
+                    boost::spirit::qi::lit("periodic") >>
+                    boost::spirit::qi::lit("task")     >>
+                    boost::spirit::qi::uint_           >>
+                    boost::spirit::qi::uint_           >>
+                    boost::spirit::qi::uint_           >>
+                    boost::spirit::qi::uint_
+                )
                 [
                     boost::phoenix::bind
                         (
-                            &SchedulingSimulation::simulate,
-                            simulationEnvironment
+                            &SchedulingSimulation::createPeriodicTask,
+                            simulationEnvironment,
+                            boost::spirit::qi::_1,
+                            boost::spirit::qi::_2,
+                            boost::spirit::qi::_3,
+                            boost::spirit::qi::_4
                         )
                 ]
-            |
-            boost::spirit::qi::lit("help")     |
-            boost::spirit::qi::lit("quit")
+            ;
+            propertyStatement %=
+                (
+                    boost::spirit::qi::lit("simulation") >>
+                    boost::spirit::qi::lit("length")     >>
+                    boost::spirit::qi::uint_
+                )
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::setSimulationLength,
+                                simulationEnvironment,
+                                boost::spirit::qi::_1
+                            )
+                    ]
+                |
+                (
+                    boost::spirit::qi::lit("scheduler") >>
+                    schedulingAlgorithm
+                )
+            ;
+            schedulingAlgorithm %=
+                boost::spirit::qi::lit("PRM")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::
+                                    setSchedulingAlgorithm<RateMonotonic>,
+                                simulationEnvironment,
+                                true
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("NPRM")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::
+                                    setSchedulingAlgorithm<RateMonotonic>,
+                                simulationEnvironment,
+                                false
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("PDM")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::
+                                    setSchedulingAlgorithm<DeadlineMonotonic>,
+                                simulationEnvironment,
+                                true
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("NPDM")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::
+                                    setSchedulingAlgorithm<DeadlineMonotonic>,
+                                simulationEnvironment,
+                                false
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("PEDF")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::
+                                    setSchedulingAlgorithm<EarliestDeadlineFirst>,
+                                simulationEnvironment,
+                                true
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("NPEDF")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::
+                                    setSchedulingAlgorithm<EarliestDeadlineFirst>,
+                                simulationEnvironment,
+                                false
+                            )
+                    ]
+            ;
+        }
+        boost::spirit::qi::rule
+            <
+                std::string::const_iterator,
+                boost::spirit::ascii::space_type
+            >
+            command,
+            createStatement,
+            setStatement,
+            objectStatement,
+            propertyStatement,
+            schedulingAlgorithm
         ;
-        createStatement %=
-            boost::spirit::qi::lit("create") >>
-            objectStatement
-        ;
-        setStatement %=
-            boost::spirit::qi::lit("set") >>
-            propertyStatement
-        ;
-        objectStatement %=
-            (
-                boost::spirit::qi::lit("periodic") >>
-                boost::spirit::qi::lit("task")     >>
-                boost::spirit::qi::uint_           >>
-                boost::spirit::qi::uint_           >>
-                boost::spirit::qi::uint_           >>
-                boost::spirit::qi::uint_
-            )
-            [
-                boost::phoenix::bind
-                    (
-                        &SchedulingSimulation::createPeriodicTask,
-                        simulationEnvironment,
-                        boost::spirit::qi::_1,
-                        boost::spirit::qi::_2,
-                        boost::spirit::qi::_3,
-                        boost::spirit::qi::_4
-                    )
-            ]
-        ;
-        propertyStatement %=
-            (
-                boost::spirit::qi::lit("simulation") >>
-                boost::spirit::qi::lit("length")     >>
-                boost::spirit::qi::uint_
-            )
-                [
-                    boost::phoenix::bind
-                        (
-                            &SchedulingSimulation::setSimulationLength,
-                            simulationEnvironment,
-                            boost::spirit::qi::_1
-                        )
-                ]
-            |
-            (
-                boost::spirit::qi::lit("scheduler") >>
-                schedulingAlgorithm
-            )
-        ;
-        schedulingAlgorithm %=
-            boost::spirit::qi::lit("PRM")
-                [
-                    boost::phoenix::bind
-                        (
-                            &SchedulingSimulation::
-                                setSchedulingAlgorithm<RateMonotonic>,
-                            simulationEnvironment,
-                            true
-                        )
-                ]
-            |
-            boost::spirit::qi::lit("NPRM")
-                [
-                    boost::phoenix::bind
-                        (
-                            &SchedulingSimulation::
-                                setSchedulingAlgorithm<RateMonotonic>,
-                            simulationEnvironment,
-                            false
-                        )
-                ]
-            |
-            boost::spirit::qi::lit("PDM")
-                [
-                    boost::phoenix::bind
-                        (
-                            &SchedulingSimulation::
-                                setSchedulingAlgorithm<DeadlineMonotonic>,
-                            simulationEnvironment,
-                            true
-                        )
-                ]
-            |
-            boost::spirit::qi::lit("NPDM")
-                [
-                    boost::phoenix::bind
-                        (
-                            &SchedulingSimulation::
-                                setSchedulingAlgorithm<DeadlineMonotonic>,
-                            simulationEnvironment,
-                            false
-                        )
-                ]
-            |
-            boost::spirit::qi::lit("PEDF")
-                [
-                    boost::phoenix::bind
-                        (
-                            &SchedulingSimulation::
-                                setSchedulingAlgorithm<EarliestDeadlineFirst>,
-                            simulationEnvironment,
-                            true
-                        )
-                ]
-            |
-            boost::spirit::qi::lit("NPEDF")
-                [
-                    boost::phoenix::bind
-                        (
-                            &SchedulingSimulation::
-                                setSchedulingAlgorithm<EarliestDeadlineFirst>,
-                            simulationEnvironment,
-                            false
-                        )
-                ]
-        ;
-    }
-    boost::spirit::qi::rule
-        <
-            std::string::const_iterator,
-            boost::spirit::ascii::space_type
-        >
-        command,
-        createStatement,
-        setStatement,
-        objectStatement,
-        propertyStatement,
-        schedulingAlgorithm
-    ;
 };
 
 #endif

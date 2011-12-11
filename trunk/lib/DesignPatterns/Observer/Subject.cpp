@@ -19,6 +19,7 @@
  **/
 
 #include "Subject.h"
+#include <iostream>
 
 Subject::~Subject(){}
 
@@ -30,6 +31,24 @@ void Subject::attach(Observer* observerToAttach)
 void Subject::detach(Observer* observerToDetach)
 {
     attachedObservers.remove(observerToDetach);
+}
+
+void Subject::substitute(Observer* observerToSubstitute, Observer* substitute)
+{
+    for
+        (
+            std::list<Observer*>::iterator i = attachedObservers.begin();
+            i != attachedObservers.end();
+            i++
+        )
+    {
+        if((*i) == observerToSubstitute)
+        {
+            std::cout << "_SUBSTITUTION_" << std::endl;
+            (*i) = substitute;
+            break;
+        }
+    }
 }
 
 void Subject::notify()

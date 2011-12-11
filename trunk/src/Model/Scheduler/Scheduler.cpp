@@ -34,7 +34,10 @@ Scheduler::Scheduler
     timer(timerToSet),
     activator(activatorToSet)
 {
-    timer->attach(this);
+    if(timer != NULL)
+    {
+        timer->attach(this);
+    }
     readyQueue = (*systemQueues)["ready"];
     executionQueue = (*systemQueues)["execution"];
     /*
@@ -72,5 +75,8 @@ Scheduler::Scheduler
 
 Scheduler::~Scheduler()
 {
-    timer->detach(this);
+    if(timer != NULL)
+    {
+        timer->detach(this);
+    }
 }

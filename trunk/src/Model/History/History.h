@@ -76,6 +76,7 @@ template <typename EventType> class History
         }
         void registerToEventSource(EventSource<EventType>* eventSource)
         {
+            std::cout << "Registering to event source: " << (void*)eventSource << std::endl;
             eventSource->attach(this);
         }
 };
