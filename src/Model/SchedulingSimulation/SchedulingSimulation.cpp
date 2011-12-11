@@ -21,6 +21,7 @@
 #include "SchedulingSimulation.h"
 #include "../Task/PeriodicTask/PeriodicTask.h"
 #include "../Scheduler/RateMonotonic/RateMonotonic.h"
+#include "../Scheduler/EarliestDeadlineFirst/EarliestDeadlineFirst.h"
 #include <cassert>
 #include <iostream>
 
@@ -29,11 +30,9 @@ SchedulingSimulation::SchedulingSimulation()
     timer(1, 25),
     systemQueues(new SystemQueuesManager()),
     activator(new Activator(systemQueues, &timer)), //No initialization issues
+    scheduler(new RateMonotonic(true,systemQueues, &timer,activator)),
     taskIDGenerator(1)
-{
-    std::cout << "SchedulingSimulation::SchedulingSimulation()" << std::endl;
-    setSchedulingAlgorithm<RateMonotonic>(true);
-}
+{}
 
 SchedulingSimulation::SchedulingSimulation
 (
@@ -71,7 +70,12 @@ unsigned int SchedulingSimulation::createPeriodicTask
     tasks.push_back(newPeriodicTask);
     taskIDGenerator++;
     //If, after the increment, taskIDGenerator is 0, an overflow happened
-    assert(taskIDGenerator != 0); 
+    assert(taskIDGenerator != 0);
+    std::cout << "New periodic task created" << std::endl;
+    std::cout << "arrival time: " << arrivalTime << std::endl;
+    std::cout << "computation time: " << computationTime << std::endl;
+    std::cout << "relative deadline: " << relativeDeadline << std::endl;
+    std::cout << "period: " << period << std::endl;
 }
 
 //TODO void removeTask(unsigned int taskID)??
@@ -84,6 +88,8 @@ void SchedulingSimulation::setSimulationLength(unsigned int simulationLengthToSe
 void SchedulingSimulation::simulate()
 {
     assert(scheduler.get() != NULL);
+    std::cout << "SIMULATION BEGIN" << std::endl;
+    std::cout << "scheduler: " << (void*)scheduler.get() << std::endl;
     history.registerToEventSource(activator.get());
     history.registerToEventSource(scheduler.get());
     for

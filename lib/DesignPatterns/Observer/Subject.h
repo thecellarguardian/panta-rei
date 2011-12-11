@@ -56,6 +56,15 @@ class Subject
          **/
         virtual void detach(Observer* observerToDetach);
         /**
+         * This method substitutes an observer with another.
+         * @param observerToSubstitute Observer to substitute.
+         * @param substitute The substitute observer.
+         **/
+        virtual void substitute
+            (
+                Observer* observerToSubstitute, Observer* substitute
+            );
+        /**
          * Each registered Observer is notified about the new state of
          * the Subject.
          **/

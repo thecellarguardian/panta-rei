@@ -174,14 +174,11 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
             std::vector<unsigned int> task((*i).second.size(), (*i).first);
             plotter.plot_xy((*i).second, task, legend);
         }
-        char a = 'a';
-        std::cin >> a;
         if(endOfComputationInstants.size() > 0)
         {
             plotter.plot_xy
                 (endOfComputationInstants, endingTasks, "End of computation");
         }
-        std::cin >> a;
         if(preemptionOriginInstants.size() > 0)
         {
             plotter.plot_xy
@@ -191,18 +188,16 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
                     "Preemption origin"
                 );
         }
-        std::cin >> a;
         if(preemptionDestinationInstants.size() > 0)
         {
             plotter.plot_xy
                 (
                     preemptionDestinationInstants,
                     preemptingInTasks,
-                    "Preemption origin"
+                    "Preemption destination"
                 );
         }
         plotter.set_style("steps");
-        std::cin >> a;
         if(scheduleInstants.size() > 0)
         {
             plotter.plot_xy
@@ -213,12 +208,11 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
                 );
         }
         plotter.plot_slope(0, 0, "IDLE");
-        std::string continueString("unknown");
-        while(continueString.compare("C") != 0 && continueString.compare("c") != 0)
-        {
-            std::cout << "Press C+[Enter] to continue" << std::endl;
-            std::cin >> continueString;
-        }
+    }
+    void defaultVisit(VisitorAcceptor* visitorAcceptor)
+    {
+        visitorAcceptor->accept(this);
+        plot();
     }
 };
 
