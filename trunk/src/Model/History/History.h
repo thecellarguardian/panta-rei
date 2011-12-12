@@ -79,6 +79,12 @@ template <typename EventType> class History
             std::cout << "Registering to event source: " << (void*)eventSource << std::endl;
             eventSource->attach(this);
         }
+        void clear()
+        {
+            boost::shared_ptr< FIFOQueueImplementation<EventType> >
+                implementation(new FIFOQueueImplementation<EventType>);
+            setImplementation(implementation);
+        }
 };
 
 #endif

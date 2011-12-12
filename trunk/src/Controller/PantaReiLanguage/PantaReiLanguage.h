@@ -17,7 +17,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
- 
+
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <boost/spirit/home/phoenix/bind/bind_function.hpp>
@@ -75,6 +75,7 @@ class PantaReiLanguage :
                 << "\t<setStatement>    |\n"
                 << "\t<viewStatement>   |\n"
                 << "\tsimulate          |\n"
+                << "\tclear             |\n"
                 << "\thelp              |\n"
                 << "\tquit\n" << std::endl;
             std::cout
@@ -117,6 +118,15 @@ class PantaReiLanguage :
                         boost::phoenix::bind
                             (
                                 &SchedulingSimulation::simulate,
+                                simulationEnvironment
+                            )
+                    ]
+                |
+                boost::spirit::qi::lit("clear")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &SchedulingSimulation::clear,
                                 simulationEnvironment
                             )
                     ]

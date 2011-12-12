@@ -213,6 +213,32 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
     {
         visitorAcceptor->accept(this);
         plot();
+        clear();
+    }
+    void clear()
+    {
+        arrivalInstants.erase(arrivalInstants.begin(), arrivalInstants.end());
+        deadlineMissInstants.erase
+            (deadlineMissInstants.begin(), deadlineMissInstants.end());
+        endOfComputationInstants.erase
+            (endOfComputationInstants.begin(), endOfComputationInstants.end());
+        endingTasks.erase(endingTasks.begin(), endingTasks.end());
+        scheduleInstants.erase(scheduleInstants.begin(), scheduleInstants.end());
+        scheduledTasks.erase(scheduledTasks.begin(), scheduledTasks.end());
+        preemptionOriginInstants.erase
+            (preemptionOriginInstants.begin(), preemptionOriginInstants.end());
+        preemptingOutTasks.erase
+            (preemptingOutTasks.begin(), preemptingOutTasks.end());
+        preemptionDestinationInstants.erase
+            (
+                preemptionDestinationInstants.begin(),
+                preemptionDestinationInstants.end()
+            );
+        preemptingInTasks.erase
+            (preemptingInTasks.begin(), preemptingInTasks.end());
+        lowestTaskID = 1;
+        highestTaskID = 1;
+        plotter.reset_plot();
     }
 };
 
