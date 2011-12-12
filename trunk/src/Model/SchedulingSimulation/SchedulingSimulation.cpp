@@ -111,6 +111,7 @@ void SchedulingSimulation::simulate()
         activator->registerForActivation(*i);
     }
     timer.start();
+    timer.reset();
 }
 
 void SchedulingSimulation::accept(Visitor* visitor)

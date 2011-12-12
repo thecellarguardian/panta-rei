@@ -60,6 +60,7 @@ class Timer : public Subject
          * and then waits for timeSlice ms.
          **/
         void start();
+        void reset();
 };
 
 #endif

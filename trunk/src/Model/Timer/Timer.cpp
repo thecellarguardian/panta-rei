@@ -80,3 +80,8 @@ void Timer::start()
         //Boost sleep is used for portability
     }
 }
+
+void Timer::reset()
+{
+    clock = 0;
+}
