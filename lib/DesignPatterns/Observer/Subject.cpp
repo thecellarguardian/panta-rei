@@ -31,6 +31,13 @@ void Subject::attach(Observer* observerToAttach)
 void Subject::detach(Observer* observerToDetach)
 {
     attachedObservers.remove(observerToDetach);
+    //Notice that this operation will remove the pointer, not the object!
+}
+
+void Subject::detachAll()
+{
+    attachedObservers.erase(attachedObservers.begin(), attachedObservers.end());
+    //Notice that this operation will remove the pointers, not the objects!
 }
 
 void Subject::substitute(Observer* observerToSubstitute, Observer* substitute)

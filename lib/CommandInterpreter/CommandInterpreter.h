@@ -23,6 +23,7 @@
 #include <string>
 #include <exception>
 #include "ExitException.h"
+#include "BadSyntaxException.h"
 
 #ifndef COMMAND_INTERPRETER_H
 #define COMMAND_INTERPRETER_H
@@ -83,15 +84,15 @@ template <typename Language> class CommandInterpreter
                                 )
                         )
                     {
-                        std::exception e;
-                        throw e;
+                        BadSyntaxException badSyntax(command);
+                        throw badSyntax;
                     }
                 }
                 catch(ExitException& exitSignal)
                 {
                     break;
                 }
-                catch(std::exception& caughtException)
+                catch(BadSyntaxException& caughtException)
                 {
                     std::cout << caughtException.what() << std::endl;
                 }

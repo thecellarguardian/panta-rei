@@ -31,7 +31,8 @@ SchedulingSimulation::SchedulingSimulation()
     systemQueues(new SystemQueuesManager()),
     activator(new Activator(systemQueues, &timer)), //No initialization issues
     scheduler(new RateMonotonic(true,systemQueues, &timer,activator)),
-    taskIDGenerator(1)
+    taskIDGenerator(1),
+    simulationDone(false)
 {}
 
 SchedulingSimulation::SchedulingSimulation
@@ -44,7 +45,8 @@ SchedulingSimulation::SchedulingSimulation
     systemQueues(new SystemQueuesManager()),
     activator(new Activator(systemQueues, &timer)), //No initialization issues
     scheduler(schedulerToSet),
-    taskIDGenerator(1)
+    taskIDGenerator(1),
+    simulationDone(false)
 {}
 
 unsigned int SchedulingSimulation::createPeriodicTask
@@ -87,31 +89,55 @@ void SchedulingSimulation::setSimulationLength(unsigned int simulationLengthToSe
 
 void SchedulingSimulation::simulate()
 {
-    assert(scheduler.get() != NULL);
-    std::cout << "SIMULATION BEGIN" << std::endl;
-    std::cout << "scheduler: " << (void*)scheduler.get() << std::endl;
-    history.registerToEventSource(activator.get());
-    history.registerToEventSource(scheduler.get());
-    for
-        (
-            std::list< boost::shared_ptr<Task> >::iterator i = tasks.begin();
-            i != tasks.end();
-            i++
-        )
+    if(!simulationDone)
     {
-        history.registerToEventSource((*i).get());
+        assert(scheduler.get() != NULL);
+        std::cout << "SIMULATION BEGIN" << std::endl;
+        std::cout << "scheduler: " << (void*)scheduler.get() << std::endl;
+        history.registerToEventSource(activator.get());
+        history.registerToEventSource(scheduler.get());
+        for
+            (
+                std::list< boost::shared_ptr<Task> >::iterator i = tasks.begin();
+                i != tasks.end();
+                i++
+            )
+        {
+            history.registerToEventSource((*i).get());
+        }
+        for
+            (
+                std::list< boost::shared_ptr<Task> >::iterator i = tasks.begin();
+                i != tasks.end();
+                i++
+            )
+        {
+            activator->registerForActivation(*i);
+        }
+        timer.start();
+        timer.reset();
+        simulationDone = true;
     }
-    for
-        (
-            std::list< boost::shared_ptr<Task> >::iterator i = tasks.begin();
-            i != tasks.end();
-            i++
-        )
-    {
-        activator->registerForActivation(*i);
-    }
-    timer.start();
+}
+
+void SchedulingSimulation::clear()
+{
     timer.reset();
+    timer.detachAll();
+    timer.setFinalTime(25);
+    boost::shared_ptr<SystemQueuesManager>
+        newSystemQueues(new SystemQueuesManager());
+    systemQueues = newSystemQueues;
+    boost::shared_ptr<Activator>
+        newActivator(new Activator(systemQueues, &timer));
+    activator = newActivator;
+    boost::shared_ptr<Scheduler>
+        newScheduler(new RateMonotonic(true,systemQueues, &timer,activator));
+    scheduler = newScheduler;
+    tasks.erase(tasks.begin(), tasks.end());
+    history.clear();
+    taskIDGenerator = 1;
+    simulationDone = false;
 }
 
 void SchedulingSimulation::accept(Visitor* visitor)

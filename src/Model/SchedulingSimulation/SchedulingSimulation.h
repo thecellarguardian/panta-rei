@@ -51,6 +51,7 @@ class SchedulingSimulation : public VisitorAcceptor
         std::list< boost::shared_ptr<Task> > tasks;
         History< Event<unsigned int, unsigned int> > history;
         unsigned int taskIDGenerator;
+        bool simulationDone;
     public:
         SchedulingSimulation();
         SchedulingSimulation
@@ -103,6 +104,7 @@ class SchedulingSimulation : public VisitorAcceptor
             std::cout << "The new scheduler address is " << (void*)scheduler.get() << std::endl;
         }
         void simulate();
+        void clear();
         void accept(Visitor* visitor);
 };
 
