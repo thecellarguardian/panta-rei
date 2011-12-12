@@ -77,8 +77,10 @@ class SchedulingSimulation : public VisitorAcceptor
         {
             //TODO: the registration mechanics are awful. The current situation
             //is the following:
-            //the new scheduler has to relace exactly the old one in the timer's
-            //attachedObservers list, so it 
+            //the new scheduler has to replace exactly the old one in the timer's
+            //attachedObservers list, but when the new scheduler is created it
+            //autonomously attaches itself to the timer, so it's necessary first
+            //to remove it from the timer attacherObservers list ()
             std::cout << "The old scheduler address was " << (void*)scheduler.get() << std::endl;
             if(scheduler.get() != NULL)
             {
@@ -91,7 +93,7 @@ class SchedulingSimulation : public VisitorAcceptor
                             (
                                 preemptiveFlag,
                                 systemQueues,
-                                &timer,
+                                &timer, //
                                 activator
                             )
                     );

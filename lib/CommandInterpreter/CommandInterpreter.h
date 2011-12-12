@@ -22,6 +22,7 @@
 #include <boost/spirit/include/qi.hpp>
 #include <string>
 #include <exception>
+#include "ExitException.h"
 
 #ifndef COMMAND_INTERPRETER_H
 #define COMMAND_INTERPRETER_H
@@ -85,6 +86,10 @@ template <typename Language> class CommandInterpreter
                         std::exception e;
                         throw e;
                     }
+                }
+                catch(ExitException& exitSignal)
+                {
+                    break;
                 }
                 catch(std::exception& caughtException)
                 {

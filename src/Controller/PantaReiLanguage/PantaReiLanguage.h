@@ -29,6 +29,7 @@
 #include "../../Model/Scheduler/DeadlineMonotonic/DeadlineMonotonic.h"
 #include "../../Model/Scheduler/EarliestDeadlineFirst/EarliestDeadlineFirst.h"
 #include "../../View/GnuplotSchedulingEventVisitor/GnuplotSchedulingEventVisitor.h"
+#include "../../../lib/CommandInterpreter/ExitException.h"
 
 #ifndef PANTA_REI_LANGUAGE_H
 #define PANTA_REI_LANGUAGE_H
@@ -57,12 +58,60 @@ class PantaReiLanguage :
     private:
         SchedulingSimulation simulationEnvironment;
         GnuplotSchedulingEventVisitor viewVisitor;
+        ExitException exitSignal;
+        void exit()
+        {
+            throw exitSignal;
+        }
+        void help()
+        {
+            std::cout
+                << "Panta Rei: a real time scheduling simulator" << std::endl;
+            std::cout
+                << "Scripting language syntax:" << std::endl;
+            std::cout
+                << "<command> ::=\n"
+                << "\t<createStatement> |\n"
+                << "\t<setStatement>    |\n"
+                << "\t<viewStatement>   |\n"
+                << "\tsimulate          |\n"
+                << "\thelp              |\n"
+                << "\tquit\n" << std::endl;
+            std::cout
+                << "<createStatement> ::=\n"
+                << "\tcreate <objectStatement>\n" << std::endl;
+            std::cout
+                << "<setStatement> ::=\n"
+                << "\tset <propertyStatement>\n" << std::endl;
+            std::cout
+                << "<viewStatement> ::=\n"
+                << "\tview <viewer>\n" << std::endl;
+            std::cout
+                << "<objectStatement> ::=\n"
+                << "\tperiodic task #arrivalTime #computationTime #relativeDeadline #period\n" << std::endl;
+            std::cout
+                << "<propertyStatement> ::=\n"
+                << "\tsimulation length #simulationLength |\n"
+                << "\tscheduler <schedulingAlgorithm>\n" << std::endl;
+            std::cout
+                << "<viewer> ::=\n"
+                << "\tGnuplot\n"<< std::endl;
+            std::cout
+                << "<schedulingAlgorithm> ::=\n"
+                << "\tPRM   |\n"
+                << "\tNPRM  |\n"
+                << "\tPDM   |\n"
+                << "\tPDM   |\n"
+                << "\tPEDF  |\n"
+                << "\tNPEDF\n" << std::endl;
+        }
     public:
         PantaReiLanguage() : PantaReiLanguage::base_type(command)
         {
             command %=
                 createStatement                    |
                 setStatement                       |
+                viewStatement                      |
                 boost::spirit::qi::lit("simulate")
                     [
                         boost::phoenix::bind
@@ -72,18 +121,23 @@ class PantaReiLanguage :
                             )
                     ]
                 |
-                boost::spirit::qi::lit("view")
+                boost::spirit::qi::lit("help")
                     [
                         boost::phoenix::bind
                             (
-                                &GnuplotSchedulingEventVisitor::defaultVisit,
-                                viewVisitor,
-                                &simulationEnvironment
+                                &PantaReiLanguage::help,
+                                *this
                             )
                     ]
                 |
-                boost::spirit::qi::lit("help")     |
                 boost::spirit::qi::lit("quit")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &PantaReiLanguage::exit,
+                                *this
+                            )
+                    ]
             ;
             createStatement %=
                 boost::spirit::qi::lit("create") >>
@@ -92,6 +146,10 @@ class PantaReiLanguage :
             setStatement %=
                 boost::spirit::qi::lit("set") >>
                 propertyStatement
+            ;
+            viewStatement %=
+                boost::spirit::qi::lit("view") >>
+                viewer
             ;
             objectStatement %=
                 (
@@ -133,6 +191,17 @@ class PantaReiLanguage :
                     boost::spirit::qi::lit("scheduler") >>
                     schedulingAlgorithm
                 )
+            ;
+            viewer %=
+                boost::spirit::qi::lit("Gnuplot")
+                    [
+                        boost::phoenix::bind
+                            (
+                                &GnuplotSchedulingEventVisitor::defaultVisit,
+                                viewVisitor,
+                                &simulationEnvironment
+                            )
+                    ]
             ;
             schedulingAlgorithm %=
                 boost::spirit::qi::lit("PRM")
@@ -210,8 +279,10 @@ class PantaReiLanguage :
             command,
             createStatement,
             setStatement,
+            viewStatement,
             objectStatement,
             propertyStatement,
+            viewer,
             schedulingAlgorithm
         ;
 };
