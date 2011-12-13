@@ -21,6 +21,7 @@
 #include <boost/type_traits/is_base_of.hpp>
 #include <boost/spirit/include/qi.hpp>
 #include <string>
+#include <iostream>
 #include <exception>
 #include "ExitException.h"
 #include "BadSyntaxException.h"
@@ -57,34 +58,46 @@ template <typename Language> class CommandInterpreter
             );
         Language grammar;
         const std::string welcomeMessage;
+        std::istream* sourceSource;
+        bool interactiveFlag;
     public:
-        CommandInterpreter(std::string welcomeMessageToSet)
-            : welcomeMessage(welcomeMessageToSet)
+        CommandInterpreter
+            (
+                std::string welcomeMessageToSet,
+                std::istream* sourceSourceToSet
+            )
+            :
+            welcomeMessage(welcomeMessageToSet),
+            sourceSource(sourceSourceToSet),
+            interactiveFlag(sourceSource == &std::cin)
             {}
-        void prompt()
+        void run()
         {
             std::cout << welcomeMessage << std::endl;
-            std::string command;
-            std::cout << ">> ";
-            while(getline(std::cin, command))
+            std::string statement;
+            if(interactiveFlag)
+            {
+                std::cout << ">> ";
+            }
+            while(getline(*sourceSource, statement))
             {
                 try
                 {
-                    std::string::const_iterator commandBegin = command.begin();
-                    std::string::const_iterator commandEnd = command.end();
+                    std::string::const_iterator statementBegin = statement.begin();
+                    std::string::const_iterator statementEnd = statement.end();
                     if
                         (
                             !
                             phrase_parse
                                 (
-                                    commandBegin,
-                                    commandEnd,
+                                    statementBegin,
+                                    statementEnd,
                                     grammar,
                                     boost::spirit::ascii::space
                                 )
                         )
                     {
-                        BadSyntaxException badSyntax(command);
+                        BadSyntaxException badSyntax(statement);
                         throw badSyntax;
                     }
                 }
@@ -95,8 +108,15 @@ template <typename Language> class CommandInterpreter
                 catch(BadSyntaxException& caughtException)
                 {
                     std::cout << caughtException.what() << std::endl;
+                    if(!interactiveFlag)
+                    {
+                        break;                        
+                    }
                 }
-                std::cout << ">> ";
+                if(interactiveFlag)
+                {
+                    std::cout << ">> ";
+                }
             }
         }
 };

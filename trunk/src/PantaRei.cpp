@@ -1,6 +1,8 @@
 #include <boost/program_options.hpp>
 #include <iostream>
 #include <fstream>
+#include "../lib/CommandInterpreter/CommandInterpreter.h"
+#include "Controller/PantaReiLanguage/PantaReiLanguage.h"
 
 int main(int argc, char** argv)
 {
@@ -9,6 +11,7 @@ int main(int argc, char** argv)
     std::istream* script = NULL;
     std::ostream* log = NULL;
     std::ifstream scriptFile;
+    scriptFile.exceptions(std::ifstream::failbit);
     std::ofstream logFile;
     boost::program_options::options_description options("Panta Rei options");
     options.add_options()
@@ -70,8 +73,24 @@ int main(int argc, char** argv)
             )
         )
     {
-        scriptFile.open((specifiedOptions["script"].as<std::string>()).c_str());
-        script = &scriptFile;
+        try
+        {
+            scriptFile.open
+                (
+                    (
+                        specifiedOptions["script"].as<std::string>()
+                    ).c_str()
+                )
+            ;
+            script = &scriptFile;
+        }
+        catch(std::ifstream::failure)
+        {
+            std::cout
+                << specifiedOptions["script"].as<std::string>()
+                << ": The specified script does not exist" << std::endl;
+            return 1;
+        }
     }
     else
     {
@@ -97,16 +116,19 @@ int main(int argc, char** argv)
     {
         log = &std::cout;
     }
-    std::string prova;
-    getline(*script, prova);
-    (*log) << prova << std::endl;
-    getline(*script, prova);
-    (*log) << prova << std::endl;
-    getline(*script, prova);
-    (*log) << prova << std::endl;
-    getline(*script, prova);
-    (*log) << prova << std::endl;
-    getline(*script, prova);
-    (*log) << prova << std::endl;
+    std::string welcomeMessage("Panta Rei - Real time scheduling simulator");
+    CommandInterpreter<PantaReiLanguage>
+        pantaReiRuntimeEnvironment(welcomeMessage, script);
+    try
+    {
+        pantaReiRuntimeEnvironment.run();
+    }
+    catch(std::ifstream::failure)
+    {
+        if((script->fail() || script->bad()) && !script->eof())
+        {
+            std::cout << "\nStream error" << std::endl;
+        }
+    }
     return 0;
 }
