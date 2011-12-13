@@ -66,9 +66,9 @@ class PantaReiLanguage :
         void help()
         {
             std::cout
-                << "Panta Rei: a real time scheduling simulator" << std::endl;
+                << "Panta Rei: a real time scheduling simulator\n" << std::endl;
             std::cout
-                << "Scripting language syntax:" << std::endl;
+                << "Scripting language syntax:\n" << std::endl;
             std::cout
                 << "<command> ::=\n"
                 << "\t<createStatement> |\n"
