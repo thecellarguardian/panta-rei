@@ -76,7 +76,7 @@ class PantaReiLanguage :
                 << "\t<viewStatement>   |\n"
                 << "\tsimulate          |\n"
                 << "\tclear             |\n"
-                << "\thelp              |\n"
+                << "\tsyntax            |\n"
                 << "\tquit\n" << std::endl;
             std::cout
                 << "<createStatement> ::=\n"
@@ -131,7 +131,7 @@ class PantaReiLanguage :
                             )
                     ]
                 |
-                boost::spirit::qi::lit("help")
+                boost::spirit::qi::lit("syntax")
                     [
                         boost::phoenix::bind
                             (

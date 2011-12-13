@@ -13,6 +13,7 @@ int main(int argc, char** argv)
     boost::program_options::options_description options("Panta Rei options");
     options.add_options()
         ("help,h", "Produce this help message")
+        ("help,h", "Produce this help message")
         (
             "script,s",
             boost::program_options::value<std::string>

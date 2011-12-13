@@ -37,7 +37,7 @@ class BadSyntaxException : public std::runtime_error
                 (
                     badCommand.append
                         (
-                            ": Invalid syntax. Use \"help\" to see Panta Rei syntax in EBNF."
+                            ": Invalid syntax. Use \"syntax\" to see Panta Rei syntax in EBNF."
                         )
                 )
                 {}
