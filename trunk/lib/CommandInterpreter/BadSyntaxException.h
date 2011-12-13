@@ -18,7 +18,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
-#include <exception>
+#include <stdexcept>
 #include <string>
 
 #ifndef BAD_SYNTAX_EXCEPTION
@@ -29,21 +29,18 @@
  * @brief Syntax error exception.
  * When a badly formed command occurs, this exception is thrown.
  **/
-class BadSyntaxException : public std::exception
+class BadSyntaxException : public std::runtime_error
 {
-    private:
-        std::string command;
     public:
-        BadSyntaxException(std::string badCommand) : command(badCommand){}
-        ~BadSyntaxException() throw(){}
-        const char* what() const throw()
-        {
-            //command.append(":\n\tInvalid command. Use \"help\" to see the complete syntax.");
-            //const std::string ciao = command;
-            //ciao.append(":\n\tInvalid command. Use \"help\" to see the complete syntax.");
-            //return ciao.c_str();
-            return "Invalid command";
-        }
+        BadSyntaxException(std::string badCommand)
+            : std::runtime_error
+                (
+                    badCommand.append
+                        (
+                            ": Invalid syntax. Use \"help\" to see Panta Rei syntax in EBNF."
+                        )
+                )
+                {}
 };
 
 #endif
