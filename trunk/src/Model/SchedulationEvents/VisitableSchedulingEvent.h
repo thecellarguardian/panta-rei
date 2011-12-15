@@ -52,7 +52,9 @@
  * "pointer to a particular VisitableSchedulingEvent" which triggers the right
  * visit method choice. The particular visitor, of course, has to implement a
  * visit method for each VisitableSchedulingEvent, that is, one for each value
- * in the SchedulingEventType value set.
+ * in the SchedulingEventType value set. Of course, the compiler will generate
+ * a lot of reduntant code, this may be drawback if the number of
+ * VisitableSchedulingEvent types is large.
  * @see Visitor, Event, SchedulingEventType
  **/
 template <enum SchedulingEventType> class VisitableSchedulingEvent :

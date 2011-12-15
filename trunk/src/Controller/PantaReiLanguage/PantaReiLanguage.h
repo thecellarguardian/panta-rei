@@ -20,7 +20,6 @@
 
 #include <boost/config/warning_disable.hpp>
 #include <boost/spirit/include/qi.hpp>
-#include <boost/spirit/home/phoenix/bind/bind_function.hpp>
 #include <boost/spirit/home/phoenix/bind/bind_member_function.hpp>
 #include <iostream>
 #include <string>
