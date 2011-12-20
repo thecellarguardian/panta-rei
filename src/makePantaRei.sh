@@ -9,4 +9,5 @@ Model/SchedulingSimulation/SchedulingSimulation.cpp \
 ../lib/DesignPatterns/Observer/Subject.cpp \
 ../lib/StaticLog/StaticLog.cpp \
 PantaRei.cpp \
+-o panta-rei \
 -lboost_thread -lboost_program_options -lpthread -g -p
