@@ -26,8 +26,9 @@
  */
 
 #include "PeriodicTask.h"
+#include "../../../../lib/StaticLog/StaticLog.h"
 #include <cassert>
-#include <iostream> //TODO remove this
+#include <iostream>
 
 PeriodicTask::PeriodicTask
     (
@@ -159,26 +160,28 @@ void PeriodicTask::reset()
 
 void PeriodicTask::print()
 {
-    std::cout << "-----------------------------------------------" << std::endl;
-    std::cout << "TaskID: " << getTaskID() <<
+    assert(StaticLog::log["general"] != NULL);
+    std::ostream* log = StaticLog::log["general"];
+    (*log) << "-----------------------------------------------" << std::endl;
+    (*log) << "TaskID: " << getTaskID() <<
         (
             (timer->getCurrentTime() == getCurrentInstanceArrivalTime())?
             " ACTIVATED" : ""
         )
     << std::endl;
-    std::cout <<
+    (*log) <<
         (
             (currentState == NEW)? "NEW" :
             (currentState == READY)? "READY" :
             (currentState == EXECUTING)? "EXECUTING" : "UNKNOWN STATE!"
         ) << std::endl;
-    std::cout << "Current instance arrival time: " <<
+    (*log) << "Current instance arrival time: " <<
         getCurrentInstanceArrivalTime() << std::endl;
-    std::cout << "Computation time left: " << getRemainingComputationTime()
+    (*log) << "Computation time left: " << getRemainingComputationTime()
     << std::endl;
-    std::cout << "Elapsed time: " << getElapsedTime() << std::endl;
-    std::cout << "Instantaneous exceeding time: " <<
+    (*log) << "Elapsed time: " << getElapsedTime() << std::endl;
+    (*log) << "Instantaneous exceeding time: " <<
     getInstantaneousExceedingTime() << std::endl;
-    std::cout << "Pending instances: " << getPendingInstances() << std::endl;
-    std::cout << ((deadlineMiss())? "DEADLINE MISS!" : "") << std::endl;
+    (*log) << "Pending instances: " << getPendingInstances() << std::endl;
+    (*log) << ((deadlineMiss())? "DEADLINE MISS!" : "") << std::endl;
 }

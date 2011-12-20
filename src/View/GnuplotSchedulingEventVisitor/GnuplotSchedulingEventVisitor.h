@@ -63,8 +63,8 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
     public:
     GnuplotSchedulingEventVisitor() : plotter("steps")
     {
-    	plotter.set_ylabel("Time");
-    	plotter.set_xlabel("Tasks");
+    	plotter.set_ylabel("Tasks");
+    	plotter.set_xlabel("Time");
         plotter.cmd("set xtics 1");
         plotter.cmd("set ytics 1,1");
         plotter.set_grid();
