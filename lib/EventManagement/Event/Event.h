@@ -29,8 +29,8 @@
  * An event is a vector of three informations: an instant, a subject and an
  * action. This interface stores the subject and instant information, while the
  * action is held by the particular type inheriting this interface (as an
- * example, think at a WinEvent inheriting this interface, the type is a vector
- * for the action information).
+ * example, think at a WinEvent inheriting this interface, the type is the
+ * vector for the action information).
  **/
 template <typename SubjectIdentifier, typename Time> class Event
 {
