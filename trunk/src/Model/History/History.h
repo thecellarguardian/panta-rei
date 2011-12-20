@@ -28,6 +28,14 @@
 #ifndef HISTORY_H
 #define HISTORY_H
 
+/**
+ * @class History
+ * @brief History.
+ * This class is a multi-subject Observer, it registers to several
+ * EventSource<EventType> and, being a Queue, it stores the produced events.
+ * History is also a VisitorAcceptor, so that the stored data can be read and
+ * elaborated to produce several aggregate information.
+ **/
 template <typename EventType> class History
     :
     public QueueInterface<EventType>,
@@ -35,12 +43,23 @@ template <typename EventType> class History
     public VisitorAcceptor
 {
     public:
+        /**
+         * History is a QueueInterface, which knows itself which implementation
+         * to use: since it stores temporal information, a FIFOQueueImplementation
+         * is proper.
+         **/
         History()
         {
             boost::shared_ptr< FIFOQueueImplementation<EventType> >
                 implementation(new FIFOQueueImplementation<EventType>);
             setImplementation(implementation);
         }
+        /**
+         * An History object can register to several EventSource<EventType>,
+         * which update it when a new Event list is available. History gets the
+         * list and stores each Event, checking that it is also a
+         * VisitorAcceptor.
+         **/
         void update(Subject* subject)
         {
             EventSource<EventType>* eventSource =
@@ -56,6 +75,9 @@ template <typename EventType> class History
                 insert(eventToCopy);
             }
         }
+        /**
+         * For each stored Event, History lets the passed Visitor visit it.
+         **/
         void accept(Visitor* visitor) //TODO IMPLEMENT ITERATORS FOR THE QUEUE LIB!
         {
             for(unsigned int i = 0; i < this->size(); i++)
@@ -67,10 +89,16 @@ template <typename EventType> class History
                 // IT WORKS BUT IT'S AWFUL
             }
         }
+        /**
+         * This metod lets History register to several EventSource<EventType>.
+         **/
         void registerToEventSource(EventSource<EventType>* eventSource)
         {
             eventSource->attach(this);
         }
+        /**
+         * Reset method.
+         **/
         void clear()
         {
             boost::shared_ptr< FIFOQueueImplementation<EventType> >

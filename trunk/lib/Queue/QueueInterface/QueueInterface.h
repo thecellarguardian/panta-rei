@@ -145,16 +145,28 @@ template<typename T> class QueueInterface
             assert(queueImplementation.get() != NULL);
             return queueImplementation->extract();
         }
+        /**
+         * The method is bound to the implementation method.
+         * @return boost::shared_ptr<T> to the first element.
+         **/
         boost::shared_ptr<T> front()
         {
             assert(queueImplementation.get() != NULL);
             return queueImplementation->front();
         }
+        /**
+         * The method is bound to the implementation method.
+         * @return boost::shared_ptr<T> to the last element.
+         **/
         boost::shared_ptr<T> back()
         {
             assert(queueImplementation.get() != NULL);
             return queueImplementation->back();
         }
+        /**
+         * The method is bound to the implementation method.
+         * @return Queue size.
+         **/
         unsigned int size()
         {
             assert(queueImplementation.get() != NULL);

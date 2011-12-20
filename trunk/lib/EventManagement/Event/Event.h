@@ -31,6 +31,8 @@
  * action is held by the particular type inheriting this interface (as an
  * example, think at a WinEvent inheriting this interface, the type is the
  * vector for the action information).
+ * @tparam SubjectIdentifier The type of the subject identifier.
+ * @tparam Time A (numerical, usually) type to navigate the time dimension.
  **/
 template <typename SubjectIdentifier, typename Time> class Event
 {
@@ -41,7 +43,9 @@ template <typename SubjectIdentifier, typename Time> class Event
         Event(SubjectIdentifier subjectToSet, Time instantToSet)
             : subject(subjectToSet), instant(instantToSet){}
         virtual ~Event(){}
+        /** This method returns the subject information. */
         SubjectIdentifier getSubject(){return subject;}
+        /** This method returns the temporal information. */
         Time getInstant(){return instant;}
 };
 

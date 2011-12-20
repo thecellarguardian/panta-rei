@@ -24,6 +24,14 @@
 #ifndef RELATIVE_DEADLINE_COMPARATOR_H
 #define RELATIVE_DEADLINE_COMPARATOR_H
 
+/**
+ * @class RelativeDeadlineComparator
+ * @brief Priority function based on periods.
+ * As each priority comparator, PeriodComparator is a functor which takes two
+ * Task and returns true if the priority of the first is greater than the one
+ * of the second. The priority law in this case is inversely proportional to
+ * the Task relative deadline.
+ **/
 class RelativeDeadlineComparator
 {
     public:

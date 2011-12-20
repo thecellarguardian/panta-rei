@@ -27,6 +27,8 @@
 /**
  * @namespace StaticLog
  * @brief A simple logger.
+ * StaticLog maintains a static map of loggers. Each StaticLog client has to be
+ * sure that the used logger has been properly initialized.
  **/
 
 class StaticLog
