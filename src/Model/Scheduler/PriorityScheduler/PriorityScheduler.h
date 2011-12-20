@@ -257,6 +257,12 @@ template <typename PriorityComparator>class PriorityScheduler
             assert(false);
             return;
         }
+        /**
+         * Each Scheduler is an
+         * EventSource< Event<unsigned int, unsigned int> >. In particular, the
+         * produced events here are VisitableSchedulingEvent<TYPE>; this method
+         * publishes the produced events for further notification.
+         **/
         void publishEvent(unsigned int taskID, SchedulingEventType typeOfEvent)
         {
             boost::shared_ptr< Event<unsigned int, unsigned int> > newEvent

@@ -23,7 +23,6 @@
 #include "../Scheduler/RateMonotonic/RateMonotonic.h"
 #include "../Scheduler/EarliestDeadlineFirst/EarliestDeadlineFirst.h"
 #include <cassert>
-#include <iostream>
 
 SchedulingSimulation::SchedulingSimulation()
     :

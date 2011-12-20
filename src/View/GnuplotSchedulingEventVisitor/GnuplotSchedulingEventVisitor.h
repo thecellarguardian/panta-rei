@@ -31,27 +31,79 @@
 #define GNUPLOT_SCHEDULING_EVENT_VISITOR_H
 
 /**
- * @class
- * @brief
+ * @class GnuplotSchedulingEventVisitor
+ * @brief This SchedulingEventVisitor visits SchedulingEvents and prints them
+ * in a plot using Gnuplot. The interaction with Gnuplot is based on Unix pipes,
+ * this class wraps the Gnuplot usage knowledge.
  * @see Visitor, Event, SchedulingEventType
  **/
 class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
 {
     private:
         Gnuplot plotter;
+        /**<
+         * This object embeds the interaction with the external process
+         * Gnuplot.
+         **/
         std::map< unsigned int, std::vector<unsigned int> > arrivalInstants;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::map< unsigned int, std::vector<unsigned int> >
             deadlineMissInstants;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> endOfComputationInstants;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> endingTasks;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> scheduleInstants;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> scheduledTasks;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> preemptionOriginInstants;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> preemptingOutTasks;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> preemptionDestinationInstants;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         std::vector<unsigned int> preemptingInTasks;
+        /**<
+         * To produce a printable function, each meaningful value is stored in
+         * tables.
+         **/
         unsigned int lowestTaskID;
+        /**<
+         * This parameter is used to focus the plot on the main area.
+         **/
         unsigned int highestTaskID;
+        /**<
+         * This parameter is used to focus the plot on the main area.
+         **/
         void updateTaskIDRange(unsigned int subject)
         {
             if(subject > highestTaskID)
@@ -124,6 +176,12 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         preemptingInTasks.push_back(subject);
         updateTaskIDRange(subject);
     }
+    /**
+     * For each VisitableSchedulingEvent, the related overloaded visit method
+     * produced a serie of value tables (std::map and std::vector). The plot()
+     * method knows how to put those information toghether and uses the Gnuplot
+     * member to plot the complete scheduling.
+     **/
     void plot()
     {
         plotter.set_style("points");
@@ -193,6 +251,9 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         plot();
         clear();
     }
+    /**
+     * Reset method.
+     **/
     void clear()
     {
         arrivalInstants.erase(arrivalInstants.begin(), arrivalInstants.end());

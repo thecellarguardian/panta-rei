@@ -33,19 +33,19 @@
 #ifndef PANTA_REI_LANGUAGE_H
 #define PANTA_REI_LANGUAGE_H
 
+//TODO higher abstraction of the language concept, something like:
+//a Language is something composed by a Syntax, a Semantic and relations between
+//those objects.
+
 /**
  * @class PantaReiLanguage
  * @brief A simple language to control the application.
  * PantaReiLanguage defines the language to interact with the application using
  * EBNF through the Boost Spirit Qi parsing framework. While the language syntax
  * is defined here, the language semantics are defined into the
- * SchedulingSimulation class.
+ * SchedulingSimulation class, whose methods are called as semantic actions.
+ * @see Boost Spirit Qi, Boost Phoenix
  **/
-
-//TODO higher abstraction of the language concept, something like:
-//a Language is something composed by a Syntax, a Semantic and relations between
-//those objects.
-
 class PantaReiLanguage :
     public
     boost::spirit::qi::grammar
@@ -56,12 +56,15 @@ class PantaReiLanguage :
 {
     private:
         SchedulingSimulation simulationEnvironment;
+        /**< The semantic actions are bound in the grammar. **/
         GnuplotSchedulingEventVisitor viewVisitor;
+        /**< The semantic actions are bound in the grammar. **/
         ExitException exitSignal;
         void exit()
         {
             throw exitSignal;
         }
+        /** This help method shows an EBNF description of the language. **/
         void help()
         {
             std::cout
@@ -106,6 +109,15 @@ class PantaReiLanguage :
                 << "\tNPEDF\n" << std::endl;
         }
     public:
+        /**
+         * The syntax tree is created at construction time: the starting symbol
+         * is set through the initialization of base_type (inherited from
+         * boost::spirit::qi::grammar<std::string::const_iterator,
+         * boost::spirit::ascii::space_type>), while the rest of the tree is
+         * created using Boost Spirit Qi magics. Terminal symbols are simple
+         * parsers, while non-terminal symbols are boost::spirit::qi::rule
+         * <std::string::const_iterator, boost::spirit::ascii::space_type>.
+         **/
         PantaReiLanguage() : PantaReiLanguage::base_type(command)
         {
             command %=

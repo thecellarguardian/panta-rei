@@ -27,15 +27,14 @@
  * @class Timer
  * @brief This class models a real-time timer.
  * A timer is a producer of time events. It is set to an initial value, and when
- * activated he notifies the end of a time slice to its state observers.
+ * activated it notifies the end of a time slice to its state observers.
  * Notice that this is a simulation of a real-time system on a non real-time
  * machine, thus this timer is not granted neither to generate exact
  * temporization nor to meet real-time costraints.
  * A timer is initialized with its starting and final time; it simply cycles
  * (finalTime - startingTime) times and, every time, it notifies its observers.
- * If the online flag is set, every notification is preceded by a pause of
- * timeSlice milliseconds.
  **/
+//TODO Adapt Timer to the EventSource<T> interface.
 class Timer : public Subject
 {
     private:

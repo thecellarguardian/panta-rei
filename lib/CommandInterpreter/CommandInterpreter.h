@@ -36,8 +36,11 @@
  * @brief Generic command interpreter.
  * A generic command interpreter. It's built using the Boost Spirit Qi
  * framework. The particular grammar and behaviour can be defined in a Grammar
- * class inheriting drom boost::spirit::qi::grammar, where it can be described
+ * class inheriting from boost::spirit::qi::grammar, where it can be described
  * using an EBNF-fashioned C++, toghether with the related semantic actions.
+ * @tparam Language The interpreted language has to be a Spirit Qi grammar, an
+ * explicit compile time check is done to verify this property.
+ * @see Boost Spirit Qi framework, Boost Static Assert.
  **/
 
 template <typename Language> class CommandInterpreter
@@ -59,9 +62,22 @@ template <typename Language> class CommandInterpreter
                 )
             );
         Language grammar;
+        /**<
+         * The interpreted language grammar.
+         **/
         const std::string welcomeMessage;
+        /**<
+         * A welcome message to be print when in interactive mode.
+         **/
         std::istream* sourceSource;
+        /**<
+         * The source code to interpret.
+         **/
         bool interactiveFlag;
+        /**<
+         * A flag to distinguish the two cases of interactive or batch
+         * interpreter.
+         **/
     public:
         CommandInterpreter
             (
@@ -73,6 +89,11 @@ template <typename Language> class CommandInterpreter
             sourceSource(sourceSourceToSet),
             interactiveFlag(sourceSource == &std::cin)
             {}
+        /**
+         * This is the main section of the comman interpreter, a loop in which
+         * every statement is caught and interpreted through the specifie
+         * grammar.
+         **/
         void run()
         {
             assert(StaticLog::log["error"] != NULL);
