@@ -77,9 +77,6 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         unsigned int instant = event->getInstant();
         arrivalInstants[subject].push_back(instant);
         updateTaskIDRange(subject);
-        std::cout
-            << "ARRIVAL scheduling event visited"
-            << std::endl;
     }
     void visit(VisitableSchedulingEvent<PENDING_ARRIVAL>* event)
     {
@@ -87,9 +84,6 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         unsigned int instant = event->getInstant();
         arrivalInstants[subject].push_back(instant);
         updateTaskIDRange(subject);
-        std::cout
-            << "PENDING_ARRIVAL scheduling event visited"
-            << std::endl;
     }
     void visit(VisitableSchedulingEvent<DEADLINE_MISS>* event)
     {
@@ -97,9 +91,6 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         unsigned int instant = event->getInstant();
         deadlineMissInstants[subject].push_back(instant);
         updateTaskIDRange(subject);
-        std::cout
-            << "DEADLINE_MISS scheduling event visited"
-            << std::endl;
     }
     void visit(VisitableSchedulingEvent<END_OF_COMPUTATION>* event)
     {
@@ -108,9 +99,6 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         endOfComputationInstants.push_back(instant);
         endingTasks.push_back(subject);
         updateTaskIDRange(subject);
-        std::cout
-            << "END_OF_COMPUTATION scheduling event visited"
-            << std::endl;
     }
     void visit(VisitableSchedulingEvent<SCHEDULE>* event)
     {
@@ -119,9 +107,6 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         scheduleInstants.push_back(instant);
         scheduledTasks.push_back(subject);
         updateTaskIDRange(subject);
-        std::cout
-            << "SCHEDULE scheduling event visited"
-            << std::endl;
     }
     void visit(VisitableSchedulingEvent<PREEMPTION_ORIGIN>* event)
     {
@@ -130,9 +115,6 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         preemptionOriginInstants.push_back(instant);
         preemptingOutTasks.push_back(subject);
         updateTaskIDRange(subject);
-        std::cout
-            << "PREEMPRION_ORIGIN scheduling event visited"
-            << std::endl;
     }
     void visit(VisitableSchedulingEvent<PREEMPTION_DESTINATION>* event)
     {
@@ -141,14 +123,10 @@ class GnuplotSchedulingEventVisitor : public SchedulingEventVisitor
         preemptionDestinationInstants.push_back(instant);
         preemptingInTasks.push_back(subject);
         updateTaskIDRange(subject);
-        std::cout
-            << "PREEMPTION_DESTINATION scheduling event visited"
-            << std::endl;
     }
     void plot()
     {
         plotter.set_style("points");
-        std::cout << "lowest: " << lowestTaskID << ", highest: " << highestTaskID << std::endl;
         plotter.set_yrange(0, 2*highestTaskID);
         for
             (

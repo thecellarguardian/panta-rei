@@ -25,18 +25,47 @@
 #include "../lib/StaticLog/StaticLog.h"
 #include "Controller/PantaReiLanguage/PantaReiLanguage.h"
 
+void printLogo()
+{
+/*                      __                                         
+                       /\ \__                                __    
+ _____      __      ___\ \ ,_\    __             _ __    __ /\_\   
+/\ '__`\  /'__`\  /' _ `\ \ \/  /'__`\   _______/\`'__\/'__`\/\ \  
+\ \ \_\ \/\ \_\.\_/\ \/\ \ \ \_/\ \_\.\_/\______\ \ \//\  __/\ \ \ 
+ \ \ ,__/\ \__/.\_\ \_\ \_\ \__\ \__/.\_\/______/\ \_\\ \____\\ \_\
+  \ \ \/  \/__/\/_/\/_/\/_/\/__/\/__/\/_/         \/_/ \/____/ \/_/
+   \ \_\                                                           
+    \/_/ 
+*/
+    std::cout << "                        __                                         " << std::endl;
+    std::cout << "                       /\\ \\__                                __    " << std::endl;
+    std::cout << " _____      __      ___\\ \\ ,_\\    __             _ __    __ /\\_\\   " << std::endl;
+    std::cout << "/\\ '__`\\  /'__`\\  /' _ `\\ \\ \\/  /'__`\\   _______/\\`'__\\/'__`\\/\\ \\  " << std::endl;
+    std::cout << "\\ \\ \\_\\ \\/\\ \\_\\.\\_/\\ \\/\\ \\ \\ \\_/\\ \\_\\.\\_/\\______\\ \\ \\//\\  __/\\ \\ \\ " << std::endl;
+    std::cout << " \\ \\ ,__/\\ \\__/.\\_\\ \\_\\ \\_\\ \\__\\ \\__/.\\_\\/______/\\ \\_\\\\ \\____\\\\ \\_\\" << std::endl;
+    std::cout << "  \\ \\ \\/  \\/__/\\/_/\\/_/\\/_/\\/__/\\/__/\\/_/         \\/_/ \\/____/ \\/_/" << std::endl;
+    std::cout << "   \\ \\_\\                                                           " << std::endl;
+    std::cout << "    \\/_/ " << std::endl;
+    std::cout << std::endl;
+}
+
 int main(int argc, char** argv)
 {
     std::string scriptFileDescriptor;
     std::string logFileDescriptor;
+    //std::string xmlFileDescriptor; TODO XML OUTPUT
+    std::string errorLogFileDescriptor;
     std::istream* script = NULL;
     std::ostream* log = NULL;
+    //std::ostream* xml = NULL; TODO XML OUTPUT
+    std::ostream* errorLog = NULL;
     std::ifstream scriptFile;
     scriptFile.exceptions(std::ifstream::failbit);
     std::ofstream logFile;
+    //std::ofstream xmlFile; TODO XML OUTPUT
+    std::ofstream errorLogFile;
     boost::program_options::options_description options("Panta Rei options");
     options.add_options()
-        ("help,h", "Produce this help message")
         ("help,h", "Produce this help message")
         (
             "script,s",
@@ -51,10 +80,28 @@ int main(int argc, char** argv)
             "log,l",
             boost::program_options::value<std::string>
                 (
-                    &scriptFileDescriptor
+                    &logFileDescriptor
                 )
                 ->default_value("stdout"),
             "Specify a log file."
+        )
+        /*(
+            "xml,x",
+            boost::program_options::value<std::string>
+                (
+                    &xmlFileDescriptor
+                )
+            "Specify a XML output file."
+        ) TODO XML OUTPUT
+        */
+        (
+            "errorLog,e",
+            boost::program_options::value<std::string>
+                (
+                    &errorLogFileDescriptor
+                )
+                ->default_value("stderr"),
+            "Specify a error log file."
         )
     ;
     boost::program_options::variables_map specifiedOptions;
@@ -137,7 +184,51 @@ int main(int argc, char** argv)
     {
         log = &std::cout;
     }
+    /*if
+        (
+            specifiedOptions.count("xml")
+            &&
+        )
+    {
+        xmlFile.open((specifiedOptions["xml"].as<std::string>()).c_str());
+        xml = &xmlFile;
+    }
+    else
+    {
+        xmlFile.open("/dev/null"); TODO portability AND standardization
+        xml = &xmlFile;
+    } TODO XML OUTPUT */
+    if
+        (
+            specifiedOptions.count("errorLog")
+            &&
+            !
+            (
+                (
+                    specifiedOptions["errorLog"].as<std::string>()
+                )
+                .compare("stderr") == 0
+            )
+        )
+    {
+        errorLogFile.open((specifiedOptions["errorLog"].as<std::string>()).c_str());
+        errorLog = &errorLogFile;
+    }
+    else
+    {
+        errorLog = &std::cerr;
+    }
     StaticLog::log["general"] = log;
+    //StaticLog::log["xml"] = xml; TODO XML OUTPUT
+    StaticLog::log["error"] = errorLog;
+    if(log == &std::cout) //That is, the output is on screen
+    {
+        printLogo();
+    }
+    else
+    {
+        (*log) << "Panta Rei - log" << std::endl << std::endl;
+    }
     std::string welcomeMessage("Panta Rei - Real time scheduling simulator");
     CommandInterpreter<PantaReiLanguage>
         pantaReiRuntimeEnvironment(welcomeMessage, script);
@@ -149,7 +240,7 @@ int main(int argc, char** argv)
     {
         if((script->fail() || script->bad()) && !script->eof())
         {
-            std::cout << "\nStream error" << std::endl;
+            (*errorLog) << "\nStream error" << std::endl;
         }
     }
     return 0;

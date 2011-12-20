@@ -53,18 +53,11 @@ template <typename EventType> class History
                 boost::shared_ptr<EventType> eventToCopy(eventList->extract());
                 assert
                     ((dynamic_cast<VisitorAcceptor*>(eventToCopy.get())) != NULL);
-                std::cout << "history >> NEW EVENT: subject:"
-                    << eventToCopy->getSubject() << " instant: "
-                    << eventToCopy->getInstant() << std::endl;
                 insert(eventToCopy);
             }
         }
         void accept(Visitor* visitor) //TODO IMPLEMENT ITERATORS FOR THE QUEUE LIB!
         {
-            std::cout
-                << "Accepting visitor, total history size: "
-                << this->size()
-                << std::endl;
             for(unsigned int i = 0; i < this->size(); i++)
             {
                 boost::shared_ptr<VisitorAcceptor> acceptor =
@@ -76,7 +69,6 @@ template <typename EventType> class History
         }
         void registerToEventSource(EventSource<EventType>* eventSource)
         {
-            std::cout << "Registering to event source: " << (void*)eventSource << std::endl;
             eventSource->attach(this);
         }
         void clear()

@@ -51,7 +51,6 @@ void Subject::substitute(Observer* observerToSubstitute, Observer* substitute)
     {
         if((*i) == observerToSubstitute)
         {
-            std::cout << "_SUBSTITUTION_" << std::endl;
             (*i) = substitute;
             break;
         }

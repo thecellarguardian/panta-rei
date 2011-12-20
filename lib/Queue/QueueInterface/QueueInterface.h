@@ -160,10 +160,6 @@ template<typename T> class QueueInterface
             assert(queueImplementation.get() != NULL);
             return queueImplementation->size();
         }
-        void print()
-        {
-            queueImplementation->print();
-        }
 };
 
 #endif

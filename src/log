@@ -1,108 +1,185 @@
------------------------------------------------
-TaskID: 1 ACTIVATED
-EXECUTING
-Current instance arrival time: 0
-Computation time left: 2
-Elapsed time: 0
-Instantaneous exceeding time: 0
-Pending instances: 1
+Panta Rei - log
+	Task1 is being insert in the ready queue
+	Task2 is being insert in the ready queue
 
------------------------------------------------
-TaskID: 2 ACTIVATED
-READY
-Current instance arrival time: 0
-Computation time left: 4
-Elapsed time: 0
-Instantaneous exceeding time: 0
-Pending instances: 1
 
------------------------------------------------
-TaskID: 1
-EXECUTING
-Current instance arrival time: 0
-Computation time left: 1
-Elapsed time: 1
-Instantaneous exceeding time: 0
-Pending instances: 1
+Current time: 0
+	Activation queue empty: true
+	Ready queue empty: false
+	Execution queue empty: true
+	Executing Task terminated: false
+	Pending instances of the executing Task: false
+	Preemption activated: true
+	Is there a ready Task with greater priority: false
+	SCHEDULING DECISION: schedule a ready task
+	-----------------------------------------------
+	TaskID: 1 ACTIVATED
+	Task state: EXECUTING
+	Current instance arrival time: 0
+	Computation time left: 2
+	Elapsed time: 0
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
+	TaskID: 2 ACTIVATED
+	Task state: READY
+	Current instance arrival time: 0
+	Computation time left: 4
+	Elapsed time: 0
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
 
------------------------------------------------
-TaskID: 2
-READY
-Current instance arrival time: 0
-Computation time left: 4
-Elapsed time: 1
-Instantaneous exceeding time: 0
-Pending instances: 1
 
------------------------------------------------
-TaskID: 1
-NEW
-Current instance arrival time: 5
-Computation time left: 2
-Elapsed time: 0
-Instantaneous exceeding time: 0
-Pending instances: 1
+Current time: 1
+	Activation queue empty: true
+	Ready queue empty: false
+	Execution queue empty: false
+	Executing Task terminated: false
+	Pending instances of the executing Task: false
+	Preemption activated: true
+	Is there a ready Task with greater priority: false
+	SCHEDULING DECISION: do nothing
+	-----------------------------------------------
+	TaskID: 1
+	Task state: EXECUTING
+	Current instance arrival time: 0
+	Computation time left: 1
+	Elapsed time: 1
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
+	TaskID: 2
+	Task state: READY
+	Current instance arrival time: 0
+	Computation time left: 4
+	Elapsed time: 1
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
 
------------------------------------------------
-TaskID: 2
-EXECUTING
-Current instance arrival time: 0
-Computation time left: 4
-Elapsed time: 2
-Instantaneous exceeding time: 0
-Pending instances: 1
 
------------------------------------------------
-TaskID: 1
-NEW
-Current instance arrival time: 5
-Computation time left: 2
-Elapsed time: 0
-Instantaneous exceeding time: 0
-Pending instances: 1
+Current time: 2
+	Activation queue empty: true
+	Ready queue empty: false
+	Execution queue empty: false
+	Executing Task terminated: true
+	Pending instances of the executing Task: true
+	Preemption activated: true
+	Is there a ready Task with greater priority: false
+	SCHEDULING DECISION: reactivate the currently executing Task and schedule a ready Task
+	Task1 is being enqueued for activation
+	-----------------------------------------------
+	TaskID: 1
+	Task state: NEW
+	Current instance arrival time: 5
+	Computation time left: 2
+	Elapsed time: 0
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
+	TaskID: 2
+	Task state: EXECUTING
+	Current instance arrival time: 0
+	Computation time left: 4
+	Elapsed time: 2
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
 
------------------------------------------------
-TaskID: 2
-EXECUTING
-Current instance arrival time: 0
-Computation time left: 3
-Elapsed time: 3
-Instantaneous exceeding time: 0
-Pending instances: 1
 
------------------------------------------------
-TaskID: 1
-NEW
-Current instance arrival time: 5
-Computation time left: 2
-Elapsed time: 0
-Instantaneous exceeding time: 0
-Pending instances: 1
+Current time: 3
+	Activation queue empty: false
+	Ready queue empty: true
+	Execution queue empty: false
+	Executing Task terminated: false
+	Pending instances of the executing Task: false
+	Preemption activated: true
+	Is there a ready Task with greater priority: false
+	SCHEDULING DECISION: do nothing
+	-----------------------------------------------
+	TaskID: 1
+	Task state: NEW
+	Current instance arrival time: 5
+	Computation time left: 2
+	Elapsed time: 0
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
+	TaskID: 2
+	Task state: EXECUTING
+	Current instance arrival time: 0
+	Computation time left: 3
+	Elapsed time: 3
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
 
------------------------------------------------
-TaskID: 2
-EXECUTING
-Current instance arrival time: 0
-Computation time left: 2
-Elapsed time: 4
-Instantaneous exceeding time: 0
-Pending instances: 1
 
------------------------------------------------
-TaskID: 1 ACTIVATED
-EXECUTING
-Current instance arrival time: 5
-Computation time left: 2
-Elapsed time: 0
-Instantaneous exceeding time: 0
-Pending instances: 1
+Current time: 4
+	Activation queue empty: false
+	Ready queue empty: true
+	Execution queue empty: false
+	Executing Task terminated: false
+	Pending instances of the executing Task: false
+	Preemption activated: true
+	Is there a ready Task with greater priority: false
+	SCHEDULING DECISION: do nothing
+	-----------------------------------------------
+	TaskID: 1
+	Task state: NEW
+	Current instance arrival time: 5
+	Computation time left: 2
+	Elapsed time: 0
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
+	TaskID: 2
+	Task state: EXECUTING
+	Current instance arrival time: 0
+	Computation time left: 2
+	Elapsed time: 4
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
 
------------------------------------------------
-TaskID: 2
-READY
-Current instance arrival time: 0
-Computation time left: 1
-Elapsed time: 5
-Instantaneous exceeding time: 0
-Pending instances: 1
 
+Current time: 5
+	Activation queue empty: false
+	Activating Task1
+	Ready queue empty: false
+	Execution queue empty: false
+	Executing Task terminated: false
+	Pending instances of the executing Task: false
+	Preemption activated: true
+	Is there a ready Task with greater priority: true
+SCHEDULING DECISION: put the currently executing Task in the ready queue and schedule a ready task
+	-----------------------------------------------
+	TaskID: 1 ACTIVATED
+	Task state: EXECUTING
+	Current instance arrival time: 5
+	Computation time left: 2
+	Elapsed time: 0
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------
+	TaskID: 2
+	Task state: READY
+	Current instance arrival time: 0
+	Computation time left: 1
+	Elapsed time: 5
+	Instantaneous exceeding time: 0
+	Pending instances: 1
+	Deadline miss: false
+	-----------------------------------------------

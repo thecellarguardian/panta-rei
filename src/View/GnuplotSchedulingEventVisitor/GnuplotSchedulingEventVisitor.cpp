@@ -106,7 +106,6 @@ void GnuplotSchedulingEventVisitor::visit(VisitableSchedulingEvent<PREEMPTION_DE
 void GnuplotSchedulingEventVisitor::plot()
 {
     plotter.set_style("points");
-    std::cout << "lowest: " << lowestTaskID << ", highest: " << highestTaskID << std::endl;
     plotter.set_yrange(lowestTaskID, 2*highestTaskID);
     for
         (

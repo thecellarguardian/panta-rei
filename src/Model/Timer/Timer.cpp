@@ -21,6 +21,8 @@
 #include "Timer.h"
 #include <boost/thread/thread.hpp>
 #include <iostream>
+#include <cassert>
+#include "../../../lib/StaticLog/StaticLog.h"
 
 Timer::Timer()
 {
@@ -70,14 +72,16 @@ void Timer::setFinalTime(unsigned int finalTimeToSet)
 
 void Timer::start()
 {
+    assert(StaticLog::log["general"] != NULL);
+    std::ostream* log = StaticLog::log["general"];
+    //assert(StaticLog::log["xml"] != NULL); TODO XML OUTPUT
+    //std::ostream* xml = StaticLog::log["xml"]; TODO XML OUTPUT
     for(; clock != finalTime; clock++)
     {
-        std::cout << std::endl << std::endl;
-        std::cout << "<<<<<<<<<<CURRENT TIME: " << clock << std::endl;
-        std::cout << std::endl << std::endl;
+        (*log) << std::endl << std::endl;
+        (*log) << "Current time: " << clock << std::endl;
         notify();
-        std::cout << "---" << std::endl;
-        //Boost sleep is used for portability
+        (*log) << "\t-----------------------------------------------" << std::endl;
     }
 }
 

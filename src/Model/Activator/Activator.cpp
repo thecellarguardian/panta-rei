@@ -18,9 +18,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  **/
 
+#include <cassert>
 #include "Activator.h"
 #include "../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
 #include "../../../lib/Queue/Implementations/FIFOQueueImplementation/FIFOQueueImplementation.h"
+#include "../../../lib/StaticLog/StaticLog.h"
 #include "../SchedulationEvents/VisitableSchedulingEvent.h"
 
 bool ArrivalTimeComparator::operator()
@@ -77,11 +79,15 @@ Activator::~Activator(){}
 
 void Activator::update(Subject* subject)
 {
+    assert(StaticLog::log["general"] != NULL);
+    std::ostream* log = StaticLog::log["general"];
+    (*log) << "\tActivation queue empty: ";
     if(activationQueue->size() == 0)
     {
-        std::cout << "The activation queue is empty" << std::endl;
+        (*log) << "true" << std::endl;
         return;
     }
+    (*log) << "false" << std::endl;
     while
         (
             (activationQueue->size() > 0)
@@ -90,12 +96,12 @@ void Activator::update(Subject* subject)
             timer->getCurrentTime()
         )
     {
-        std::cout << "A task is being activated" << std::endl;
         boost::shared_ptr<Task> taskToActivate = activationQueue->extract();
-        std::cout << "The task to activate is: " <<
-            taskToActivate->getTaskID() << std::endl;
+        (*log)
+            <<"\tActivating Task"
+            << taskToActivate->getTaskID()
+            << std::endl;
         taskToActivate->setState(READY);
-        std::cout << "ACTIVATOR: publishing arrival event" << std::endl;
         publishArrivalEvent(taskToActivate->getTaskID());
         readyQueue->insert(taskToActivate);
         notify();
@@ -104,14 +110,19 @@ void Activator::update(Subject* subject)
 
 void Activator::registerForActivation(boost::shared_ptr<Task> taskToRegister)
 {
+    assert(StaticLog::log["general"] != NULL);
+    std::ostream* log = StaticLog::log["general"];
     if
         (
             timer->getCurrentTime() >=
             taskToRegister->getCurrentInstanceArrivalTime()
         )
     {
-        std::cout << "Task" << taskToRegister->getTaskID() <<
-            " is being insert in the ready queue" << std::endl;
+        (*log)
+            << "\tTask"
+            << taskToRegister->getTaskID()
+            << " is being insert in the ready queue"
+            << std::endl;
         taskToRegister->setState(READY);
         publishArrivalEvent(taskToRegister->getTaskID());
         readyQueue->insert(taskToRegister);
@@ -119,8 +130,11 @@ void Activator::registerForActivation(boost::shared_ptr<Task> taskToRegister)
     }
     else
     {
-        std::cout << "Task" << taskToRegister->getTaskID() <<
-            " is being enqueued for activation" << std::endl;
+        (*log)
+            << "\tTask"
+            << taskToRegister->getTaskID()
+            << " is being enqueued for activation"
+            << std::endl;
         activationQueue->insert(taskToRegister);
     }
 }
@@ -136,9 +150,4 @@ void Activator::publishArrivalEvent(unsigned int taskID)
             )
         );
     insert(newEvent);
-}
-
-void Activator::print()
-{
-    activationQueue->print();
 }

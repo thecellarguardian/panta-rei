@@ -89,7 +89,6 @@ class Activator
          * pointer to it is placed into the activation queue.
          **/
         void registerForActivation(boost::shared_ptr<Task> taskToRegister);
-        void print();
 };
 
 #endif

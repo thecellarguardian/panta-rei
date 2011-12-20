@@ -162,26 +162,26 @@ void PeriodicTask::print()
 {
     assert(StaticLog::log["general"] != NULL);
     std::ostream* log = StaticLog::log["general"];
-    (*log) << "-----------------------------------------------" << std::endl;
-    (*log) << "TaskID: " << getTaskID() <<
+    (*log) << "\t-----------------------------------------------" << std::endl;
+    (*log) << "\tTaskID: " << getTaskID() <<
         (
             (timer->getCurrentTime() == getCurrentInstanceArrivalTime())?
             " ACTIVATED" : ""
         )
     << std::endl;
-    (*log) <<
+    (*log) << "\tTask state: " <<
         (
             (currentState == NEW)? "NEW" :
             (currentState == READY)? "READY" :
             (currentState == EXECUTING)? "EXECUTING" : "UNKNOWN STATE!"
         ) << std::endl;
-    (*log) << "Current instance arrival time: " <<
+    (*log) << "\tCurrent instance arrival time: " <<
         getCurrentInstanceArrivalTime() << std::endl;
-    (*log) << "Computation time left: " << getRemainingComputationTime()
+    (*log) << "\tComputation time left: " << getRemainingComputationTime()
     << std::endl;
-    (*log) << "Elapsed time: " << getElapsedTime() << std::endl;
-    (*log) << "Instantaneous exceeding time: " <<
+    (*log) << "\tElapsed time: " << getElapsedTime() << std::endl;
+    (*log) << "\tInstantaneous exceeding time: " <<
     getInstantaneousExceedingTime() << std::endl;
-    (*log) << "Pending instances: " << getPendingInstances() << std::endl;
-    (*log) << ((deadlineMiss())? "DEADLINE MISS!" : "") << std::endl;
+    (*log) << "\tPending instances: " << getPendingInstances() << std::endl;
+    (*log) << "\tDeadline miss: " << ((deadlineMiss())? "true" : "false") << std::endl;
 }
