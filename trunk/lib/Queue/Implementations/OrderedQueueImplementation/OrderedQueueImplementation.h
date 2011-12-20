@@ -109,15 +109,6 @@ class OrderedQueueImplementation : public QueueImplementation<ElementType>
         {
             return dataStructure.size();
         }
-        void print() //TODO remove this!
-        {
-            typename std::list< boost::shared_ptr<ElementType> >::iterator i =
-            dataStructure.begin();
-            for(; i != dataStructure.end(); i++)
-            {
-                (*i)->print();
-            }
-        }
 };
 
 #endif

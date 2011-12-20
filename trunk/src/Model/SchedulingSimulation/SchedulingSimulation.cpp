@@ -73,11 +73,6 @@ unsigned int SchedulingSimulation::createPeriodicTask
     taskIDGenerator++;
     //If, after the increment, taskIDGenerator is 0, an overflow happened
     assert(taskIDGenerator != 0);
-    std::cout << "New periodic task created" << std::endl;
-    std::cout << "arrival time: " << arrivalTime << std::endl;
-    std::cout << "computation time: " << computationTime << std::endl;
-    std::cout << "relative deadline: " << relativeDeadline << std::endl;
-    std::cout << "period: " << period << std::endl;
 }
 
 //TODO void removeTask(unsigned int taskID)??
@@ -92,8 +87,6 @@ void SchedulingSimulation::simulate()
     if(!simulationDone)
     {
         assert(scheduler.get() != NULL);
-        std::cout << "SIMULATION BEGIN" << std::endl;
-        std::cout << "scheduler: " << (void*)scheduler.get() << std::endl;
         history.registerToEventSource(activator.get());
         history.registerToEventSource(scheduler.get());
         for
@@ -117,6 +110,11 @@ void SchedulingSimulation::simulate()
         timer.start();
         timer.reset();
         simulationDone = true;
+    }
+    else
+    {
+        std::cout << "The simulation has already been done." << std::endl;
+        std::cout << "Use \"clear\" to wipe it and start with a new simulation." << std::endl;
     }
 }
 

@@ -19,7 +19,9 @@
  **/
 
 #include <boost/shared_ptr.hpp>
+#include <cassert>
 #include "../Scheduler.h"
+#include "../../../../lib/StaticLog/StaticLog.h"
 #include "../../../../lib/Queue/QueueImplementationProvider/QueueImplementationProvider.h"
 #include "../../../../lib/Queue/Implementations/OrderedQueueImplementation/OrderedQueueImplementation.h"
 #include "../../../../lib/Queue/Implementations/SingleSlotQueueImplementation/SingleSlotQueueImplementation.h"
@@ -155,6 +157,8 @@ template <typename PriorityComparator>class PriorityScheduler
          **/
         void update(Subject* subject)
         {
+            assert(StaticLog::log["general"] != NULL);
+            std::ostream* log = StaticLog::log["general"];
             bool A = readyQueue->size() == 0;
             bool B = executionQueue->size() == 0;
             bool C =
@@ -170,21 +174,21 @@ template <typename PriorityComparator>class PriorityScheduler
                 (A == false && B == false)
                 &&
                 comparator(readyQueue->front(), executionQueue->front());
-            std::cout << "readyQueue empty: "
+            (*log) << "\tReady queue empty: "
                 << ((A)? "true" : "false") << std::endl;
-            std::cout << "executionQueue empty: "
+            (*log) << "\tExecution queue empty: "
                 << ((B)? "true" : "false") << std::endl;
-            std::cout << "executing Task terminated: "
+            (*log) << "\tExecuting Task terminated: "
                 << ((C)? "true" : "false") << std::endl;
-            std::cout << "Are there pending instances of the executing task: "
-                << ((D)? "false" : "true") << std::endl;
-            std::cout << "preemption: "
+            (*log) << "\tPending instances of the executing Task: "
+                << ((D)? "true" : "false") << std::endl;
+            (*log) << "\tPreemption activated: "
                 << ((E)? "true" : "false") << std::endl;
-            std::cout << "Is there a ready Task with greater priority: "
+            (*log) << "\tIs there a ready Task with greater priority: "
                 << ((F)? "true" : "false") << std::endl;
             if(((!B) && (!C) && ((!E) || (!F))) || (A && ((!C) || B)))
             {
-                std::cout << "SCHEDULING DECISION: return" << std::endl;
+                (*log) << "\tSCHEDULING DECISION: do nothing" << std::endl;
                 publishEvent
                 (
                     ((executionQueue->front()).get() == NULL)?
@@ -196,8 +200,8 @@ template <typename PriorityComparator>class PriorityScheduler
             }
             if((!B) && C & (!D) && ((!F) || A))
             {
-                std::cout
-                    << "SCHEDULING DECISION: reset execution and re-schedule it"
+                (*log)
+                    << "\tSCHEDULING DECISION: re-schedule the currently executing Task"
                     << std::endl;
                 reExecute();
                 notify();
@@ -205,7 +209,7 @@ template <typename PriorityComparator>class PriorityScheduler
             }
             if(A && (!B) && C && D)
             {
-                std::cout << "SCHEDULING DECISION: reactivate execution"
+                (*log) << "\tSCHEDULING DECISION: reactivate the currently executing Task"
                     << std::endl;
                 reActivate();
                 publishEvent(0, SCHEDULE);
@@ -214,7 +218,7 @@ template <typename PriorityComparator>class PriorityScheduler
             }
             if((!A) && B)
             {
-                std::cout << "SCHEDULING DECISION: schedule a ready task"
+                (*log) << "\tSCHEDULING DECISION: schedule a ready task"
                     << std::endl;
                 schedule();
                 notify();
@@ -222,8 +226,8 @@ template <typename PriorityComparator>class PriorityScheduler
             }
             if((!A) && (!B) && C && D)
             {
-                std::cout <<
-                    "SCHEDULING DECISION: reactivate execution, schedule a ready task"
+                (*log) <<
+                    "\tSCHEDULING DECISION: reactivate the currently executing Task and schedule a ready Task"
                     << std::endl;
                 reActivate();
                 schedule();
@@ -232,9 +236,8 @@ template <typename PriorityComparator>class PriorityScheduler
             }
             if((!A) && (!B) && C && (!D) && F)
             {
-                std::cout <<
-                    "SCHEDULING DECISION: reset execution and put it in ready, \
-                    schedule a ready task"
+                (*log) <<
+                    "SCHEDULING DECISION: put the currently executing Task in the ready queue and schedule a ready task"
                     << std::endl;
                 (executionQueue->front())->reset();
                 preemption();
@@ -243,8 +246,8 @@ template <typename PriorityComparator>class PriorityScheduler
             }
             if((!A) && (!B) && (!C) && E && F)
             {
-                std::cout <<
-                    "SCHEDULING DECISION: put execution in ready and schedule a ready task"
+                (*log) <<
+                    "SCHEDULING DECISION: put the currently executing Task in the ready queue and schedule a ready task"
                     << std::endl;
                 preemption();
                 notify();

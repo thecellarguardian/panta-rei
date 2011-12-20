@@ -43,11 +43,6 @@ template <typename SubjectIdentifier, typename Time> class Event
         virtual ~Event(){}
         SubjectIdentifier getSubject(){return subject;}
         Time getInstant(){return instant;}
-        void print()
-        {
-            std::cout << "event<SubjectID: " << subject << ", instant: "
-                << instant << ")" << std::endl;
-        }
 };
 
 #endif

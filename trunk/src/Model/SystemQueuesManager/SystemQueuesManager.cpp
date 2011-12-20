@@ -28,7 +28,6 @@ SystemQueuesManager::operator[](std::string key)
 {
     if(queueRegistry.find(key) == queueRegistry.end())
     {
-        std::cout << "The " << key << " queue is being created" << std::endl;
         boost::shared_ptr< QueueInterface<Task> > pointerToInsert
         (new QueueInterface<Task>());
         std::pair

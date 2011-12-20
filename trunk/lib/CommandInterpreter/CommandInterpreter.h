@@ -23,8 +23,10 @@
 #include <string>
 #include <iostream>
 #include <exception>
+#include <cassert>
 #include "ExitException.h"
 #include "BadSyntaxException.h"
+#include "../StaticLog/StaticLog.h"
 
 #ifndef COMMAND_INTERPRETER_H
 #define COMMAND_INTERPRETER_H
@@ -73,10 +75,12 @@ template <typename Language> class CommandInterpreter
             {}
         void run()
         {
-            std::cout << welcomeMessage << std::endl;
+            assert(StaticLog::log["error"] != NULL);
+            std::ostream* errorLog = StaticLog::log["error"];
             std::string statement;
             if(interactiveFlag)
             {
+                std::cout << welcomeMessage << std::endl;
                 std::cout << ">> ";
             }
             while(getline(*sourceSource, statement))
@@ -107,7 +111,15 @@ template <typename Language> class CommandInterpreter
                 }
                 catch(BadSyntaxException& caughtException)
                 {
-                    std::cout << caughtException.what() << std::endl;
+                    (*errorLog) << caughtException.what() << std::endl;
+                    if(!interactiveFlag)
+                    {
+                        break;                        
+                    }
+                }
+                catch(std::exception& caughtException)
+                {
+                    std::cerr << caughtException.what() << std::endl;
                     if(!interactiveFlag)
                     {
                         break;                        

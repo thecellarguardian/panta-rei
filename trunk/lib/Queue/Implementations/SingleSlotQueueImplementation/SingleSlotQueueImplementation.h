@@ -87,10 +87,6 @@ class SingleSlotQueueImplementation : public QueueImplementation<ElementType>
         {
             return (dataStructure.get() == NULL)? 0 : 1;
         }
-        void print() //TODO remove this!
-        {
-            dataStructure->print();
-        }
 };
 
 #endif

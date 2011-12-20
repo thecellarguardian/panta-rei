@@ -82,7 +82,6 @@ class SchedulingSimulation : public VisitorAcceptor
             //attachedObservers list, but when the new scheduler is created it
             //autonomously attaches itself to the timer, so it's necessary first
             //to remove it from the timer attacherObservers list ()
-            std::cout << "The old scheduler address was " << (void*)scheduler.get() << std::endl;
             if(scheduler.get() != NULL)
             {
                 scheduler->detach(&history);
@@ -101,7 +100,6 @@ class SchedulingSimulation : public VisitorAcceptor
             timer.detach(newScheduler.get());
             timer.substitute(scheduler.get(), newScheduler.get());
             scheduler = newScheduler;
-            std::cout << "The new scheduler address is " << (void*)scheduler.get() << std::endl;
         }
         void simulate();
         void clear();
