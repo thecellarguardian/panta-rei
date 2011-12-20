@@ -7,5 +7,6 @@ Model/Task/PeriodicTask/*.cpp \
 Model/Timer/Timer.cpp \
 Model/SchedulingSimulation/SchedulingSimulation.cpp \
 ../lib/DesignPatterns/Observer/Subject.cpp \
+../lib/StaticLog/StaticLog.cpp \
 PantaRei.cpp \
 -lboost_thread -lboost_program_options -lpthread -g -p

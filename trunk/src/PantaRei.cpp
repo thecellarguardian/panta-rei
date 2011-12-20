@@ -22,6 +22,7 @@
 #include <iostream>
 #include <fstream>
 #include "../lib/CommandInterpreter/CommandInterpreter.h"
+#include "../lib/StaticLog/StaticLog.h"
 #include "Controller/PantaReiLanguage/PantaReiLanguage.h"
 
 int main(int argc, char** argv)
@@ -136,6 +137,7 @@ int main(int argc, char** argv)
     {
         log = &std::cout;
     }
+    StaticLog::log["general"] = log;
     std::string welcomeMessage("Panta Rei - Real time scheduling simulator");
     CommandInterpreter<PantaReiLanguage>
         pantaReiRuntimeEnvironment(welcomeMessage, script);
