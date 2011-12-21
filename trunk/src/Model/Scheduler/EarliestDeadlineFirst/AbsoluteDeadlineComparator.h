@@ -26,7 +26,7 @@
 
 /**
  * @class AbsoluteDeadlineComparator
- * @brief Priority function based on periods.
+ * @brief Priority function based on absolute deadlines.
  * As each priority comparator, AbsoluteDeadlineComparator is a functor which
  * takes two Task and returns true if the priority of the first is greater than
  * the one of the second. The priority law in this case is inversely
