@@ -29,7 +29,7 @@
  * @brief A single slot queue implementation.
  * This is a bounded queue implementation, it refers a queue that can maintain
  * no more than one element.
- * @tparam ElementType The element type.
+ * The template parameter is the element type.
  **/
 template <typename ElementType>
 class SingleSlotQueueImplementation : public QueueImplementation<ElementType>

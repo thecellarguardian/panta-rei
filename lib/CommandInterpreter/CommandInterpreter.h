@@ -38,11 +38,10 @@
  * framework. The particular grammar and behaviour can be defined in a Grammar
  * class inheriting from boost::spirit::qi::grammar, where it can be described
  * using an EBNF-fashioned C++, toghether with the related semantic actions.
- * @tparam Language The interpreted language has to be a Spirit Qi grammar, an
+ * The interpreted language has to be a Spirit Qi grammar, an
  * explicit compile time check is done to verify this property.
  * @see Boost Spirit Qi framework, Boost Static Assert.
  **/
-
 template <typename Language> class CommandInterpreter
 {
     private:

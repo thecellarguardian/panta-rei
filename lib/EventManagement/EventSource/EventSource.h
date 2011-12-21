@@ -26,6 +26,9 @@
 #ifndef EVENT_SOURCE_H
 #define EVENT_SOURCE_H
 
+//TODO: add a withMemory flag to give the possibility to store all past events
+//even after a notify call. Notice that this change could make the interface
+//grow with temporal query wrappers and stuff...
  /**
  * @class EventSource
  * @brief A generic source of events.
@@ -36,12 +39,9 @@
  * and, when the right time arrives, a call to the inherited notify() method
  * will let every Observer know that events have been produced, so that they can
  * get them through the getEventList() method.
- * @tparam QueueImplementor A particular QueueImplementation class.
+ * The template parameter is a particular QueueImplementation class.
  * @see Subject, QueueInterface, QueueImplementation, Event
  **/
-//TODO: add a withMemory flag to give the possibility to store all past events
-//even after a notify call. Notice that this change could make the interface
-//grow with temporal query wrappers and stuff...
 template <typename EventType> class EventSource
     :
     public QueueInterface<EventType>, public Subject

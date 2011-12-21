@@ -30,7 +30,7 @@
  * @brief An FIFO queue implementation.
  * A simple FIFO queue implementation. This implementation is a simple
  * std::list<T> wrapper. 
- * @tparam ElementType The type of the elements.
+ * The template parameter is the type of the elements.
  **/
 template <typename ElementType>
 class FIFOQueueImplementation : public QueueImplementation<ElementType>
