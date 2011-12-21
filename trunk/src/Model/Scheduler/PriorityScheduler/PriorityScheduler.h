@@ -32,6 +32,7 @@
 #ifndef PRIORITY_SCHEDULER_H
 #define PRIORITY_SCHEDULER_H
 
+//TODO Use Boost Concept Check Library!
 /**
  * @class PriorityScheduler
  * @brief Generic scheduler with priority check.
@@ -39,13 +40,12 @@
  * priority law (the law that states when a task has priority over another task)
  * is provided through the template parameter PriorityComparator.
  * The implementation is based on the concept of decision tree.
- * @tparam PriorityComparator This parameter refers a functor class whose
+ * The template parameter refers a functor class whose
  * operator() takes two boost::shared_ptr<Task> and returns true if the first
  * parameter has priority over the second. The use of different comparators
  * lets the programmer bind this generic priority based scheduler to particular
  * priority policies.
  **/
-//TODO Use Boost Concept Check Library!
 template <typename PriorityComparator>class PriorityScheduler
     : public Scheduler
 {

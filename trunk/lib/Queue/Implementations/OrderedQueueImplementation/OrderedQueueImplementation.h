@@ -35,8 +35,8 @@
  * the actual elements stored in the queue are shared pointers to the meaningful
  * elements to manipulate. Notice that the use of shared pointers implies that
  * the managed objects could be shared with other entities.
- * @tparam ElementType The type of the elements.
- * @tparam Comparator The ordering law.
+ * The first template parameter is the type of the elements.
+ * The second template parameter is the ordering law.
  **/
 template <typename ElementType, typename Comparator>
 class OrderedQueueImplementation : public QueueImplementation<ElementType>

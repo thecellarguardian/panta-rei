@@ -30,7 +30,7 @@
  * A class inheriting QueueImplementationProvider<T> is able to provide a
  * particular implementation for a queue. This can be useful to initialize
  * a QueueInterface object with the proper implementation.
- * @tparam T The type of the implementation to return.
+ * The template parameter is the type of the implementation to return.
  **/
 template <typename T> class QueueImplementationProvider
 {

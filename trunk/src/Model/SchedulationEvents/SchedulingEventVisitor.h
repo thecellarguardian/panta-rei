@@ -30,7 +30,7 @@ template <enum SchedulingEventType> class VisitableSchedulingEvent;
 
 /**
  * @class SchedulingEventVisitor
- * @brief A generic SchedulingEvent visitor
+ * @brief A generic SchedulingEvent visitor.
  * This interface overloads a visit method for each possible
  * VisitableSchedulingEvent.
  * @see Visitor, Event, SchedulingEventType

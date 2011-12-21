@@ -26,7 +26,7 @@
  * @brief The Prototype Design Pattern.
  * This Design Pattern provides the implementor with a method, clone, which
  * has to be implemented to return a new copy of the callee object.
- * @tparam Implementor The implementor type.
+ * The template parameter is the implementor type.
  **/
 template <typename Implementor> class Prototype
 {

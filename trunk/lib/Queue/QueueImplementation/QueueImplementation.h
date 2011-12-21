@@ -30,10 +30,10 @@
  * This class provides the interface for a queue implementation class. By mean
  * of derivation, a particular class can define particular data structures to be
  * used and particular policies for the insert and extract operations.
- * @tparam T The element type.
+ * The template parameter is the element type.
  **/
-template <typename T> class QueueImplementation
-    : public Prototype< QueueImplementation<T> >
+template <typename T>
+class QueueImplementation : public Prototype< QueueImplementation<T> >
 {
     public:
         virtual ~QueueImplementation(){}

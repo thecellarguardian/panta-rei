@@ -35,12 +35,13 @@
 
 /**
  * @class SchedulingSimulation
+ * 
  * @brief The scheduling simulation environment.
+ * 
  * This class encapsulates the creation and link logic of all the objects
  * involved into the simulation, and provides a command interface to modify each
  * simulation property.
  **/
-
 class SchedulingSimulation : public VisitorAcceptor
 {
     private:
@@ -69,8 +70,7 @@ class SchedulingSimulation : public VisitorAcceptor
         //TODO void removeTask ??
         void setSimulationLength(unsigned int simulationLengthToSet);
         /**
-         * @tparam SchedulingAlgorithm The scheduler to set.
-         * @pre SchedulingAlgorithm must extend Scheduler.
+         * SchedulingAlgorithm must extend Scheduler.
          **/
         template <typename SchedulingAlgorithm> void setSchedulingAlgorithm
             (

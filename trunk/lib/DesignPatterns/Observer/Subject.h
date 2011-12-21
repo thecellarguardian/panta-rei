@@ -27,22 +27,22 @@
 
 /**
  * @class Subject
- * @brief This class models a subject of observation.
+ * @brief A subject of observation.
  * A Subject object lets Observer object to register themselves, in order to
  * be notified when the Subject's state changes.
- * @see "Observer design pattern."
+ * @see Observer design pattern
  **/
 class Subject
 {
     protected:
-        std::list<Observer*> attachedObservers;
-        /**<
+        /**
          * Registered Observers list. These object have to be notified when the
          * Subject' s state changes. Notice the use of simple pointer instead of
          * a shared_ptr: the Subject is a subject of observation, thus it
          * doesn't make any sense, for a Subject, to have lifecycle control over
          * its observers.
          **/
+        std::list<Observer*> attachedObservers;
     public:
         virtual ~Subject();
         /**
