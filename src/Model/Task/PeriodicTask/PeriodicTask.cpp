@@ -128,6 +128,7 @@ void PeriodicTask::update(Subject* subject)
             if(remainingComputationTime == 0)
             {
                 pendingInstances--;
+                absoluteDeadline += period;
                 publishEvent(END_OF_COMPUTATION);
             }
             break;
@@ -145,7 +146,7 @@ void PeriodicTask::reset()
     elapsedTime =
         (timer->getCurrentTime() <= currentInstanceArrivalTime)?
         0 : timer->getCurrentTime() - currentInstanceArrivalTime;
-    absoluteDeadline += period;
+    //absoluteDeadline += period; PAY ATTENTION! THIS HAS TO BE MOVED IN THE UPDATE METHOD!
     remainingComputationTime = computationTime;
     remainingPeriod =
         (pendingInstances > 0)?
