@@ -181,7 +181,7 @@ template <typename PriorityComparator>class PriorityScheduler
             (*log) << "\tExecuting Task terminated: "
                 << ((C)? "true" : "false") << std::endl;
             (*log) << "\tPending instances of the executing Task: "
-                << ((D)? "true" : "false") << std::endl;
+                << ((D)? "false" : "true") << std::endl;
             (*log) << "\tPreemption activated: "
                 << ((E)? "true" : "false") << std::endl;
             (*log) << "\tIs there a ready Task with greater priority: "
@@ -198,7 +198,7 @@ template <typename PriorityComparator>class PriorityScheduler
                 );
                 return;
             }
-            if((!B) && C & (!D) && ((!F) || A))
+            if((!B) && C && (!D) && ((!F) || A))
             {
                 (*log)
                     << "\tSCHEDULING DECISION: re-schedule the currently executing Task"
@@ -237,7 +237,7 @@ template <typename PriorityComparator>class PriorityScheduler
             if((!A) && (!B) && C && (!D) && F)
             {
                 (*log) <<
-                    "SCHEDULING DECISION: put the currently executing Task in the ready queue and schedule a ready task"
+                    "\tSCHEDULING DECISION: put the currently executing Task in the ready queue and schedule a ready task"
                     << std::endl;
                 (executionQueue->front())->reset();
                 preemption();

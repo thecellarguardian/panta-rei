@@ -19,6 +19,7 @@
  *
  */
 
+#include <iostream>
 #include "Task.h"
 #include "../SchedulationEvents/VisitableSchedulingEvent.h"
 #include "../../../lib/Queue/Implementations/FIFOQueueImplementation/FIFOQueueImplementation.h"
@@ -103,6 +104,7 @@ unsigned int Task::getRelativeDeadline()
 
 unsigned int Task::getAbsoluteDeadline()
 {
+    std::cout << "Task" << taskID << "has absolute deadline: " << absoluteDeadline << std::endl;
     return absoluteDeadline;
 }
 
