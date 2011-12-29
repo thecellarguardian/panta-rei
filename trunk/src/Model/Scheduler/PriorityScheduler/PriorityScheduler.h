@@ -247,7 +247,7 @@ template <typename PriorityComparator>class PriorityScheduler
             if((!A) && (!B) && (!C) && E && F)
             {
                 (*log) <<
-                    "SCHEDULING DECISION: put the currently executing Task in the ready queue and schedule a ready task"
+                    "\tSCHEDULING DECISION: put the currently executing Task in the ready queue and schedule a ready task"
                     << std::endl;
                 preemption();
                 notify();
