@@ -52,7 +52,7 @@ template <typename EventType> class History
         {
             boost::shared_ptr< FIFOQueueImplementation<EventType> >
                 implementation(new FIFOQueueImplementation<EventType>);
-            setImplementation(implementation);
+            this->setImplementation(implementation);
         }
         /**
          * An History object can register to several EventSource<EventType>,
@@ -72,7 +72,7 @@ template <typename EventType> class History
                 boost::shared_ptr<EventType> eventToCopy(eventList->extract());
                 assert
                     ((dynamic_cast<VisitorAcceptor*>(eventToCopy.get())) != NULL);
-                insert(eventToCopy);
+                this->insert(eventToCopy);
             }
         }
         /**
@@ -103,7 +103,7 @@ template <typename EventType> class History
         {
             boost::shared_ptr< FIFOQueueImplementation<EventType> >
                 implementation(new FIFOQueueImplementation<EventType>);
-            setImplementation(implementation);
+            this->setImplementation(implementation);
         }
 };
 

@@ -10,4 +10,4 @@ Model/SchedulingSimulation/SchedulingSimulation.cpp \
 ../lib/StaticLog/StaticLog.cpp \
 PantaRei.cpp \
 -o ../bin/panta-rei \
--lboost_thread -lboost_program_options -lpthread -g -p
+-lboost_system -lboost_thread -lboost_program_options -lpthread -g -p
